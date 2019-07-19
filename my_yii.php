@@ -15,8 +15,9 @@ use Ray\Di\NullModule;
 
 require __DIR__ . '/vendor/autoload.php';
 
-if(!class_exists('YiiBase', false))
-	require(__DIR__ . '/vendor/yiisoft/yii/framework/YiiBase.php');
+if(!class_exists('YiiBase', false)) {
+    require(__DIR__ . '/vendor/yiisoft/yii/framework/YiiBase.php');
+}
 
 /**
  * Yii is a helper class serving common framework functionalities.
