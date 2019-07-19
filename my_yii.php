@@ -33,27 +33,25 @@ class Yii extends YiiBase
     public static function createComponent($config)
     {
         $args = func_get_args();
-        if(is_string($config))
-        {
+        if(is_string($config)) {
             $type=$config;
             $config=array();
-        }
-        elseif(isset($config['class']))
-        {
+        } elseif(isset($config['class'])) {
             $type=$config['class'];
             unset($config['class']);
+        } else {
+            throw new CException(Yii::t('yii', 'Object configuration must be an array containing a "class" element.'));
         }
-        else
-            throw new CException(Yii::t('yii','Object configuration must be an array containing a "class" element.'));
-
-        if(!class_exists($type,false))
-            $type=Yii::import($type,true);
+        if(!class_exists($type,false)) {
+            $type = Yii::import( $type, true );
+        }
 
         unset($args[0]);
         $class=new ReflectionClass($type);
         $object=$class->newInstanceArgs($args);
-        foreach($config as $key=>$value)
-            $object->$key=$value;
+        foreach($config as $key=>$value) {
+            $object->$key = $value;
+        }
 
         return $object;
     }
