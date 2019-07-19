@@ -1,0 +1,20 @@
+{
+  "name": "yii/yii",
+  "require": {
+    "php": ">=5.3.2",
+    "yiisoft/yii": "1.1.*"
+  },
+  "autoload": {
+    "psr-0": {
+      "config": "./"
+    }
+  },
+  "scripts": {
+    "pre-install-cmd": "config\\ComposerCallback::preInstall",
+    "post-install-cmd": "config\\ComposerCallback::postInstall",
+    "pre-update-cmd": "config\\ComposerCallback::preUpdate",
+    "post-update-cmd": "config\\ComposerCallback::postUpdate",
+    "post-package-install": ["config\\ComposerCallback::postPackageInstall"],
+    "post-package-update": ["config\\ComposerCallback::postPackageUpdate"]
+  }
+}
