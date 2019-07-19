@@ -10,6 +10,9 @@
  * @since 1.0
  */
 
+use Ray\Di\Injector;
+use Ray\Di\NullModule;
+
 require __DIR__ . '/vendor/autoload.php';
 
 if(!class_exists('YiiBase', false))
@@ -39,7 +42,8 @@ class Yii extends YiiBase
         }
         unset($args[0]);
 
-        $object = (new ReflectionClass($type))->newInstanceArgs($args);
+        $injector = (new Injector(new NullModule));
+        $object = $injector->getInstanceWithArgs($type, '', $args);
 
         foreach($config as $key=>$value) {
             $object->$key = $value;
