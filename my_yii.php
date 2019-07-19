@@ -10,6 +10,8 @@
  * @since 1.0
  */
 
+require __DIR__ . '/vendor/autoload.php';
+
 if(!class_exists('YiiBase', false))
 	require(__DIR__ . '/vendor/yiisoft/yii/framework/YiiBase.php');
 
