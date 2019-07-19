@@ -50,7 +50,7 @@ class Yii extends YiiBase
 
     /**
      * Extract config
-     * 
+     *
      * @param string|array $config
      *
      * @return [$type, $config]
@@ -69,6 +69,6 @@ class Yii extends YiiBase
             return [$type, $config];
         }
 
-        throw new CException( Yii::t( 'yii', 'Object configuration must be an array containing a "class" element.' ) );
+        throw new CException(Yii::t( 'yii', 'Object configuration must be an array containing a "class" element.'));
     }
 }
