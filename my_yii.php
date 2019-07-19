@@ -10,10 +10,15 @@
  * @since 1.0
  */
 
+use MyVendor\MyProject\AppModule;
+use Ray\Di\InjectableInterface;
 use Ray\Di\Injector;
 use Ray\Di\NullModule;
 
 require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/ray-src/AppModule.php';
+require __DIR__ . '/ray-src/InjectableInterface.php';
+
 
 if(!class_exists('YiiBase', false)) {
     require(__DIR__ . '/vendor/yiisoft/yii/framework/YiiBase.php');
@@ -43,8 +48,8 @@ class Yii extends YiiBase
         }
         unset($args[0]);
 
-        $injector = (new Injector(new NullModule));
-        $object = $injector->getInstanceWithArgs($type, '', $args);
+        $isInjectable = in_array(InjectableInterface::class, class_implements($type));
+        $object = $isInjectable ? (new Injector(new AppModule))->getInstanceWithArgs($type, '', $args) : (new ReflectionClass($type))->newInstanceArgs($args);
 
         foreach($config as $key=>$value) {
             $object->$key = $value;
