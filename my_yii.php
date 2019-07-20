@@ -1,14 +1,4 @@
 <?php
-/**
- * Yii bootstrap file.
- *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @link http://www.yiiframework.com/
- * @copyright 2008-2013 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- * @package system
- * @since 1.0
- */
 
 use MyVendor\MyProject\AppModule;
 use Ray\Di\InjectableInterface;
