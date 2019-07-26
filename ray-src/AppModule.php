@@ -1,6 +1,6 @@
 <?php
 
-namespace MyVendor\MyProject;
+namespace Ray\Dyii;
 
 use Ray\Di\AbstractModule;
 

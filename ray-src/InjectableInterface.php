@@ -1,10 +1,10 @@
 <?php
 
-namespace MyVendor\MyProject;
+namespace Ray\Dyii;
 
 /**
  * Injectable marker
  */
-interface InjectableInterface
+interface Injectable
 {
 }

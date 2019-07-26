@@ -1,9 +1,8 @@
 <?php
 
-use MyVendor\MyProject\AppModule;
-use Ray\Di\InjectableInterface;
 use Ray\Di\Injector;
-use Ray\Di\NullModule;
+use Ray\Dyii\AppModule;
+use Ray\Dyii\Injectable;
 
 spl_autoload_unregister(array('YiiBase','autoload'));
 require 'vendor/autoload.php';
@@ -22,6 +21,7 @@ class Yii extends YiiBase
 {
     /**
      * {@inheritdoc}
+     * @throws \ReflectionException
      */
     public static function createComponent($config)
     {
@@ -32,8 +32,8 @@ class Yii extends YiiBase
         }
         unset($args[0]);
 
-        $isInjectable = in_array(InjectableInterface::class, class_implements($type));
-        $object = $isInjectable ? (new Injector(new AppModule))->getInstanceWithArgs($type, '', $args) : (new ReflectionClass($type))->newInstanceArgs($args);
+        $isInjectable = in_array(Injectable::class, class_implements($type));
+        $object = $isInjectable ? (new Injector(new AppModule()))->getInstanceWithArgs($type, '', $args) : (new \ReflectionClass($type))->newInstanceArgs($args);
 
         foreach($config as $key=>$value) {
             $object->$key = $value;
@@ -45,7 +45,7 @@ class Yii extends YiiBase
     /**
      * {@inheritdoc}
      */
-    public static function createWebApplication($config=null)
+    public static function createWebApplication($cfig=null)
     {
         return self::createApplication('MyCWebApplication',$config);
     }
