@@ -5,10 +5,11 @@ use Ray\Di\InjectableInterface;
 use Ray\Di\Injector;
 use Ray\Di\NullModule;
 
-require __DIR__ . '/vendor/autoload.php';
+spl_autoload_unregister(array('YiiBase','autoload'));
+require 'vendor/autoload.php';
+spl_autoload_register(array('YiiBase','autoload'), true, true);
 require __DIR__ . '/ray-src/AppModule.php';
 require __DIR__ . '/ray-src/InjectableInterface.php';
-
 
 if(!class_exists('YiiBase', false)) {
     require(__DIR__ . '/vendor/yiisoft/yii/framework/YiiBase.php');
