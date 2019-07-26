@@ -5,9 +5,11 @@ use Ray\Dyii\AppModule;
 use Ray\Dyii\Injectable;
 use Ray\Dyii\RayCWebApplication;
 
-spl_autoload_unregister(['YiiBase','autoload']);
-require 'vendor/autoload.php';
-spl_autoload_register(['YiiBase','autoload'], true, true);
+$autoload = require __DIR__ . '/ray-src/autoload.php';
+
+spl_autoload_unregister([YiiBase::class, 'autoload']);
+require __DIR__ . '/vendor/autoload.php';
+spl_autoload_register($autoload, true, true);
 
 /**
  * Ray.Di powered Yii base class
