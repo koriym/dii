@@ -1,34 +1,25 @@
 <?php
-/**
- * Yii bootstrap file.
- *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @link http://www.yiiframework.com/
- * @copyright 2008-2013 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- * @package system
- * @since 1.0
- */
 
+use Ray\Di\Injector;
+use Ray\Dyii\AppModule;
+use Ray\Dyii\Injectable;
+use Ray\Dyii\RayCWebApplication;
+
+$autoload = require __DIR__ . '/ray-src/autoload.php';
+
+spl_autoload_unregister([YiiBase::class, 'autoload']);
 require __DIR__ . '/vendor/autoload.php';
-
-if(!class_exists('YiiBase', false))
-	require(__DIR__ . '/vendor/yiisoft/yii/framework/YiiBase.php');
+spl_autoload_register($autoload, true, true);
 
 /**
- * Yii is a helper class serving common framework functionalities.
- *
- * It encapsulates {@link YiiBase} which provides the actual implementation.
- * By writing your own Yii class, you can customize some functionalities of YiiBase.
- *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @package system
- * @since 1.0
+ * Ray.Di powered Yii base class
  */
 class Yii extends YiiBase
 {
     /**
      * {@inheritdoc}
+     *
+     * @throws \ReflectionException
      */
     public static function createComponent($config)
     {
@@ -39,13 +30,27 @@ class Yii extends YiiBase
         }
         unset($args[0]);
 
-        $object = (new ReflectionClass($type))->newInstanceArgs($args);
+        $isInjectable = in_array(Injectable::class, class_implements($type));
+        $object = $isInjectable ? (new Injector(new AppModule()))->getInstanceWithArgs($type, '', $args) : (new \ReflectionClass($type))->newInstanceArgs($args);
 
         foreach($config as $key=>$value) {
             $object->$key = $value;
         }
 
         return $object;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function createWebApplication($config = null)
+    {
+        return self::createApplication(RayCWebApplication::class, $config);
+    }
+
+    public static function getInjector() : Injector
+    {
+        return (new Injector(new AppModule));
     }
 
     /**
