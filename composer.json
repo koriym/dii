@@ -6,9 +6,7 @@
     "ray/di": "dev-with-args"
   },
   "autoload": {
-    "psr-0": {
-      "config": "./"
-    }
+    "classmap": ["./ext-src", "./ray-src"]
   },
   "scripts": {
   }
