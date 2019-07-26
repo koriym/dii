@@ -43,6 +43,14 @@ class Yii extends YiiBase
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public static function createWebApplication($config=null)
+    {
+        return self::createApplication('MyCWebApplication',$config);
+    }
+
+    /**
      * Extract config
      *
      * @param string|array $config
