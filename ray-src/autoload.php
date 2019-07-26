@@ -56,7 +56,9 @@ return function ($className,$classMapOnly=false)
                 }
             }
             else
-                @include($className.'.php');
+                $er = error_reporting(0);
+                include($className . '.php');
+                ini_set('error_reporting', $er);
         }
         else  // class name with namespace in PHP 5.3
         {
