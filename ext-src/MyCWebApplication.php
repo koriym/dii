@@ -54,7 +54,7 @@ class MyCWebApplication extends CWebApplication
 				{
 					$id[0]=strtolower($id[0]);
 					return array(
-						new $className($controllerID.$id,$owner===$this?null:$owner),
+					    $this->newInstance($className, $controllerID.$id,$owner===$this?null:$owner),
 						$this->parseActionParams($route),
 					);
 				}
@@ -64,4 +64,9 @@ class MyCWebApplication extends CWebApplication
 			$basePath.=DIRECTORY_SEPARATOR.$id;
 		}
 	}
+
+	private function newInstance(string $className, $argument)
+    {
+        return new $className($argument);
+    }
 }
