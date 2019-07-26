@@ -1,5 +1,7 @@
 <?php
 
+use Ray\Di\Injector;
+
 class MyCWebApplication extends CWebApplication
 {
     /**
@@ -67,6 +69,9 @@ class MyCWebApplication extends CWebApplication
 
 	private function newInstance(string $className, $argument)
     {
-        return new $className($argument);
+        $isInjectable = in_array(\MyVendor\MyProject\InjectableInterface::class, class_implements($className));
+        $controller = $isInjectable ? (new Injector(new \MyVendor\MyProject\AppModule()))->getInstanceWithArgs($className, '', $argument) : new $className($argument);
+
+        return $controller;
     }
 }
