@@ -1,12 +1,13 @@
 {
   "name": "yii/yii",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.1.0",
     "yiisoft/yii": "1.1.*",
     "ray/di": "dev-with-args"
   },
   "autoload": {
-    "classmap": ["./ext-src", "./ray-src"]
+    "classmap": ["src", "ray-src"],
+    "files": ["vendor/yiisoft/yii/framework/YiiBase.php"]
   },
   "scripts": {
     "serve": "php -dzend_extension=xdebug.so -S 127.0.0.1:8080 -t demos/helloworld"

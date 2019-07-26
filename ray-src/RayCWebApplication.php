@@ -1,10 +1,10 @@
 <?php
 
-use Ray\Di\Injector;
-use Ray\Dyii\AppModule;
-use Ray\Dyii\Injectable;
+namespace Ray\Dyii;
 
-class MyCWebApplication extends CWebApplication
+use Ray\Di\Injector;
+
+class RayCWebApplication extends \CWebApplication
 {
     /**
      * {@inheritDoc}
@@ -31,7 +31,7 @@ class MyCWebApplication extends CWebApplication
 				if(isset($owner->controllerMap[$id]))
 				{
 					return array(
-						Yii::createComponent($owner->controllerMap[$id],$id,$owner===$this?null:$owner),
+						\Yii::createComponent($owner->controllerMap[$id],$id,$owner===$this?null:$owner),
 						$this->parseActionParams($route),
 					);
 				}
@@ -72,7 +72,7 @@ class MyCWebApplication extends CWebApplication
 	private function newInstance(string $className, $argument)
     {
         $isInjectable = in_array(Injectable::class, class_implements($className));
-        $controller = $isInjectable ? (new Injector(new AppModule()))->getInstanceWithArgs($className, '', $argument) : new $className($argument);
+        $controller = $isInjectable ? \Yii::getInjector()->getInstanceWithArgs($className, '', $argument) : new $className($argument);
 
         return $controller;
     }

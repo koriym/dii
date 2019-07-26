@@ -3,16 +3,11 @@
 use Ray\Di\Injector;
 use Ray\Dyii\AppModule;
 use Ray\Dyii\Injectable;
+use Ray\Dyii\RayCWebApplication;
 
-spl_autoload_unregister(array('YiiBase','autoload'));
+spl_autoload_unregister(['YiiBase','autoload']);
 require 'vendor/autoload.php';
-spl_autoload_register(array('YiiBase','autoload'), true, true);
-require __DIR__ . '/ray-src/AppModule.php';
-require __DIR__ . '/ray-src/InjectableInterface.php';
-
-if(!class_exists('YiiBase', false)) {
-    require(__DIR__ . '/vendor/yiisoft/yii/framework/YiiBase.php');
-}
+spl_autoload_register(['YiiBase','autoload'], true, true);
 
 /**
  * Ray.Di powered Yii base class
@@ -21,6 +16,7 @@ class Yii extends YiiBase
 {
     /**
      * {@inheritdoc}
+     *
      * @throws \ReflectionException
      */
     public static function createComponent($config)
@@ -45,9 +41,14 @@ class Yii extends YiiBase
     /**
      * {@inheritdoc}
      */
-    public static function createWebApplication($cfig=null)
+    public static function createWebApplication($config = null)
     {
-        return self::createApplication('MyCWebApplication',$config);
+        return self::createApplication(RayCWebApplication::class, $config);
+    }
+
+    public static function getInjector() : Injector
+    {
+        return (new Injector(new AppModule));
     }
 
     /**
