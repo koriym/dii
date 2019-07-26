@@ -9,5 +9,6 @@
     "classmap": ["./ext-src", "./ray-src"]
   },
   "scripts": {
+    "serve": "php -dzend_extension=xdebug.so -S 127.0.0.1:8080 -t demos/helloworld"
   }
 }
