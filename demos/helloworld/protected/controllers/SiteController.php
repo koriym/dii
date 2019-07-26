@@ -22,11 +22,11 @@ class SiteController extends CController implements Injectable
         $this->foo = $foo;
     }
 
-	/**
-	 * Index action is the default action in a controller.
-	 */
-	public function actionIndex()
-	{
-		echo 'Hello World' . $this->foo->get();
-	}
+    /**
+     * Index action is the default action in a controller.
+     */
+    public function actionIndex()
+    {
+        echo 'Hello World' . $this->foo->get();
+    }
 }
