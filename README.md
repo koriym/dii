@@ -8,6 +8,7 @@ This project was created to make [Ray.Di](https://github.com/ray-di/Ray.Di) work
 
 ## Install
 
+    cd demo
     composer install
 
 ## Run

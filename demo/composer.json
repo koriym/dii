@@ -1,0 +1,22 @@
+{
+  "name": "vendor/hello",
+  "require": {
+    "php": ">=7.1.0",
+    "ray/dyii": "dev-package"
+  },
+  "autoload": {
+    "psr-4": {
+      "Dyii\\App\\": "src/App",
+      "Dyii\\Module\\": "src/Module"
+    }
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/koriym/Ray.Dyii.git"
+    }
+  ],
+  "scripts": {
+    "serve": "php -dzend_extension=xdebug.so -S 127.0.0.1:8080 -t public"
+  }
+}
