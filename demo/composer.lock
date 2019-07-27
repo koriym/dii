@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "746b0b3e767150b68263f0dac7dfb35b",
+    "content-hash": "b9262aa95242a577101b9c0dba6556d0",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -133,6 +133,42 @@
                 "php"
             ],
             "time": "2019-06-08T11:03:04+00:00"
+        },
+        {
+            "name": "koriym/dyii",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/koriym/Ray.Dyii.git",
+                "reference": "46fdfbd9d7c4ba7a8cb4616f55601c41c1f950b5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/koriym/Ray.Dyii/zipball/46fdfbd9d7c4ba7a8cb4616f55601c41c1f950b5",
+                "reference": "46fdfbd9d7c4ba7a8cb4616f55601c41c1f950b5",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0",
+                "ray/aop": "^2.8.5",
+                "ray/di": "dev-with-args",
+                "yiisoft/yii": "1.1.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Ray\\Dyii\\": "src"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Dependency Injection Plugin for Yii 1",
+            "support": {
+                "source": "https://github.com/koriym/Ray.Dyii/tree/master",
+                "issues": "https://github.com/koriym/Ray.Dyii/issues"
+            },
+            "time": "2019-07-27T07:27:37+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -327,41 +363,6 @@
             "time": "2019-07-19T19:15:47+00:00"
         },
         {
-            "name": "ray/dyii",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/koriym/Ray.Dyii.git",
-                "reference": "9cbd6b6dfbc5ffc016a26f793c07269ee84b8958"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/koriym/Ray.Dyii/zipball/9cbd6b6dfbc5ffc016a26f793c07269ee84b8958",
-                "reference": "9cbd6b6dfbc5ffc016a26f793c07269ee84b8958",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.1.0",
-                "ray/di": "dev-with-args",
-                "yiisoft/yii": "1.1.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Ray\\Dyii\\": "src"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "Dependency Injection Plugin for Yii 1",
-            "support": {
-                "source": "https://github.com/koriym/Ray.Dyii/tree/master",
-                "issues": "https://github.com/koriym/Ray.Dyii/issues"
-            },
-            "time": "2019-07-27T06:16:18+00:00"
-        },
-        {
             "name": "yiisoft/yii",
             "version": "1.1.21",
             "source": {
@@ -466,7 +467,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "ray/dyii": 20
+        "koriym/dyii": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
