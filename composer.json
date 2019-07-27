@@ -6,5 +6,10 @@
     "yiisoft/yii": "1.1.*",
     "ray/di": "dev-with-args"
   },
+  "autoload": {
+    "psr-4": {
+      "Ray\\Dyii\\": "src"
+    }
+  },
   "license": "MIT"
 }
