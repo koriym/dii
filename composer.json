@@ -1,10 +1,12 @@
 {
   "name": "ray/dyii",
+  "description": "Dependency Injection Plugin for Yii 1",
   "require": {
     "php": ">=7.1.0",
     "yiisoft/yii": "1.1.*",
     "ray/di": "dev-with-args"
   },
+  "license": "MIT",
   "autoload": {
     "classmap": [
       "vendor/yiisoft/yii/framework/base",
