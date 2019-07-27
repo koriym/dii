@@ -187,16 +187,16 @@
         },
         {
             "name": "ray/aop",
-            "version": "2.8.4",
+            "version": "2.8.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ray-di/Ray.Aop.git",
-                "reference": "48055627ab3f7056d3d354bc82b4d6881476b565"
+                "reference": "967c61aa50518e0489142a730fb3d57f1b00c5f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ray-di/Ray.Aop/zipball/48055627ab3f7056d3d354bc82b4d6881476b565",
-                "reference": "48055627ab3f7056d3d354bc82b4d6881476b565",
+                "url": "https://api.github.com/repos/ray-di/Ray.Aop/zipball/967c61aa50518e0489142a730fb3d57f1b00c5f7",
+                "reference": "967c61aa50518e0489142a730fb3d57f1b00c5f7",
                 "shasum": ""
             },
             "require": {
@@ -235,7 +235,7 @@
             "keywords": [
                 "aop"
             ],
-            "time": "2019-06-02T10:51:04+00:00"
+            "time": "2019-07-27T01:43:24+00:00"
         },
         {
             "name": "ray/compiler",

@@ -4618,3 +4618,41 @@ REQUEST_URI=/
 #15 {main}
 REQUEST_URI=/
 ---
+2019/07/27 08:24:41 [error] [exception.Ray\Di\Exception\NotFound] Ray\Di\Exception\NotFound: BarInterceptor in /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/BindValidator.php:16
+Stack trace:
+#0 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/Bind.php(56): Ray\Di\BindValidator->constructor('BarInterceptor')
+#1 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/AbstractModule.php(82): Ray\Di\Bind->__construct(Object(Ray\Di\Container), 'BarInterceptor')
+#2 /Users/akihito/git/Ray.Dyii/demo/src/Module/AppModule.php(19): Ray\Di\AbstractModule->bindInterceptor(Object(Ray\Aop\BuiltinMatcher), Object(Ray\Aop\BuiltinMatcher), Array)
+#3 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/AbstractModule.php(134): Ray\Dyii\Module\AppModule->configure()
+#4 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/AbstractModule.php(32): Ray\Di\AbstractModule->activate()
+#5 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/dyii/yii_ray.php(47): Ray\Di\AbstractModule->__construct()
+#6 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/dyii/src/RayCWebApplication.php(75): Yii::getInjector()
+#7 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/dyii/src/RayCWebApplication.php(61): Ray\Dyii\RayCWebApplication->newInstance('SiteController', 'site', NULL)
+#8 /Users/akihito/git/Ray.Dyii/demo/vendor/yiisoft/yii/framework/web/CWebApplication.php(276): Ray\Dyii\RayCWebApplication->createController('')
+#9 /Users/akihito/git/Ray.Dyii/demo/vendor/yiisoft/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('')
+#10 /Users/akihito/git/Ray.Dyii/demo/vendor/yiisoft/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#11 /Users/akihito/git/Ray.Dyii/demo/public/index.php(11): CApplication->run()
+#12 {main}
+REQUEST_URI=/
+---
+2019/07/27 08:25:12 [error] [exception.LogicException] LogicException: Name cannot be empty in /Users/akihito/git/Ray.Dyii/demo/vendor/nikic/php-parser/lib/PhpParser/BuilderHelpers.php:131
+Stack trace:
+#0 /Users/akihito/git/Ray.Dyii/demo/vendor/nikic/php-parser/lib/PhpParser/BuilderHelpers.php(104): PhpParser\BuilderHelpers::normalizeNameCommon('', false)
+#1 /Users/akihito/git/Ray.Dyii/demo/vendor/nikic/php-parser/lib/PhpParser/Builder/Namespace_.php(21): PhpParser\BuilderHelpers::normalizeName('')
+#2 /Users/akihito/git/Ray.Dyii/demo/vendor/nikic/php-parser/lib/PhpParser/BuilderFactory.php(23): PhpParser\Builder\Namespace_->__construct('')
+#3 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/aop/src/CodeGen.php(77): PhpParser\BuilderFactory->namespace('')
+#4 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/aop/src/Compiler.php(109): Ray\Aop\CodeGen->generate(Object(Ray\Aop\ReflectionClass), Object(Ray\Aop\Bind))
+#5 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/aop/src/Compiler.php(82): Ray\Aop\Compiler->requireFile('SiteController_...', Object(Ray\Aop\ReflectionClass), Object(Ray\Aop\Bind))
+#6 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/Dependency.php(135): Ray\Aop\Compiler->compile('SiteController', Object(Ray\Aop\Bind))
+#7 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/Container.php(155): Ray\Di\Dependency->weaveAspects(Object(Ray\Aop\Compiler), Array)
+#8 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/Injector.php(32): Ray\Di\Container->weaveAspects(Object(Ray\Aop\Compiler))
+#9 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/dyii/yii_ray.php(47): Ray\Di\Injector->__construct(Object(Ray\Dyii\Module\AppModule))
+#10 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/dyii/src/RayCWebApplication.php(75): Yii::getInjector()
+#11 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/dyii/src/RayCWebApplication.php(61): Ray\Dyii\RayCWebApplication->newInstance('SiteController', 'site', NULL)
+#12 /Users/akihito/git/Ray.Dyii/demo/vendor/yiisoft/yii/framework/web/CWebApplication.php(276): Ray\Dyii\RayCWebApplication->createController('')
+#13 /Users/akihito/git/Ray.Dyii/demo/vendor/yiisoft/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('')
+#14 /Users/akihito/git/Ray.Dyii/demo/vendor/yiisoft/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#15 /Users/akihito/git/Ray.Dyii/demo/public/index.php(11): CApplication->run()
+#16 {main}
+REQUEST_URI=/
+---
