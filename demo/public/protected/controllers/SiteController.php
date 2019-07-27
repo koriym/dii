@@ -1,8 +1,8 @@
 <?php
 
-use Ray\Dyii\FooInterface;
 use Ray\Dyii\Injectable;
 use Ray\Di\Di\Inject;
+use Vendor\Hello\FooInterface;
 
 /**
  * SiteController is the default controller to handle user requests.

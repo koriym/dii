@@ -1,8 +1,10 @@
 <?php
 
-namespace Vendor\Hello;
+namespace Ray\Dyii\Module;
 
 use Ray\Di\AbstractModule;
+use Vendor\Hello\Foo;
+use Vendor\Hello\FooInterface;
 
 class AppModule extends AbstractModule
 {

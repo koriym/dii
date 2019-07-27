@@ -4481,3 +4481,140 @@ Stack trace:
 #6 {main}
 REQUEST_URI=/
 ---
+2019/07/27 08:17:03 [error] [php] include(Annotation.php): failed to open stream: No such file or directory (/Users/akihito/git/Ray.Dyii/demo/vendor/yiisoft/yii/framework/YiiBase.php:463)
+Stack trace:
+#0 unknown(0): spl_autoload_call()
+#1 /Users/akihito/git/Ray.Dyii/demo/vendor/doctrine/annotations/lib/Doctrine/Common/Annotations/AnnotationRegistry.php(165): class_exists()
+#2 /Users/akihito/git/Ray.Dyii/demo/vendor/doctrine/annotations/lib/Doctrine/Common/Annotations/DocParser.php(469): loadAnnotationClass()
+#3 /Users/akihito/git/Ray.Dyii/demo/vendor/doctrine/annotations/lib/Doctrine/Common/Annotations/DocParser.php(725): Doctrine\Common\Annotations\DocParser->classExists()
+#4 /Users/akihito/git/Ray.Dyii/demo/vendor/doctrine/annotations/lib/Doctrine/Common/Annotations/DocParser.php(663): Doctrine\Common\Annotations\DocParser->Annotation()
+#5 /Users/akihito/git/Ray.Dyii/demo/vendor/doctrine/annotations/lib/Doctrine/Common/Annotations/DocParser.php(354): Doctrine\Common\Annotations\DocParser->Annotations()
+#6 /Users/akihito/git/Ray.Dyii/demo/vendor/doctrine/annotations/lib/Doctrine/Common/Annotations/AnnotationReader.php(405): Doctrine\Common\Annotations\DocParser->parse()
+#7 /Users/akihito/git/Ray.Dyii/demo/vendor/doctrine/annotations/lib/Doctrine/Common/Annotations/AnnotationReader.php(338): Doctrine\Common\Annotations\AnnotationReader->collectParsingMetadata()
+#8 /Users/akihito/git/Ray.Dyii/demo/vendor/doctrine/annotations/lib/Doctrine/Common/Annotations/AnnotationReader.php(218): Doctrine\Common\Annotations\AnnotationReader->getClassImports()
+#9 /Users/akihito/git/Ray.Dyii/demo/vendor/doctrine/annotations/lib/Doctrine/Common/Annotations/AnnotationReader.php(230): Doctrine\Common\Annotations\AnnotationReader->getClassAnnotations()
+#10 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/AnnotatedClassMethods.php(86): Doctrine\Common\Annotations\AnnotationReader->getClassAnnotation()
+#11 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/AnnotatedClassMethods.php(71): Ray\Di\AnnotatedClassMethods->getQualifierKeyVarString()
+#12 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/AnnotatedClassMethods.php(52): Ray\Di\AnnotatedClassMethods->getNamedKeyVarString()
+#13 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/AnnotatedClass.php(41): Ray\Di\AnnotatedClassMethods->getSetterMethod()
+#14 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/DependencyFactory.php(17): Ray\Di\AnnotatedClass->getNewInstance()
+#15 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/Untarget.php(29): Ray\Di\DependencyFactory->newAnnotatedDependency()
+#16 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/Bind.php(62): Ray\Di\Untarget->__invoke()
+#17 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/AbstractModule.php(124): Ray\Di\Bind->__destruct()
+#18 /Users/akihito/git/Ray.Dyii/demo/src/Module/AppModule.php(11): Ray\Dyii\Module\AppModule->bind()
+#19 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/AbstractModule.php(134): Ray\Dyii\Module\AppModule->configure()
+#20 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/AbstractModule.php(32): Ray\Dyii\Module\AppModule->activate()
+#21 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/dyii/yii_ray.php(47): Ray\Dyii\Module\AppModule->__construct()
+#22 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/dyii/src/RayCWebApplication.php(75): getInjector()
+#23 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/dyii/src/RayCWebApplication.php(61): Ray\Dyii\RayCWebApplication->newInstance()
+#24 /Users/akihito/git/Ray.Dyii/demo/vendor/yiisoft/yii/framework/web/CWebApplication.php(276): Ray\Dyii\RayCWebApplication->createController()
+#25 /Users/akihito/git/Ray.Dyii/demo/vendor/yiisoft/yii/framework/web/CWebApplication.php(141): Ray\Dyii\RayCWebApplication->runController()
+#26 /Users/akihito/git/Ray.Dyii/demo/vendor/yiisoft/yii/framework/base/CApplication.php(185): Ray\Dyii\RayCWebApplication->processRequest()
+#27 /Users/akihito/git/Ray.Dyii/demo/public/index.php(11): Ray\Dyii\RayCWebApplication->run()
+REQUEST_URI=/
+2019/07/27 08:17:26 [error] [exception.Ray\Di\Exception\NotFound] Ray\Di\Exception\NotFound: Ray\Dyii\Module\FooInterface in /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/BindValidator.php:16
+Stack trace:
+#0 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/Bind.php(56): Ray\Di\BindValidator->constructor('Ray\\Dyii\\Module...')
+#1 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/AbstractModule.php(124): Ray\Di\Bind->__construct(Object(Ray\Di\Container), 'Ray\\Dyii\\Module...')
+#2 /Users/akihito/git/Ray.Dyii/demo/src/Module/AppModule.php(12): Ray\Di\AbstractModule->bind('Ray\\Dyii\\Module...')
+#3 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/AbstractModule.php(134): Ray\Dyii\Module\AppModule->configure()
+#4 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/AbstractModule.php(32): Ray\Di\AbstractModule->activate()
+#5 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/dyii/yii_ray.php(47): Ray\Di\AbstractModule->__construct()
+#6 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/dyii/src/RayCWebApplication.php(75): Yii::getInjector()
+#7 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/dyii/src/RayCWebApplication.php(61): Ray\Dyii\RayCWebApplication->newInstance('SiteController', 'site', NULL)
+#8 /Users/akihito/git/Ray.Dyii/demo/vendor/yiisoft/yii/framework/web/CWebApplication.php(276): Ray\Dyii\RayCWebApplication->createController('')
+#9 /Users/akihito/git/Ray.Dyii/demo/vendor/yiisoft/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('')
+#10 /Users/akihito/git/Ray.Dyii/demo/vendor/yiisoft/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#11 /Users/akihito/git/Ray.Dyii/demo/public/index.php(10): CApplication->run()
+#12 {main}
+REQUEST_URI=/
+---
+2019/07/27 08:17:54 [error] [exception.Ray\Di\Exception\NotFound] Ray\Di\Exception\NotFound: Ray\Dyii\Module\FooInterface in /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/BindValidator.php:16
+Stack trace:
+#0 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/Bind.php(56): Ray\Di\BindValidator->constructor('Ray\\Dyii\\Module...')
+#1 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/AbstractModule.php(124): Ray\Di\Bind->__construct(Object(Ray\Di\Container), 'Ray\\Dyii\\Module...')
+#2 /Users/akihito/git/Ray.Dyii/demo/src/Module/AppModule.php(12): Ray\Di\AbstractModule->bind('Ray\\Dyii\\Module...')
+#3 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/AbstractModule.php(134): Ray\Dyii\Module\AppModule->configure()
+#4 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/AbstractModule.php(32): Ray\Di\AbstractModule->activate()
+#5 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/dyii/yii_ray.php(47): Ray\Di\AbstractModule->__construct()
+#6 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/dyii/src/RayCWebApplication.php(75): Yii::getInjector()
+#7 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/dyii/src/RayCWebApplication.php(61): Ray\Dyii\RayCWebApplication->newInstance('SiteController', 'site', NULL)
+#8 /Users/akihito/git/Ray.Dyii/demo/vendor/yiisoft/yii/framework/web/CWebApplication.php(276): Ray\Dyii\RayCWebApplication->createController('')
+#9 /Users/akihito/git/Ray.Dyii/demo/vendor/yiisoft/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('')
+#10 /Users/akihito/git/Ray.Dyii/demo/vendor/yiisoft/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#11 /Users/akihito/git/Ray.Dyii/demo/public/index.php(12): CApplication->run()
+#12 {main}
+REQUEST_URI=/
+---
+2019/07/27 08:18:08 [error] [exception.Ray\Di\Exception\NotFound] Ray\Di\Exception\NotFound: Ray\Dyii\Module\FooInterface in /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/BindValidator.php:16
+Stack trace:
+#0 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/Bind.php(56): Ray\Di\BindValidator->constructor('Ray\\Dyii\\Module...')
+#1 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/AbstractModule.php(124): Ray\Di\Bind->__construct(Object(Ray\Di\Container), 'Ray\\Dyii\\Module...')
+#2 /Users/akihito/git/Ray.Dyii/demo/src/Module/AppModule.php(12): Ray\Di\AbstractModule->bind('Ray\\Dyii\\Module...')
+#3 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/AbstractModule.php(134): Ray\Dyii\Module\AppModule->configure()
+#4 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/AbstractModule.php(32): Ray\Di\AbstractModule->activate()
+#5 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/dyii/yii_ray.php(47): Ray\Di\AbstractModule->__construct()
+#6 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/dyii/src/RayCWebApplication.php(75): Yii::getInjector()
+#7 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/dyii/src/RayCWebApplication.php(61): Ray\Dyii\RayCWebApplication->newInstance('SiteController', 'site', NULL)
+#8 /Users/akihito/git/Ray.Dyii/demo/vendor/yiisoft/yii/framework/web/CWebApplication.php(276): Ray\Dyii\RayCWebApplication->createController('')
+#9 /Users/akihito/git/Ray.Dyii/demo/vendor/yiisoft/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('')
+#10 /Users/akihito/git/Ray.Dyii/demo/vendor/yiisoft/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#11 /Users/akihito/git/Ray.Dyii/demo/public/index.php(11): CApplication->run()
+#12 {main}
+REQUEST_URI=/
+---
+2019/07/27 08:18:09 [error] [exception.Ray\Di\Exception\NotFound] Ray\Di\Exception\NotFound: Ray\Dyii\Module\FooInterface in /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/BindValidator.php:16
+Stack trace:
+#0 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/Bind.php(56): Ray\Di\BindValidator->constructor('Ray\\Dyii\\Module...')
+#1 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/AbstractModule.php(124): Ray\Di\Bind->__construct(Object(Ray\Di\Container), 'Ray\\Dyii\\Module...')
+#2 /Users/akihito/git/Ray.Dyii/demo/src/Module/AppModule.php(12): Ray\Di\AbstractModule->bind('Ray\\Dyii\\Module...')
+#3 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/AbstractModule.php(134): Ray\Dyii\Module\AppModule->configure()
+#4 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/AbstractModule.php(32): Ray\Di\AbstractModule->activate()
+#5 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/dyii/yii_ray.php(47): Ray\Di\AbstractModule->__construct()
+#6 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/dyii/src/RayCWebApplication.php(75): Yii::getInjector()
+#7 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/dyii/src/RayCWebApplication.php(61): Ray\Dyii\RayCWebApplication->newInstance('SiteController', 'site', NULL)
+#8 /Users/akihito/git/Ray.Dyii/demo/vendor/yiisoft/yii/framework/web/CWebApplication.php(276): Ray\Dyii\RayCWebApplication->createController('')
+#9 /Users/akihito/git/Ray.Dyii/demo/vendor/yiisoft/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('')
+#10 /Users/akihito/git/Ray.Dyii/demo/vendor/yiisoft/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#11 /Users/akihito/git/Ray.Dyii/demo/public/index.php(11): CApplication->run()
+#12 {main}
+REQUEST_URI=/
+---
+2019/07/27 08:18:09 [error] [exception.Ray\Di\Exception\NotFound] Ray\Di\Exception\NotFound: Ray\Dyii\Module\FooInterface in /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/BindValidator.php:16
+Stack trace:
+#0 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/Bind.php(56): Ray\Di\BindValidator->constructor('Ray\\Dyii\\Module...')
+#1 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/AbstractModule.php(124): Ray\Di\Bind->__construct(Object(Ray\Di\Container), 'Ray\\Dyii\\Module...')
+#2 /Users/akihito/git/Ray.Dyii/demo/src/Module/AppModule.php(12): Ray\Di\AbstractModule->bind('Ray\\Dyii\\Module...')
+#3 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/AbstractModule.php(134): Ray\Dyii\Module\AppModule->configure()
+#4 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/AbstractModule.php(32): Ray\Di\AbstractModule->activate()
+#5 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/dyii/yii_ray.php(47): Ray\Di\AbstractModule->__construct()
+#6 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/dyii/src/RayCWebApplication.php(75): Yii::getInjector()
+#7 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/dyii/src/RayCWebApplication.php(61): Ray\Dyii\RayCWebApplication->newInstance('SiteController', 'site', NULL)
+#8 /Users/akihito/git/Ray.Dyii/demo/vendor/yiisoft/yii/framework/web/CWebApplication.php(276): Ray\Dyii\RayCWebApplication->createController('')
+#9 /Users/akihito/git/Ray.Dyii/demo/vendor/yiisoft/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('')
+#10 /Users/akihito/git/Ray.Dyii/demo/vendor/yiisoft/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#11 /Users/akihito/git/Ray.Dyii/demo/public/index.php(11): CApplication->run()
+#12 {main}
+REQUEST_URI=/
+---
+2019/07/27 08:18:33 [error] [exception.Ray\Di\Exception\Unbound] exception 'Ray\Di\Exception\Unbound' with message 'Ray\Dyii\FooInterface-'
+- dependency 'Ray\Dyii\FooInterface' with name '' used in /Users/akihito/git/Ray.Dyii/demo/public/protected/controllers/SiteController.php:20 ($foo)
+
+#0 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/Container.php(79): Ray\Di\Container->unbound('Ray\\Dyii\\FooInt...')
+#1 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/Arguments.php(49): Ray\Di\Container->getDependency('Ray\\Dyii\\FooInt...')
+#2 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/Arguments.php(36): Ray\Di\Arguments->getParameter(Object(Ray\Di\Container), Object(Ray\Di\Argument))
+#3 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/SetterMethod.php(44): Ray\Di\Arguments->inject(Object(Ray\Di\Container))
+#4 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/SetterMethods.php(29): Ray\Di\SetterMethod->__invoke(Object(SiteController), Object(Ray\Di\Container))
+#5 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/NewInstance.php(85): Ray\Di\SetterMethods->__invoke(Object(SiteController), Object(Ray\Di\Container))
+#6 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/Dependency.php(102): Ray\Di\NewInstance->newInstanceArgs(Object(Ray\Di\Container), Array)
+#7 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/Container.php(68): Ray\Di\Dependency->injectWithArgs(Object(Ray\Di\Container), Array)
+#8 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/di/src/Injector.php(72): Ray\Di\Container->getInstanceWithArgs('SiteController', '', Array)
+#9 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/dyii/src/RayCWebApplication.php(75): Ray\Di\Injector->getInstanceWithArgs('SiteController', '', Array)
+#10 /Users/akihito/git/Ray.Dyii/demo/vendor/ray/dyii/src/RayCWebApplication.php(61): Ray\Dyii\RayCWebApplication->newInstance('SiteController', 'site', NULL)
+#11 /Users/akihito/git/Ray.Dyii/demo/vendor/yiisoft/yii/framework/web/CWebApplication.php(276): Ray\Dyii\RayCWebApplication->createController('')
+#12 /Users/akihito/git/Ray.Dyii/demo/vendor/yiisoft/yii/framework/web/CWebApplication.php(141): CWebApplication->runController('')
+#13 /Users/akihito/git/Ray.Dyii/demo/vendor/yiisoft/yii/framework/base/CApplication.php(185): CWebApplication->processRequest()
+#14 /Users/akihito/git/Ray.Dyii/demo/public/index.php(11): CApplication->run()
+#15 {main}
+REQUEST_URI=/
+---
