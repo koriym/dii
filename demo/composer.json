@@ -2,7 +2,7 @@
   "name": "vendor/hello",
   "require": {
     "php": ">=7.1.0",
-    "ray/dyii": "dev-master"
+    "koriym/dyii": "dev-master"
   },
   "autoload": {
     "psr-4": {
