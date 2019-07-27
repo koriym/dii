@@ -4,7 +4,8 @@
   "require": {
     "php": ">=7.1.0",
     "yiisoft/yii": "1.1.*",
-    "ray/di": "dev-with-args"
+    "ray/di": "dev-with-args",
+    "ray/aop": "^2.8.5"
   },
   "autoload": {
     "psr-4": {
