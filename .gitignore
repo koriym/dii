@@ -2,3 +2,4 @@
 vendor/
 composer.lock
 .php_cs.cache
+demo/public/protected/runtime/application.log

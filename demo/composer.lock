@@ -140,18 +140,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/koriym/Ray.Dyii.git",
-                "reference": "8d261ad92bc98c7007e04170db54cca3e3a78efe"
+                "reference": "81c87db852b3cdadd6b257554829e04e337276a8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/koriym/Ray.Dyii/zipball/8d261ad92bc98c7007e04170db54cca3e3a78efe",
-                "reference": "8d261ad92bc98c7007e04170db54cca3e3a78efe",
+                "url": "https://api.github.com/repos/koriym/Ray.Dyii/zipball/81c87db852b3cdadd6b257554829e04e337276a8",
+                "reference": "81c87db852b3cdadd6b257554829e04e337276a8",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.1.0",
-                "ray/aop": "^2.8.5",
-                "ray/di": "dev-with-args",
+                "ray/di": "2.x-dev",
                 "yiisoft/yii": "1.1.*"
             },
             "require-dev": {
@@ -199,7 +198,7 @@
                 "source": "https://github.com/koriym/Ray.Dyii/tree/master",
                 "issues": "https://github.com/koriym/Ray.Dyii/issues"
             },
-            "time": "2019-07-28T03:17:28+00:00"
+            "time": "2019-07-28T07:16:50+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -348,16 +347,16 @@
         },
         {
             "name": "ray/di",
-            "version": "dev-with-args",
+            "version": "2.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ray-di/Ray.Di.git",
-                "reference": "cce67f0408dd855dc5e17b85981e20357c39586c"
+                "reference": "86395f56399eba13edf4b9d2700a3ec9943f73c6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ray-di/Ray.Di/zipball/cce67f0408dd855dc5e17b85981e20357c39586c",
-                "reference": "cce67f0408dd855dc5e17b85981e20357c39586c",
+                "url": "https://api.github.com/repos/ray-di/Ray.Di/zipball/86395f56399eba13edf4b9d2700a3ec9943f73c6",
+                "reference": "86395f56399eba13edf4b9d2700a3ec9943f73c6",
                 "shasum": ""
             },
             "require": {
@@ -391,7 +390,7 @@
                 "di",
                 "guice"
             ],
-            "time": "2019-07-19T19:15:47+00:00"
+            "time": "2019-07-28T06:56:25+00:00"
         },
         {
             "name": "yiisoft/yii",
