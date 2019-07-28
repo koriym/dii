@@ -6,6 +6,9 @@ class RayCWebApplication extends \CWebApplication
 {
     /**
      * {@inheritdoc}
+     *
+     * @psalm-suppress UndefinedVariable
+     * @psalm-suppress ArgumentTypeCoercion
      */
     public function createController($route, $owner = null)
     {
