@@ -13,7 +13,10 @@
       }
   },
   "autoload-dev": {
-      "files": ["yii_ray.php"],
+    "psr-4": {
+      "Ray\\Dyii\\Module\\": "demo/src/Module"
+    },
+    "files": ["yii_ray.php"],
       "classmap": [
         "vendor/yiisoft/yii/framework/base/",
         "vendor/yiisoft/yii/framework/web/"
