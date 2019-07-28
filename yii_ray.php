@@ -19,15 +19,15 @@ class Yii extends YiiBase
     {
         $args = func_get_args();
         [$type, $config] = self::extract($config);
-        if(!class_exists($type,false)) {
-            $type = Yii::import( $type, true );
+        if (! class_exists($type, false)) {
+            $type = self::import($type, true);
         }
         unset($args[0]);
 
-        $isInjectable = in_array(Injectable::class, class_implements($type));
+        $isInjectable = in_array(Injectable::class, class_implements($type), true);
         $object = $isInjectable ? (new Injector(new AppModule()))->getInstanceWithArgs($type, '', $args) : (new \ReflectionClass($type))->newInstanceArgs($args);
 
-        foreach($config as $key=>$value) {
+        foreach ($config as $key => $value) {
             $object->$key = $value;
         }
 
@@ -44,77 +44,68 @@ class Yii extends YiiBase
 
     public static function getInjector() : Injector
     {
-        return (new Injector(new AppModule));
+        return new Injector(new AppModule);
     }
 
-    public static function autoload($className,$classMapOnly=false)
+    public static function autoload($className, $classMapOnly = false)
     {
-        foreach (self::$autoloaderFilters as $filter)
-        {
+        foreach (self::$autoloaderFilters as $filter) {
             if (is_array($filter)
                 && isset($filter[0]) && isset($filter[1])
                 && is_string($filter[0]) && is_string($filter[1])
-                && true === call_user_func(array($filter[0], $filter[1]), $className)
-            )
-            {
+                && true === call_user_func([$filter[0], $filter[1]], $className)
+            ) {
                 return true;
-            }
-            elseif (is_string($filter)
+            } elseif (is_string($filter)
                 && true === call_user_func($filter, $className)
-            )
-            {
+            ) {
                 return true;
-            }
-            elseif (is_callable($filter)
+            } elseif (is_callable($filter)
                 && true === $filter($className)
-            )
-            {
+            ) {
                 return true;
             }
         }
 
         // use include so that the error PHP file may appear
-        if(isset(self::$classMap[$className]))
-            include(self::$classMap[$className]);
-        elseif(isset(self::$_coreClasses[$className]))
-            include(YII_PATH.self::$_coreClasses[$className]);
-        elseif($classMapOnly)
+        if (isset(self::$classMap[$className])) {
+            include self::$classMap[$className];
+        } elseif (isset(self::$_coreClasses[$className])) {
+            include YII_PATH . self::$_coreClasses[$className];
+        } elseif ($classMapOnly) {
             return false;
-        else
-        {
+        } else {
             // include class file relying on include_path
-            if(strpos($className,'\\')===false)  // class without namespace
-            {
-                if(self::$enableIncludePath===false)
-                {
-                    foreach(self::$_includePaths as $path)
-                    {
-                        $classFile=$path.DIRECTORY_SEPARATOR.$className.'.php';
-                        if(is_file($classFile))
-                        {
-                            include($classFile);
-                            if(YII_DEBUG && basename(realpath($classFile))!==$className.'.php')
-                                throw new CException(Yii::t('yii','Class name "{class}" does not match class file "{file}".', array(
-                                    '{class}'=>$className,
-                                    '{file}'=>$classFile,
-                                )));
+            if (strpos($className, '\\') === false) {  // class without namespace
+                if (self::$enableIncludePath === false) {
+                    foreach (self::$_includePaths as $path) {
+                        $classFile = $path . DIRECTORY_SEPARATOR . $className . '.php';
+                        if (is_file($classFile)) {
+                            include $classFile;
+                            if (YII_DEBUG && basename(realpath($classFile)) !== $className . '.php') {
+                                throw new CException(self::t('yii', 'Class name "{class}" does not match class file "{file}".', [
+                                    '{class}' => $className,
+                                    '{file}' => $classFile,
+                                ]));
+                            }
                             break;
                         }
                     }
+                } else {
+                    include $className . '.php';
                 }
-                else
-                    include($className.'.php');
-            }
-            else  // class name with namespace in PHP 5.3
-            {
-                $namespace=str_replace('\\','.',ltrim($className,'\\'));
-                if(($path=self::getPathOfAlias($namespace))!==false && is_file($path.'.php'))
-                    include($path.'.php');
-                else
+            } else {  // class name with namespace in PHP 5.3
+                $namespace = str_replace('\\', '.', ltrim($className, '\\'));
+                if (($path = self::getPathOfAlias($namespace)) !== false && is_file($path . '.php')) {
+                    include $path . '.php';
+                } else {
                     return false;
+                }
             }
-            return class_exists($className,false) || interface_exists($className,false);
+
+            return class_exists($className, false) || interface_exists($className, false);
         }
+
         return true;
     }
 
@@ -123,13 +114,13 @@ class Yii extends YiiBase
      *
      * @param string|array $config
      *
-     * @return [$type, $config]
      * @throws CException
+     *
+     * @return [$type, $config]
      */
     private static function extract($config) : array
     {
         if (is_string($config)) {
-
             return [$config, []];
         }
         if (isset($config['class'])) {
@@ -139,6 +130,6 @@ class Yii extends YiiBase
             return [$type, $config];
         }
 
-        throw new CException(Yii::t( 'yii', 'Object configuration must be an array containing a "class" element.'));
+        throw new CException(self::t('yii', 'Object configuration must be an array containing a "class" element.'));
     }
 }
