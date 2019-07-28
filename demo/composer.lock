@@ -140,12 +140,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/koriym/Ray.Dyii.git",
-                "reference": "46fdfbd9d7c4ba7a8cb4616f55601c41c1f950b5"
+                "reference": "4353ea5145d24de0304dd26e5b455a47de11a5ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/koriym/Ray.Dyii/zipball/46fdfbd9d7c4ba7a8cb4616f55601c41c1f950b5",
-                "reference": "46fdfbd9d7c4ba7a8cb4616f55601c41c1f950b5",
+                "url": "https://api.github.com/repos/koriym/Ray.Dyii/zipball/4353ea5145d24de0304dd26e5b455a47de11a5ac",
+                "reference": "4353ea5145d24de0304dd26e5b455a47de11a5ac",
                 "shasum": ""
             },
             "require": {
@@ -154,11 +154,39 @@
                 "ray/di": "dev-with-args",
                 "yiisoft/yii": "1.1.*"
             },
+            "require-dev": {
+                "vimeo/psalm": "^3.4"
+            },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Ray\\Dyii\\": "src"
+                    "Ray\\Dyii\\": [
+                        "src/"
+                    ]
                 }
+            },
+            "autoload-dev": {
+                "files": [
+                    "yii_ray.php"
+                ],
+                "classmap": [
+                    "vendor/yiisoft/yii/framework/base/",
+                    "vendor/yiisoft/yii/framework/web/"
+                ]
+            },
+            "scripts": {
+                "tests": [
+                    "psalm --show-info=false",
+                    "@cs"
+                ],
+                "cs": [
+                    "php-cs-fixer fix -v --dry-run",
+                    "phpcs --standard=./phpcs.xml src"
+                ],
+                "cs-fix": [
+                    "php-cs-fixer fix -v",
+                    "phpcbf src"
+                ]
             },
             "license": [
                 "MIT"
@@ -168,7 +196,7 @@
                 "source": "https://github.com/koriym/Ray.Dyii/tree/master",
                 "issues": "https://github.com/koriym/Ray.Dyii/issues"
             },
-            "time": "2019-07-27T07:27:37+00:00"
+            "time": "2019-07-28T02:47:00+00:00"
         },
         {
             "name": "nikic/php-parser",
