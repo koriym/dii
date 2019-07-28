@@ -2,15 +2,30 @@
   "name": "koriym/dyii",
   "description": "Dependency Injection Plugin for Yii 1",
   "require": {
-    "php": ">=7.1.0",
-    "yiisoft/yii": "1.1.*",
-    "ray/di": "dev-with-args",
-    "ray/aop": "^2.8.5"
+      "php": ">=7.1.0",
+      "yiisoft/yii": "1.1.*",
+      "ray/di": "dev-with-args",
+      "ray/aop": "^2.8.5"
   },
   "autoload": {
-    "psr-4": {
-      "Ray\\Dyii\\": "src"
-    }
+      "psr-4": {
+          "Ray\\Dyii\\": ["src/"]
+      }
   },
-  "license": "MIT"
+  "autoload-dev": {
+      "files": ["yii_ray.php"],
+      "classmap": [
+        "vendor/yiisoft/yii/framework/base/",
+        "vendor/yiisoft/yii/framework/web/"
+      ]
+  },
+  "license": "MIT",
+  "scripts" :{
+    "tests": ["psalm --show-info=false", "@cs"],
+    "cs": ["php-cs-fixer fix -v --dry-run", "phpcs --standard=./phpcs.xml src"],
+    "cs-fix": ["php-cs-fixer fix -v", "phpcbf src"]
+  },
+  "require-dev": {
+    "vimeo/psalm": "^3.4"
+  }
 }
