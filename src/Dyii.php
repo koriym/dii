@@ -3,6 +3,7 @@
 namespace Ray\Dyii;
 
 use CException;
+use Ray\Di\Grapher;
 use Ray\Di\Injector;
 use Ray\Dyii\Module\AppModule;
 use YiiBase;
@@ -27,7 +28,7 @@ class Dyii extends YiiBase
         unset($args[0]);
 
         $isInjectable = in_array(Injectable::class, class_implements($type), true);
-        $object = $isInjectable ? \Yii::getInjector()->getInstanceWithArgs($type, '', $args) : (new \ReflectionClass($type))->newInstanceArgs($args);
+        $object = $isInjectable ? \Yii::getGrapher()->newInstanceArgs($type, $args) : (new \ReflectionClass($type))->newInstanceArgs($args);
 
         foreach ($config as $key => $value) {
             $object->$key = $value;
@@ -44,9 +45,11 @@ class Dyii extends YiiBase
         return self::createApplication(RayCWebApplication::class, $config);
     }
 
-    public static function getInjector() : Injector
+    public static function getGrapher() : Grapher
     {
-        return new Injector(new AppModule);
+        $tmpDir = dirname((new \ReflectionClass(AppModule::class))->getFileName()) . '/tmp';
+
+        return new Grapher(new AppModule, $tmpDir);
     }
 
     /**
