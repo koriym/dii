@@ -8,7 +8,7 @@ use Ray\Dyii\Module\AppModule;
 use YiiBase;
 
 /**
- * Ray.Di powered Yii base class
+ * Ray.Di powered Yii class
  */
 class Dyii extends YiiBase
 {
