@@ -1,7 +1,7 @@
 <?php
 
-use Ray\Dyii\Injectable;
 use Ray\Di\Di\Inject;
+use Ray\Dyii\Injectable;
 use Vendor\Hello\FooInterface;
 
 /**
