@@ -21,11 +21,11 @@
   },
   "license": "MIT",
   "scripts" :{
-    "tests": ["psalm --show-info=false", "@cs"],
-    "cs": ["php-cs-fixer fix -v --dry-run", "phpcs --standard=./phpcs.xml src"],
-    "cs-fix": ["php-cs-fixer fix -v", "phpcbf src"]
+      "tests": ["psalm --show-info=false", "@cs"],
+      "cs": ["php-cs-fixer fix -v --dry-run", "phpcs --standard=./phpcs.xml src"],
+      "cs-fix": ["php-cs-fixer fix -v", "phpcbf src"]
   },
   "require-dev": {
-    "vimeo/psalm": "^3.4"
+      "vimeo/psalm": "^3.4"
   }
 }
