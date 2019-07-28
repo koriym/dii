@@ -25,7 +25,7 @@ class Yii extends YiiBase
         unset($args[0]);
 
         $isInjectable = in_array(Injectable::class, class_implements($type), true);
-        $object = $isInjectable ? (new Injector(new AppModule()))->getInstanceWithArgs($type, '', $args) : (new \ReflectionClass($type))->newInstanceArgs($args);
+        $object = $isInjectable ?  \Yii::getInjector()->getInstanceWithArgs($type, '', $args) : (new \ReflectionClass($type))->newInstanceArgs($args);
 
         foreach ($config as $key => $value) {
             $object->$key = $value;
