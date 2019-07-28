@@ -140,12 +140,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/koriym/Ray.Dyii.git",
-                "reference": "4353ea5145d24de0304dd26e5b455a47de11a5ac"
+                "reference": "8d261ad92bc98c7007e04170db54cca3e3a78efe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/koriym/Ray.Dyii/zipball/4353ea5145d24de0304dd26e5b455a47de11a5ac",
-                "reference": "4353ea5145d24de0304dd26e5b455a47de11a5ac",
+                "url": "https://api.github.com/repos/koriym/Ray.Dyii/zipball/8d261ad92bc98c7007e04170db54cca3e3a78efe",
+                "reference": "8d261ad92bc98c7007e04170db54cca3e3a78efe",
                 "shasum": ""
             },
             "require": {
@@ -166,6 +166,9 @@
                 }
             },
             "autoload-dev": {
+                "psr-4": {
+                    "Ray\\Dyii\\Module\\": "demo/src/Module"
+                },
                 "files": [
                     "yii_ray.php"
                 ],
@@ -196,7 +199,7 @@
                 "source": "https://github.com/koriym/Ray.Dyii/tree/master",
                 "issues": "https://github.com/koriym/Ray.Dyii/issues"
             },
-            "time": "2019-07-28T02:47:00+00:00"
+            "time": "2019-07-28T03:17:28+00:00"
         },
         {
             "name": "nikic/php-parser",
