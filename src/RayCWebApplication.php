@@ -73,10 +73,10 @@ class RayCWebApplication extends \CWebApplication
         }
     }
 
-    private function newInstance(string $className, $argument)
+    private function newInstance(string $className, $controllerId, $owner)
     {
         $isInjectable = in_array(Injectable::class, class_implements($className), true);
-        $controller = $isInjectable ? \Yii::getInjector()->getInstanceWithArgs($className, '', [$argument]) : new $className($argument);
+        $controller = $isInjectable ? \Yii::getInjector()->getInstanceWithArgs($className, '', [$controllerId, $owner]) : new $className($controllerId, $owner);
 
         return $controller;
     }
