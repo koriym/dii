@@ -1,8 +1,8 @@
 <?php
 
-namespace Ray\Dyii;
+namespace Koriym\Dii;
 
-class RayCWebApplication extends \CWebApplication
+class DiiWebApplication extends \CWebApplication
 {
     /**
      * {@inheritdoc}

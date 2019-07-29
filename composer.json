@@ -4,22 +4,21 @@
   "require": {
       "php": ">=7.1.0",
       "yiisoft/yii": "1.1.*",
-      "ray/di": "2.x-dev"
+      "ray/di": "^2.0"
   },
   "autoload": {
       "psr-4": {
-          "Ray\\Dyii\\": ["src/"]
+          "Koriym\\Dii\\": ["src/"]
       }
   },
   "autoload-dev": {
-    "psr-4": {
-      "Ray\\Dyii\\Module\\": "demo/src/Module"
+      "psr-4": {
+          "Ray\\Dyii\\Module\\": "demo/src/Module"
     },
-    "files": ["yii_ray.php"],
-      "classmap": [
-        "vendor/yiisoft/yii/framework/base/",
-        "vendor/yiisoft/yii/framework/web/"
-      ]
+    "classmap": [
+          "vendor/yiisoft/yii/framework/base/",
+          "vendor/yiisoft/yii/framework/web/"
+    ]
   },
   "license": "MIT",
   "scripts" :{

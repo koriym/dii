@@ -1,4 +1,4 @@
-# Ray.Dyii
+# Dii
 
 ## Dependency Injection Container Plugin for Yii 1
 
@@ -17,7 +17,6 @@ Use composer autoloader instead of Yii autoloader.
 ```php
 // composer autoloader
 require dirname(__DIR__) . '/vendor/autoload.php';
-require dirname(__DIR__) . '/vendor/ray/dyii/yii_ray.php';
 spl_autoload_unregister([YiiBase::class, 'autoload']);
 // run the application
 Yii::createWebApplication()->run();
@@ -30,7 +29,7 @@ Modules are classes that describe how instances and their dependencies should be
 ```php
 <?php
 
-namespace Ray\Dyii\Module;
+namespace Koriym\Dii\Module;
 
 use Ray\Di\AbstractModule;
 use Vendor\Hello\BarInterceptor;
@@ -52,7 +51,7 @@ class AppModule extends AbstractModule
 }
 ```
 
-Note: Module name is fixed as `Ray\Dyii\Module\AppModule`.
+Note: Module name is fixed as `Koriym\Dii\Module\AppModule`.
 
 ## Injecting Dependencies in Controllers
 
@@ -61,7 +60,7 @@ Ray.Di is able to inject instances to your controllers based on annotations:
 ```php
 <?php
 
-use Ray\Dyii\Injectable;
+use Koriym\Dii\Injectable;
 use Ray\Di\Di\Inject;
 use Vendor\Hello\FooInterface;
 

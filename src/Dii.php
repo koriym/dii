@@ -1,17 +1,16 @@
 <?php
 
-namespace Ray\Dyii;
+namespace Koriym\Dii;
 
 use CException;
 use Ray\Di\Grapher;
-use Ray\Di\Injector;
-use Ray\Dyii\Module\AppModule;
+use Koriym\Dii\Module\AppModule;
 use YiiBase;
 
 /**
  * Ray.Di powered Yii class
  */
-class Dyii extends YiiBase
+class Dii extends YiiBase
 {
     /**
      * {@inheritdoc}
@@ -42,7 +41,7 @@ class Dyii extends YiiBase
      */
     public static function createWebApplication($config = null)
     {
-        return self::createApplication(RayCWebApplication::class, $config);
+        return self::createApplication(DiiWebApplication::class, $config);
     }
 
     public static function getGrapher() : Grapher
