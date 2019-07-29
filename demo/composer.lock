@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b9262aa95242a577101b9c0dba6556d0",
+    "content-hash": "0c31f2f8cab1f7619a917f37b6f44594",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -135,17 +135,17 @@
             "time": "2019-06-08T11:03:04+00:00"
         },
         {
-            "name": "koriym/dyii",
+            "name": "koriym/dii",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/koriym/Ray.Dyii.git",
-                "reference": "d2ac220b551b370067982ce903beb78331734789"
+                "url": "https://github.com/koriym/dii.git",
+                "reference": "ad2c0857b308a71c0bdf739b970684d35c8a3b8c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/koriym/Ray.Dyii/zipball/d2ac220b551b370067982ce903beb78331734789",
-                "reference": "d2ac220b551b370067982ce903beb78331734789",
+                "url": "https://api.github.com/repos/koriym/dii/zipball/ad2c0857b308a71c0bdf739b970684d35c8a3b8c",
+                "reference": "ad2c0857b308a71c0bdf739b970684d35c8a3b8c",
                 "shasum": ""
             },
             "require": {
@@ -192,10 +192,10 @@
             ],
             "description": "Dependency Injection Plugin for Yii 1",
             "support": {
-                "source": "https://github.com/koriym/Ray.Dyii/tree/master",
-                "issues": "https://github.com/koriym/Ray.Dyii/issues"
+                "source": "https://github.com/koriym/dii/tree/master",
+                "issues": "https://github.com/koriym/dii/issues"
             },
-            "time": "2019-07-29T02:50:25+00:00"
+            "time": "2019-07-29T03:05:09+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -494,7 +494,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "koriym/dyii": 20
+        "koriym/dii": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

@@ -23,7 +23,7 @@
         ],
         "files": [
             "vendor/yiisoft/yii/framework/YiiBase.php",
-            "vendor/koriym/dyii/yiidii.php"
+            "vendor/koriym/dii/yiidii.php"
         ]
     },
     "minimum-stability": "dev",
