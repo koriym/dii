@@ -1,6 +1,6 @@
 <?php
 
-namespace Ray\Dyii\Module;
+namespace Koriym\Dii\Module;
 
 use Ray\Di\AbstractModule;
 use Vendor\Hello\BarInterceptor;

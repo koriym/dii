@@ -3,7 +3,7 @@
 // include Yii bootstrap file
 require dirname(__DIR__) . '/vendor/autoload.php';
 //require dirname(__DIR__, 2) . '/vendor/autoload.php'; // for development
-require dirname(__DIR__) . '/vendor/koriym/dyii/yii_ray.php';
+require dirname(__DIR__) . '/vendor/koriym/dyii/yiidii.php';
 spl_autoload_unregister([YiiBase::class, 'autoload']);
 
 $config = __DIR__ . '/protected/config/main.php';
