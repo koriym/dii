@@ -1,17 +1,16 @@
 <?php
 
-namespace Ray\Dyii;
+namespace Koriym\Dii;
 
 use CException;
 use Ray\Di\Grapher;
-use Ray\Di\Injector;
-use Ray\Dyii\Module\AppModule;
+use Koriym\Dii\Module\AppModule;
 use YiiBase;
 
 /**
  * Ray.Di powered Yii class
  */
-class Dyii extends YiiBase
+class Dii extends YiiBase
 {
     /**
      * {@inheritdoc}
@@ -28,7 +27,7 @@ class Dyii extends YiiBase
         unset($args[0]);
 
         $isInjectable = in_array(Injectable::class, class_implements($type), true);
-        $object = $isInjectable ? \Yii::getGrapher()->newInstanceArgs($type, $args) : (new \ReflectionClass($type))->newInstanceArgs($args);
+        $object = $isInjectable ? Dii::getGrapher()->newInstanceArgs($type, $args) : (new \ReflectionClass($type))->newInstanceArgs($args);
 
         foreach ($config as $key => $value) {
             $object->$key = $value;
@@ -42,7 +41,7 @@ class Dyii extends YiiBase
      */
     public static function createWebApplication($config = null)
     {
-        return self::createApplication(RayCWebApplication::class, $config);
+        return self::createApplication(DiiWebApplication::class, $config);
     }
 
     public static function getGrapher() : Grapher

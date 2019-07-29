@@ -1,6 +1,6 @@
 <?php
 
-namespace Ray\Dyii;
+namespace Koriym\Dii;
 
 /**
  * Injectable marker
