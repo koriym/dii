@@ -1,5 +1,5 @@
 {
-  "name": "koriym/dyii",
+  "name": "koriym/dii",
   "description": "Dependency Injection Plugin for Yii 1",
   "require": {
       "php": ">=7.1.0",
