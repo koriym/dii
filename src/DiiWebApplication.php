@@ -9,6 +9,9 @@ class DiiWebApplication extends \CWebApplication
      *
      * @psalm-suppress UndefinedVariable
      * @psalm-suppress ArgumentTypeCoercion
+     *
+     * @throws \CException
+     * @throws \ReflectionException
      */
     public function createController($route, $owner = null)
     {
