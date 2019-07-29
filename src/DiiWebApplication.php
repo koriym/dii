@@ -33,7 +33,7 @@ class DiiWebApplication extends \CWebApplication
             if (! isset($basePath)) {  // first segment
                 if (isset($owner->controllerMap[$id])) {
                     return [
-                        \Yii::createComponent($owner->controllerMap[$id], $id, $owner === $this ? null : $owner),
+                        Dii::createComponent($owner->controllerMap[$id], $id, $owner === $this ? null : $owner),
                         $this->parseActionParams($route),
                     ];
                 }
@@ -76,7 +76,7 @@ class DiiWebApplication extends \CWebApplication
     private function newInstance(string $className, $controllerId, $owner)
     {
         $isInjectable = in_array(Injectable::class, class_implements($className), true);
-        $controller = $isInjectable ? \Yii::getGrapher()->newInstanceArgs($className, [$controllerId, $owner]) : new $className($controllerId, $owner);
+        $controller = $isInjectable ? Dii::getGrapher()->newInstanceArgs($className, [$controllerId, $owner]) : new $className($controllerId, $owner);
 
         return $controller;
     }
