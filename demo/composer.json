@@ -22,7 +22,8 @@
             "vendor/yiisoft/yii/framework/web"
         ],
         "files": [
-            "vendor/yiisoft/yii/framework/YiiBase.php"
+            "vendor/yiisoft/yii/framework/YiiBase.php",
+            "vendor/koriym/dyii/yiidii.php"
         ]
     },
     "minimum-stability": "dev",
