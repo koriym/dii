@@ -4,6 +4,18 @@ namespace Koriym\Dii;
 
 class DiiWebApplication extends \CWebApplication
 {
+    /** @var ControllerClassResolver */
+    private $controllerClassResolver;
+
+    /**
+     * @inheritDoc
+     */
+    public function __construct($config = null)
+    {
+        parent::__construct($config);
+        $this->controllerClassResolver = new ControllerClassResolver();
+    }
+
     /**
      * {@inheritdoc}
      *
@@ -61,37 +73,15 @@ class DiiWebApplication extends \CWebApplication
                     include_once $classFile;
                 }
 
-                if (class_exists($className, false) && is_subclass_of($className, \CController::class)) {
-                    $id[0] = strtolower($id[0]);
-                    return [
-                        $this->newInstance($className, $controllerID . $id, $owner === $this ? null : $owner),
-                        $this->parseActionParams($route),
-                    ];
+                $controllerClass = ($this->controllerClassResolver)($className, $controllerID, $id, $owner === $this ? null : $owner);
+                if ($controllerClass === null) {
+                    return null;
                 }
-
-                $controllerName = ucfirst($id) . 'Controller';
-
-                $namespacedClassName = 'application\\' . $controllerName;
-                if (class_exists($namespacedClassName, false) && is_subclass_of($namespacedClassName, \CController::class)) {
-                    $id[0] = strtolower($id[0]);
-                    return [
-                        $this->newInstance($namespacedClassName, $controllerID . $id, $owner === $this ? null : $owner),
-                        $this->parseActionParams($route),
-                    ];
-                }
-
-                return null;
+                return [$controllerClass, $this->parseActionParams($route)];
             }
             $controllerID .= $id;
             $basePath .= DIRECTORY_SEPARATOR . $id;
         }
-    }
-
-    private function newInstance(string $className, $controllerId, $owner)
-    {
-        $isInjectable = in_array(Injectable::class, class_implements($className), true);
-        $controller = $isInjectable ? Dii::getGrapher()->newInstanceArgs($className, [$controllerId, $owner]) : new $className($controllerId, $owner);
-
-        return $controller;
+        return null;
     }
 }
