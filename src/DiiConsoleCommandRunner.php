@@ -35,10 +35,12 @@ class DiiConsoleCommandRunner extends CConsoleCommandRunner
                     $className = Yii::import($command);
                 }
 
-                return Yii::createComponent(['class' => $className], $name, $this);
+                // This line is main difference from parent::createCommand.
+                // Object should be instantiated through `Dii::createComponent`.
+                return Dii::createComponent(['class' => $className], $name, $this);
             }
             // an array configuration
-            return Yii::createComponent($command, $name, $this);
+            return Dii::createComponent($command, $name, $this);
         } elseif ($name === 'help') {
             return new \CHelpCommand('help', $this);
         }
