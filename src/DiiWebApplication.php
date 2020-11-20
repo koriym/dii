@@ -66,6 +66,7 @@ class DiiWebApplication extends \CWebApplication
                 $namespacedClassName = 'application\\' . $controllerName;
                 if (class_exists($namespacedClassName, false) && is_subclass_of($namespacedClassName, \CController::class)) {
                     $id[0] = strtolower($id[0]);
+
                     return [
                         $this->newInstance($namespacedClassName, $controllerID . $id, $owner === $this ? null : $owner),
                         $this->parseActionParams($route),
@@ -74,6 +75,7 @@ class DiiWebApplication extends \CWebApplication
 
                 if (class_exists($controllerName, false) && is_subclass_of($controllerName, \CController::class)) {
                     $id[0] = strtolower($id[0]);
+
                     return [
                         $this->newInstance($controllerName, $controllerID . $id, $owner === $this ? null : $owner),
                         $this->parseActionParams($route),
