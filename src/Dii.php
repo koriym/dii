@@ -3,8 +3,8 @@
 namespace Koriym\Dii;
 
 use CException;
-use Ray\Di\Grapher;
 use Koriym\Dii\Module\AppModule;
+use Ray\Di\Grapher;
 use YiiBase;
 
 /**
@@ -27,7 +27,7 @@ class Dii extends YiiBase
         unset($args[0]);
 
         $isInjectable = in_array(Injectable::class, class_implements($type), true);
-        $object = $isInjectable ? Dii::getGrapher()->newInstanceArgs($type, $args) : (new \ReflectionClass($type))->newInstanceArgs($args);
+        $object = $isInjectable ? self::getGrapher()->newInstanceArgs($type, $args) : (new \ReflectionClass($type))->newInstanceArgs($args);
 
         foreach ($config as $key => $value) {
             $object->$key = $value;
