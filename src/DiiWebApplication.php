@@ -61,6 +61,14 @@ class DiiWebApplication extends \CWebApplication
                     include_once $classFile;
                 }
 
+                if (class_exists($className, false) && is_subclass_of($className, \CController::class)) {
+                    $id[0] = strtolower($id[0]);
+                    return [
+                        $this->newInstance($className, $controllerID . $id, $owner === $this ? null : $owner),
+                        $this->parseActionParams($route),
+                    ];
+                }
+
                 $controllerName = ucfirst($id) . 'Controller';
 
                 $namespacedClassName = 'application\\' . $controllerName;
