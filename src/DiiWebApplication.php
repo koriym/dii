@@ -80,14 +80,6 @@ class DiiWebApplication extends \CWebApplication
                     ];
                 }
 
-                if (class_exists($controllerName, false) && is_subclass_of($controllerName, \CController::class)) {
-                    $id[0] = strtolower($id[0]);
-                    return [
-                        $this->newInstance($controllerName, $controllerID . $id, $owner === $this ? null : $owner),
-                        $this->parseActionParams($route),
-                    ];
-                }
-
                 return null;
             }
             $controllerID .= $id;
