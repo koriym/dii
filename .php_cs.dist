@@ -119,5 +119,8 @@ return \PhpCsFixer\Config::create()
     ->setUsingCache(true)
     ->setFinder(
         PhpCsFixer\Finder::create()
+            ->exclude([
+                    'tmp/'
+                ])
             ->in(__DIR__)
     );
