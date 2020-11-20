@@ -7,9 +7,12 @@
     "autoload": {
         "psr-4": {
             "Vendor\\Hello\\": "src/App",
-            "Koriym\\Dii\\Module\\": "src/Module"
+            "Koriym\\Dii\\Module\\": "src/Module",
+            "Vendor\\App\\": "public/protected"
         },
         "classmap": [
+            "public/protected/controllers/",
+            "public/protected/commands/",
             "vendor/yiisoft/yii/framework/base",
             "vendor/yiisoft/yii/framework/caching",
             "vendor/yiisoft/yii/framework/collections",

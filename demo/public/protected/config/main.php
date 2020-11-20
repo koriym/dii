@@ -8,6 +8,7 @@
 return [
     // preloading 'log' component
     'preload' => ['log'],
+    'basePath' => dirname(__DIR__),
     // application components
     'components' => [
         'log' => [
@@ -24,4 +25,9 @@ return [
             ],
         ],
     ],
+    'commandMap' => [
+        'namespaced' => [
+            'class' => \Vendor\App\Command\NamespacedCommand::class
+        ]
+    ]
 ];
