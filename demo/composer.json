@@ -8,6 +8,7 @@
         "psr-4": {
             "Vendor\\Hello\\": "src/App",
             "Koriym\\Dii\\": "../src/",
+            "Koriym\\Dii\\Module\\": "src/Module",
             "Vendor\\App\\": "public/protected"
         },
         "classmap": [
@@ -25,6 +26,7 @@
             "../vendor/yiisoft/yii/framework/web"
         ],
         "files": [
+            "../vendor/autoload.php",
             "../vendor/yiisoft/yii/framework/YiiBase.php",
             "../yiidii.php"
         ]
