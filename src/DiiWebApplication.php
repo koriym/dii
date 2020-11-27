@@ -4,6 +4,9 @@ namespace Koriym\Dii;
 
 class DiiWebApplication extends \CWebApplication
 {
+    /** @var array  */
+    public $commandMap = [];
+
     /**
      * {@inheritdoc}
      *
