@@ -1,0 +1,6 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Start server" type="PhpBuiltInWebServerConfigurationType" factoryName="PHP Built-in Web Server" document_root="demo/public/" host="127.0.0.1" port="8080" router_script="demo/public/index.php" use_router_script="true">
+    <CommandLine parameters="-dzend_extension=xdebug.so" />
+    <method v="2" />
+  </configuration>
+</component>
