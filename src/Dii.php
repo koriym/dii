@@ -44,6 +44,14 @@ class Dii extends YiiBase
         return self::createApplication(DiiWebApplication::class, $config);
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public static function createConsoleApplication($config = null)
+    {
+        return self::createApplication(DiiConsoleApplication::class, $config);
+    }
+
     public static function getGrapher() : Grapher
     {
         $tmpDir = dirname((new \ReflectionClass(AppModule::class))->getFileName()) . '/tmp';
