@@ -10,6 +10,7 @@ class TestModule extends AbstractModule
 {
     protected function configure()
     {
+        // binding for the test
         $this->bind(FooInterface::class)->to(FakeFoo::class);
     }
 }

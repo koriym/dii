@@ -11,6 +11,7 @@ class Test implements ModuleProvider
 {
     public function __invoke() : AbstractModule
     {
+        // override AppModule with TestModule
         return new TestModule(new AppModule());
     }
 }
