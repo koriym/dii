@@ -18,6 +18,10 @@ Use composer autoloader instead of Yii autoloader.
 // composer autoloader
 require dirname(__DIR__) . '/vendor/autoload.php';
 spl_autoload_unregister([YiiBase::class, 'autoload']);
+
+// set context module
+Dii::setContext(\YourVendor\YourProject\Context\App::class);
+
 // run the application
 Yii::createWebApplication()->run();
 ```
@@ -50,8 +54,36 @@ class AppModule extends AbstractModule
     }
 }
 ```
+## Context
 
-Note: Module name is fixed as `Koriym\Dii\Module\AppModule`.
+You can make the necessary bindings depending on the context. The context class specifies which module to bind in.
+
+```php
+use Koriym\Dii\Module\AppModule;
+use Koriym\Dii\ModuleProvider;
+use Ray\Di\AbstractModule;
+
+class App implements ModuleProvider
+{
+    public function __invoke() : AbstractModule
+    {
+        return new AppModule();
+    }
+}
+```
+
+In this example we have overridden the binding of `AppModule` with `TestModule`.
+
+```php
+class Test implements ModuleProvider
+{
+    public function __invoke() : AbstractModule
+    {
+        // override AppModule with TestModule
+        return new TestModule(new AppModule());
+    }
+}
+```
 
 ## Injecting Dependencies in Controllers
 
