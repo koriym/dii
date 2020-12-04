@@ -13,15 +13,15 @@ use YiiBase;
 class Dii extends YiiBase
 {
     /** @var class-string<ModuleProvider> */
-    public static $moduleName = App::class;
+    public static $context = App::class;
 
     /**
-     * @param class-string<ModuleProvider> $moduleName
+     * @param class-string<ModuleProvider> $context
      */
-    public static function setContext(string $moduleName) : void
+    public static function setContext(string $context) : void
     {
-        assert(class_exists($moduleName));
-        self::$moduleName = $moduleName;
+        assert(class_exists($context));
+        self::$context = $context;
     }
 
     /**
@@ -68,7 +68,7 @@ class Dii extends YiiBase
     {
         $tmpDir = dirname((new \ReflectionClass(AppModule::class))->getFileName()) . '/tmp';
 
-        return new Grapher((new self::$moduleName)(), $tmpDir);
+        return new Grapher((new self::$context)(), $tmpDir);
     }
 
     /**
