@@ -8,12 +8,12 @@
   },
   "autoload": {
       "psr-4": {
-          "Koriym\\Dii\\": ["src/"]
+          "Koriym\\Dii\\": "src/"
       }
   },
   "autoload-dev": {
       "psr-4": {
-          "Ray\\Dyii\\Module\\": "demo/src/Module"
+        "Koriym\\Dii\\": "demo/src/"
     },
     "classmap": [
           "vendor/yiisoft/yii/framework/base/",
@@ -26,7 +26,8 @@
       "test": ["phpunit"],
       "tests": ["psalm --show-info=false", "@cs"],
       "cs": ["php-cs-fixer fix -v --dry-run"],
-      "cs-fix": ["php-cs-fixer fix -v"]
+      "cs-fix": ["php-cs-fixer fix -v"],
+      "demo": "php -S 127.0.0.1:8080 -t demo/public"
   },
   "require-dev": {
       "vimeo/psalm": "^4.2",

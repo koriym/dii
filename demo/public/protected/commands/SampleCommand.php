@@ -1,7 +1,7 @@
 <?php
 
-use Ray\Di\Di\Inject;
 use Koriym\Dii\Injectable;
+use Ray\Di\Di\Inject;
 use Vendor\Hello\FooInterface;
 
 class SampleCommand extends \CConsoleCommand implements Injectable

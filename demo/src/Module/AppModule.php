@@ -3,10 +3,10 @@
 namespace Koriym\Dii\Module;
 
 use Ray\Di\AbstractModule;
+use Vendor\App\Command\NamespacedCommand;
 use Vendor\Hello\BarInterceptor;
 use Vendor\Hello\Foo;
 use Vendor\Hello\FooInterface;
-use Vendor\App\Command\NamespacedCommand;
 
 class AppModule extends AbstractModule
 {
