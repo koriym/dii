@@ -18,6 +18,10 @@ Use composer autoloader instead of Yii autoloader.
 // composer autoloader
 require dirname(__DIR__) . '/vendor/autoload.php';
 spl_autoload_unregister([YiiBase::class, 'autoload']);
+
+// set context module
+Dii::setContext(Test::class);
+
 // run the application
 Yii::createWebApplication()->run();
 ```
