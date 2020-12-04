@@ -4,7 +4,7 @@ namespace Koriym\Dii;
 
 class DiiWebApplication extends \CWebApplication
 {
-    /** @var array  */
+    /** @var array */
     public $commandMap = [];
 
     /**
@@ -66,6 +66,7 @@ class DiiWebApplication extends \CWebApplication
 
                 if (class_exists($className, false) && is_subclass_of($className, \CController::class)) {
                     $id[0] = strtolower($id[0]);
+
                     return [
                         $this->newInstance($className, $controllerID . $id, $owner === $this ? null : $owner),
                         $this->parseActionParams($route),
