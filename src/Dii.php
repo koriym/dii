@@ -4,6 +4,7 @@ namespace Koriym\Dii;
 
 use CException;
 use Koriym\Dii\Module\AppModule;
+use Ray\Di\AbstractModule;
 use Ray\Di\Grapher;
 use YiiBase;
 
@@ -14,6 +15,9 @@ class Dii extends YiiBase
 {
     /** @var class-string<ModuleProvider> */
     public static $context = App::class;
+
+    /** @var AbstractModule */
+    private static $module;
 
     /**
      * @param class-string<ModuleProvider> $context
@@ -68,7 +72,18 @@ class Dii extends YiiBase
     {
         $tmpDir = dirname((new \ReflectionClass(AppModule::class))->getFileName()) . '/tmp';
 
-        return new Grapher((new self::$context)(), $tmpDir);
+        return new Grapher(self::getModuleInstance(), $tmpDir);
+    }
+
+    /**
+     * Get singleton instance of Module class
+     */
+    private static function getModuleInstance() : AbstractModule
+    {
+        if (! self::$module instanceof AbstractModule) {
+            self::$module = (new self::$context)();
+        }
+        return self::$module;
     }
 
     /**
