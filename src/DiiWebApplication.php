@@ -68,7 +68,7 @@ class DiiWebApplication extends \CWebApplication
                     $id[0] = strtolower($id[0]);
 
                     return [
-                        $this->newInstance($className, $controllerID . $id, $owner === $this ? null : $owner),
+                        Dii::createComponent($className, $id, $owner === $this ? null : $owner),
                         $this->parseActionParams($route),
                     ];
                 }
@@ -80,7 +80,7 @@ class DiiWebApplication extends \CWebApplication
                     $id[0] = strtolower($id[0]);
 
                     return [
-                        $this->newInstance($namespacedClassName, $controllerID . $id, $owner === $this ? null : $owner),
+                        Dii::createComponent($namespacedClassName, $id, $owner === $this ? null : $owner),
                         $this->parseActionParams($route),
                     ];
                 }
@@ -90,13 +90,5 @@ class DiiWebApplication extends \CWebApplication
             $controllerID .= $id;
             $basePath .= DIRECTORY_SEPARATOR . $id;
         }
-    }
-
-    private function newInstance(string $className, $controllerId, $owner)
-    {
-        $isInjectable = in_array(Injectable::class, class_implements($className), true);
-        $controller = $isInjectable ? Dii::getGrapher()->newInstanceArgs($className, [$controllerId, $owner]) : new $className($controllerId, $owner);
-
-        return $controller;
     }
 }
