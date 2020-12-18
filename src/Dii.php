@@ -5,6 +5,8 @@ namespace Koriym\Dii;
 use CException;
 use Koriym\Dii\Module\AppModule;
 use Ray\Di\AbstractModule;
+use Ray\Di\Bind;
+use Ray\Di\Exception\Unbound;
 use Ray\Di\Grapher;
 use YiiBase;
 
@@ -43,7 +45,16 @@ class Dii extends YiiBase
         unset($args[0]);
 
         $isInjectable = in_array(Injectable::class, class_implements($type), true);
-        $object = $isInjectable ? self::getGrapher()->newInstanceArgs($type, $args) : (new \ReflectionClass($type))->newInstanceArgs($args);
+        if ($isInjectable) {
+            try {
+                $object = self::getGrapher()->newInstanceArgs($type, $args);
+            } catch (Unbound $unbound) {
+                new Bind(self::getModuleInstance()->getContainer(), $type);
+                $object = self::getGrapher()->newInstanceArgs($type, $args);
+            }
+        } else {
+            $object = (new \ReflectionClass($type))->newInstanceArgs($args);
+        }
 
         foreach ($config as $key => $value) {
             $object->$key = $value;
