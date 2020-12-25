@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Koriym\Dii;
 
 use CException;
@@ -8,7 +10,17 @@ use Ray\Di\AbstractModule;
 use Ray\Di\Bind;
 use Ray\Di\Exception\Unbound;
 use Ray\Di\Grapher;
+use ReflectionClass;
+use ReflectionException;
 use YiiBase;
+
+use function assert;
+use function class_exists;
+use function class_implements;
+use function dirname;
+use function func_get_args;
+use function in_array;
+use function is_string;
 
 /**
  * Ray.Di powered Yii class
@@ -24,7 +36,7 @@ class Dii extends YiiBase
     /**
      * @param class-string<ModuleProvider> $context
      */
-    public static function setContext(string $context) : void
+    public static function setContext(string $context): void
     {
         assert(class_exists($context));
         self::$context = $context;
@@ -33,7 +45,7 @@ class Dii extends YiiBase
     /**
      * {@inheritdoc}
      *
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public static function createComponent($config)
     {
@@ -42,6 +54,7 @@ class Dii extends YiiBase
         if (! class_exists($type, false)) {
             $type = self::import($type, true);
         }
+
         unset($args[0]);
 
         $isInjectable = in_array(Injectable::class, class_implements($type), true);
@@ -53,7 +66,7 @@ class Dii extends YiiBase
                 $object = self::getGrapher()->newInstanceArgs($type, $args);
             }
         } else {
-            $object = (new \ReflectionClass($type))->newInstanceArgs($args);
+            $object = (new ReflectionClass($type))->newInstanceArgs($args);
         }
 
         foreach ($config as $key => $value) {
@@ -79,9 +92,9 @@ class Dii extends YiiBase
         return self::createApplication(DiiConsoleApplication::class, $config);
     }
 
-    public static function getGrapher() : Grapher
+    public static function getGrapher(): Grapher
     {
-        $tmpDir = dirname((new \ReflectionClass(AppModule::class))->getFileName()) . '/tmp';
+        $tmpDir = dirname((new ReflectionClass(AppModule::class))->getFileName()) . '/tmp';
 
         return new Grapher(self::getModuleInstance(), $tmpDir);
     }
@@ -89,28 +102,30 @@ class Dii extends YiiBase
     /**
      * Get singleton instance of Module class
      */
-    private static function getModuleInstance() : AbstractModule
+    private static function getModuleInstance(): AbstractModule
     {
         if (! self::$module instanceof AbstractModule) {
-            self::$module = (new self::$context)();
+            self::$module = (new self::$context())();
         }
+
         return self::$module;
     }
 
     /**
      * Extract config
      *
-     * @param string|array $config
+     * @param string|array<string, mixed> $config
+     *
+     * @return array{0: string, 1:array<string, mixed>} [$type, $config]
      *
      * @throws CException
-     *
-     * @return [$type, $config]
      */
-    private static function extract($config) : array
+    private static function extract($config): array
     {
         if (is_string($config)) {
             return [$config, []];
         }
+
         if (isset($config['class'])) {
             $type = $config['class'];
             unset($config['class']);

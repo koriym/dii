@@ -1,9 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Koriym\Dii;
 
 use CConsoleCommandRunner;
+use CHelpCommand;
 use Yii;
+
+use function array_change_key_case;
+use function basename;
+use function class_exists;
+use function is_string;
+use function strpos;
+use function strtolower;
+use function substr;
 
 class DiiConsoleCommandRunner extends CConsoleCommandRunner
 {
@@ -39,10 +50,11 @@ class DiiConsoleCommandRunner extends CConsoleCommandRunner
                 // Object should be instantiated through `Dii::createComponent`.
                 return Dii::createComponent(['class' => $className], $name, $this);
             }
+
             // an array configuration
             return Dii::createComponent($command, $name, $this);
         } elseif ($name === 'help') {
-            return new \CHelpCommand('help', $this);
+            return new CHelpCommand('help', $this);
         }
 
         return null;

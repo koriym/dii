@@ -4,23 +4,26 @@ declare(strict_types=1);
 
 namespace Koriym\Dii;
 
-use function error_log;
-use function register_shutdown_function;
 use RuntimeException;
+use Symfony\Component\Process\Process;
+
+use function error_log;
+use function is_int;
+use function register_shutdown_function;
+use function sleep;
 use function sprintf;
 use function strpos;
-use Symfony\Component\Process\Process;
+use function version_compare;
+
+use const PHP_BINARY;
+use const PHP_VERSION;
 
 final class BuiltinServer
 {
-    /**
-     * @var Process
-     */
+    /** @var Process */
     private $process;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $host;
 
     public function __construct(string $host, string $index)
@@ -29,7 +32,7 @@ final class BuiltinServer
             PHP_BINARY,
             '-S',
             $host,
-            $index
+            $index,
         ]);
         $this->host = $host;
         register_shutdown_function(function () {
@@ -37,7 +40,7 @@ final class BuiltinServer
         });
     }
 
-    public function start() : void
+    public function start(): void
     {
         $this->process->start();
         if (version_compare(PHP_VERSION, '7.4.0', '<')) {
@@ -45,7 +48,8 @@ final class BuiltinServer
 
             return;
         }
-        $this->process->waitUntil(function (string $type, string $output) : bool {
+
+        $this->process->waitUntil(function (string $type, string $output): bool {
             if ($type === 'err' && ! is_int(strpos($output, 'started'))) {
                 error_log($output);
             }
@@ -54,7 +58,7 @@ final class BuiltinServer
         });
     }
 
-    public function stop() : void
+    public function stop(): void
     {
         $exitCode = $this->process->stop();
         if ($exitCode !== 143) {
