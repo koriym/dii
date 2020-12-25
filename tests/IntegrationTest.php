@@ -6,21 +6,17 @@ namespace Koriym\Dii;
 
 use PHPUnit\Framework\TestCase;
 
+use function dirname;
+use function file_get_contents;
+use function register_shutdown_function;
+use function stream_context_create;
+
 class IntegrationTest extends TestCase
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private static $host = '127.0.0.1:8080';
 
-    /**
-     * @var string
-     */
-    private $httpHost = 'http://127.0.0.1:8080';
-
-    /**
-     * @var BuiltinServer
-     */
+    /** @var BuiltinServer */
     private static $server;
 
     public static function setUpBeforeClass(): void
@@ -28,7 +24,7 @@ class IntegrationTest extends TestCase
         $publicDir = dirname(__DIR__) . '/demo/public';
         self::$server = new BuiltinServer(self::$host, $publicDir . '/index.php');
         self::$server->start();
-        register_shutdown_function(function () {
+        register_shutdown_function(static function () {
             self::$server->stop();
         });
     }
@@ -41,9 +37,7 @@ class IntegrationTest extends TestCase
     public function testIndex(): void
     {
         $context = stream_context_create([
-            'http' => [
-                'ignore_errors' => true
-            ]
+            'http' => ['ignore_errors' => true],
         ]);
         $responseBody  = file_get_contents('http://127.0.0.1:8080/', false, $context);
         $this->assertSame('Hello World +injected fake +intercepted', $responseBody);
