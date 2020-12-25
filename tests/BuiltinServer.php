@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Koriym\Dii;;
+namespace Koriym\Dii;
 
 use function error_log;
 use function register_shutdown_function;
