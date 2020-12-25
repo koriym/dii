@@ -37,7 +37,7 @@
     "test": ["phpunit"],
     "tests": ["@sa", "@cs",　"@test"],
     "sa": "psalm --show-info=false",
-    "cs": "php-cs-fixer fix -v --dry-run",
-    "cs-fix": "php-cs-fixer fix -v",
+    "cs": "phpcs --standard=./phpcs.xml src tests",
+    "cs-fix": "phpcbf src tests"
   }
 }
