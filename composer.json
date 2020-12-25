@@ -2,9 +2,9 @@
   "name": "koriym/dii",
   "description": "Dependency Injection Plugin for Yii 1",
   "require": {
-    "php": ">=7.1.0",
-    "yiisoft/yii": "1.1.*",
-    "ray/di": "^2.0"
+    "php": "^7.1 || ^8.0",
+    "yiisoft/yii": "^1.1.16",
+    "ray/di": "^2.10"
   },
   "require-dev": {
     "phpunit/phpunit": "^9.5",
