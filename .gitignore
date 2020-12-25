@@ -6,3 +6,4 @@ demo/public/protected/runtime/application.log
 demo/src/Module/tmp/
 .phpunit.result.cache
 .phpcs-cache
+build/
