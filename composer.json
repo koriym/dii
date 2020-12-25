@@ -13,7 +13,7 @@
   },
   "autoload-dev": {
       "psr-4": {
-        "Koriym\\Dii\\": "demo/src/"
+        "Koriym\\Dii\\": ["demo/src/", "tests/"]
     },
     "classmap": [
           "vendor/yiisoft/yii/framework/base/",
@@ -31,7 +31,7 @@
   },
   "require-dev": {
       "vimeo/psalm": "^4.2",
-      "phpunit/phpunit": "^7.5",
+      "phpunit/phpunit": "^9.5",
       "friendsofphp/php-cs-fixer": "^2.16"
   }
 }
