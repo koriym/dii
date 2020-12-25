@@ -33,18 +33,11 @@
   },
   "license": "MIT",
   "scripts": {
-    "test": ["phpunit"
-    ],
-    "tests": [
-      "psalm --show-info=false",
-      "@cs"
-    ],
-    "cs": [
-      "php-cs-fixer fix -v --dry-run"
-    ],
-    "cs-fix": [
-      "php-cs-fixer fix -v"
-    ],
-    "demo": "php -S 127.0.0.1:8080 -t demo/public"
+    "demo": "php -S 127.0.0.1:8080 -t demo/public",
+    "test": ["phpunit"],
+    "tests": ["@sa", "@cs",　"@test"],
+    "sa": "psalm --show-info=false",
+    "cs": "php-cs-fixer fix -v --dry-run",
+    "cs-fix": "php-cs-fixer fix -v",
   }
 }
