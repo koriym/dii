@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0c31f2f8cab1f7619a917f37b6f44594",
+    "content-hash": "dd060237af869021adf263f6fcee5401",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -267,12 +267,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/koriym/dii.git",
-                "reference": "32afe575eaa95a7c0f8daadfa34c47d1e85d7b0b"
+                "reference": "8a3ab76500bc5950f8f3492d46a59b2f54f6acba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/koriym/dii/zipball/32afe575eaa95a7c0f8daadfa34c47d1e85d7b0b",
-                "reference": "32afe575eaa95a7c0f8daadfa34c47d1e85d7b0b",
+                "url": "https://api.github.com/repos/koriym/dii/zipball/8a3ab76500bc5950f8f3492d46a59b2f54f6acba",
+                "reference": "8a3ab76500bc5950f8f3492d46a59b2f54f6acba",
                 "shasum": ""
             },
             "require": {
@@ -289,45 +289,19 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Koriym\\Dii\\": [
-                        "src/"
-                    ]
+                    "Koriym\\Dii\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Ray\\Dyii\\Module\\": "demo/src/Module"
-                },
-                "classmap": [
-                    "vendor/yiisoft/yii/framework/base/",
-                    "vendor/yiisoft/yii/framework/web/",
-                    "vendor/yiisoft/yii/framework/console/"
-                ]
-            },
-            "scripts": {
-                "test": [
-                    "phpunit"
-                ],
-                "tests": [
-                    "psalm --show-info=false",
-                    "@cs"
-                ],
-                "cs": [
-                    "php-cs-fixer fix -v --dry-run"
-                ],
-                "cs-fix": [
-                    "php-cs-fixer fix -v"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
             "description": "Dependency Injection Plugin for Yii 1",
             "support": {
-                "source": "https://github.com/koriym/dii/tree/0.1.2",
-                "issues": "https://github.com/koriym/dii/issues"
+                "issues": "https://github.com/koriym/dii/issues",
+                "source": "https://github.com/koriym/dii/tree/master"
             },
-            "time": "2020-11-27T05:08:46+00:00"
+            "time": "2020-12-23T01:43:51+00:00"
         },
         {
             "name": "koriym/printo",
@@ -385,16 +359,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v4.10.2",
+            "version": "v4.10.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "658f1be311a230e0907f5dfe0213742aff0596de"
+                "reference": "c6d052fc58cb876152f89f532b95a8d7907e7f0e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/658f1be311a230e0907f5dfe0213742aff0596de",
-                "reference": "658f1be311a230e0907f5dfe0213742aff0596de",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/c6d052fc58cb876152f89f532b95a8d7907e7f0e",
+                "reference": "c6d052fc58cb876152f89f532b95a8d7907e7f0e",
                 "shasum": ""
             },
             "require": {
@@ -435,9 +409,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
-                "source": "https://github.com/nikic/PHP-Parser/tree/v4.10.2"
+                "source": "https://github.com/nikic/PHP-Parser/tree/v4.10.4"
             },
-            "time": "2020-09-26T10:30:38+00:00"
+            "time": "2020-12-20T10:01:03+00:00"
         },
         {
             "name": "ray/aop",
@@ -555,27 +529,28 @@
         },
         {
             "name": "yiisoft/yii",
-            "version": "1.1.22",
+            "version": "1.1.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii.git",
-                "reference": "bf1d26e5a2c2b89d7c39e8566b3abb13c39deab3"
+                "reference": "445827fe625a392451e9839787bd513112b23b1b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii/zipball/bf1d26e5a2c2b89d7c39e8566b3abb13c39deab3",
-                "reference": "bf1d26e5a2c2b89d7c39e8566b3abb13c39deab3",
+                "url": "https://api.github.com/repos/yiisoft/yii/zipball/445827fe625a392451e9839787bd513112b23b1b",
+                "reference": "445827fe625a392451e9839787bd513112b23b1b",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.1.0"
             },
             "require-dev": {
+                "cweagans/composer-patches": "^1.7",
                 "pear/archive_tar": "~1.4.6",
                 "phing/phing": "2.*",
                 "phpseclib/mcrypt_compat": "^1.0",
-                "phpunit/phpunit": "~4.8.34",
-                "phpunit/phpunit-selenium": "~1.4.0"
+                "phpunit/phpunit": "4.8.34",
+                "phpunit/phpunit-selenium": "~2.0.0"
             },
             "suggest": {
                 "ext-mcrypt": "Required by encrypt and decrypt methods of CSecurityManager",
@@ -585,6 +560,21 @@
                 "framework/yiic"
             ],
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1.x-dev"
+                },
+                "composer-exit-on-patch-failure": true,
+                "patches": {
+                    "phpunit/phpunit-mock-objects": {
+                        "Fix PHP 7 and 8 compatibility": "https://yiisoft.github.io/phpunit-patches/phpunit_mock_objects.patch"
+                    },
+                    "phpunit/phpunit": {
+                        "Fix PHP 7 compatibility": "https://yiisoft.github.io/phpunit-patches/phpunit_php7.patch",
+                        "Fix PHP 8 compatibility": "https://yiisoft.github.io/phpunit-patches/phpunit_php8.patch"
+                    }
+                }
+            },
             "autoload": {
                 "classmap": [
                     "framework/YiiBase.php",
@@ -659,7 +649,21 @@
                 "source": "https://github.com/yiisoft/yii",
                 "wiki": "http://www.yiiframework.com/wiki/"
             },
-            "time": "2020-01-16T22:29:49+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/yiisoft",
+                    "type": "github"
+                },
+                {
+                    "url": "https://opencollective.com/yiisoft",
+                    "type": "open_collective"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/yiisoft/yii",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-12-02T16:53:51+00:00"
         }
     ],
     "packages-dev": [],
