@@ -11,7 +11,8 @@
     "vimeo/psalm": "^4.3",
     "doctrine/coding-standard": "^8.2",
     "phpmd/phpmd": "^2.9",
-    "squizlabs/php_codesniffer": "^3.5"
+    "squizlabs/php_codesniffer": "^3.5",
+    "symfony/process": "^5.2"
   },
   "autoload": {
     "psr-4": {
@@ -35,7 +36,7 @@
   "scripts": {
     "demo": "php -S 127.0.0.1:8080 -t demo/public",
     "test": ["phpunit"],
-    "tests": ["@sa", "@cs",　"@test"],
+    "tests": ["@sa", "@cs", "@test"],
     "sa": "psalm --show-info=false",
     "cs": "phpcs --standard=./phpcs.xml src tests",
     "cs-fix": "phpcbf src tests"
