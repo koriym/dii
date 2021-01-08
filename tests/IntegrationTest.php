@@ -40,6 +40,6 @@ class IntegrationTest extends TestCase
             'http' => ['ignore_errors' => true],
         ]);
         $responseBody  = file_get_contents('http://' . self::$host, false, $context);
-        $this->assertSame('Hello World +injected fake +intercepted', $responseBody);
+        $this->assertSame('Hello World +injected(fake) +intercepted', $responseBody);
     }
 }
