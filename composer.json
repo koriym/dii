@@ -43,7 +43,8 @@
     "classmap": [
       "vendor/yiisoft/yii/framework/base/",
       "vendor/yiisoft/yii/framework/web/",
-      "vendor/yiisoft/yii/framework/console/"
+      "vendor/yiisoft/yii/framework/console/",
+      "tests/Fake"
     ]
   },
   "license": "MIT",
