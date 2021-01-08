@@ -6,6 +6,8 @@ namespace Koriym\Dii;
 
 use CException;
 use Koriym\Dii\Module\AppModule;
+use LengthException;
+use LogicException;
 use Ray\Di\AbstractModule;
 use Ray\Di\Bind;
 use Ray\Di\Exception\Unbound;
@@ -38,6 +40,10 @@ class Dii extends YiiBase
      */
     public static function setContext(string $context): void
     {
+        if (! class_exists($context)) {
+            throw new LogicException("Unloadable: {$context}");
+        }
+
         assert(class_exists($context));
         self::$context = $context;
         self::createModule();
