@@ -54,6 +54,15 @@ class DiiTest extends TestCase
         $this->assertInstanceOf(Foo::class, $controller->foo);
     }
 
+    /**
+     * @depends testCreateComponentWithGrapher
+     */
+    public function testIntercepted(FakeSiteController $controller): void
+    {
+        $controller->actionIndex();
+        $this->assertTrue($controller->intercepted);
+    }
+
     public function testSetContext(): void
     {
         $this->dii->setContext(TestContext::class); // FooInterface -> TestFoo
