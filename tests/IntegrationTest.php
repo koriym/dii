@@ -14,7 +14,7 @@ use function stream_context_create;
 class IntegrationTest extends TestCase
 {
     /** @var string */
-    private static $host = '127.0.0.1:8080';
+    private static $host = '127.0.0.1:8081';
 
     /** @var BuiltinServer */
     private static $server;
@@ -39,7 +39,7 @@ class IntegrationTest extends TestCase
         $context = stream_context_create([
             'http' => ['ignore_errors' => true],
         ]);
-        $responseBody  = file_get_contents('http://127.0.0.1:8080/', false, $context);
+        $responseBody  = file_get_contents('http://' . self::$host, false, $context);
         $this->assertSame('Hello World +injected fake +intercepted', $responseBody);
     }
 }
