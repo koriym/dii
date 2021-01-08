@@ -36,15 +36,13 @@
   "autoload-dev": {
     "psr-4": {
       "Koriym\\Dii\\": [
-        "demo/src/",
         "tests/"
       ]
     },
     "classmap": [
       "vendor/yiisoft/yii/framework/base/",
       "vendor/yiisoft/yii/framework/web/",
-      "vendor/yiisoft/yii/framework/console/",
-      "tests/Fake"
+      "vendor/yiisoft/yii/framework/console/"
     ]
   },
   "license": "MIT",
