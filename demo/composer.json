@@ -6,10 +6,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Vendor\\Hello\\": "src/App",
-            "Koriym\\Dii\\": "../src/",
-            "Koriym\\Dii\\Module\\": "src/Module",
-            "Vendor\\App\\": "public/protected"
+            "Vendor\\Hello\\": "src/",
+            "Koriym\\Dii\\": "src-module"
         },
         "classmap": [
             "public/protected/controllers/",
