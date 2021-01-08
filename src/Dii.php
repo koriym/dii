@@ -22,6 +22,7 @@ use function class_implements;
 use function dirname;
 use function func_get_args;
 use function in_array;
+use function is_callable;
 use function is_string;
 
 /**
@@ -30,6 +31,7 @@ use function is_string;
 class Dii extends YiiBase
 {
     /** @var class-string<ModuleProvider> */
+    /** @psalm-suppress UndefinedClass */
     public static $context = App::class;
 
     /** @var AbstractModule */
@@ -108,7 +110,9 @@ class Dii extends YiiBase
 
     private static function createModule(): void
     {
-        self::$module = (new self::$context())();
+        $context = new self::$context();
+        assert(is_callable($context));
+        self::$module = ($context)();
     }
 
     /**
