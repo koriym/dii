@@ -3,10 +3,11 @@
 namespace Koriym\Dii\Module;
 
 use Ray\Di\AbstractModule;
-use Vendor\App\Command\NamespacedCommand;
-use Vendor\Hello\BarInterceptor;
-use Vendor\Hello\Foo;
-use Vendor\Hello\FooInterface;
+use Koriym\Dii\BarInterceptor;
+use Koriym\Dii\FakeSiteController;
+use Koriym\Dii\Foo;
+use Koriym\Dii\FooInterface;
+use function var_dump;
 
 class AppModule extends AbstractModule
 {

@@ -6,6 +6,8 @@ namespace Koriym\Dii;
 
 use CException;
 use Koriym\Dii\Module\AppModule;
+use LengthException;
+use LogicException;
 use Ray\Di\AbstractModule;
 use Ray\Di\Bind;
 use Ray\Di\Exception\Unbound;
@@ -20,6 +22,7 @@ use function class_implements;
 use function dirname;
 use function func_get_args;
 use function in_array;
+use function is_callable;
 use function is_string;
 
 /**
@@ -27,7 +30,7 @@ use function is_string;
  */
 class Dii extends YiiBase
 {
-    /** @var class-string<ModuleProvider> */
+    /** @var class-string<ModuleProvider>  */
     public static $context = App::class;
 
     /** @var AbstractModule */
@@ -38,8 +41,13 @@ class Dii extends YiiBase
      */
     public static function setContext(string $context): void
     {
+        if (! class_exists($context)) {
+            throw new LogicException("Unloadable: {$context}");
+        }
+
         assert(class_exists($context));
         self::$context = $context;
+        self::createModule();
     }
 
     /**
@@ -99,13 +107,20 @@ class Dii extends YiiBase
         return new Grapher(self::getModuleInstance(), $tmpDir);
     }
 
+    private static function createModule(): void
+    {
+        $context = new self::$context();
+        assert(is_callable($context));
+        self::$module = ($context)();
+    }
+
     /**
      * Get singleton instance of Module class
      */
     private static function getModuleInstance(): AbstractModule
     {
         if (! self::$module instanceof AbstractModule) {
-            self::$module = (new self::$context())();
+            self::createModule();
         }
 
         return self::$module;

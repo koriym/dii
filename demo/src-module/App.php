@@ -1,14 +1,15 @@
 <?php
 
-namespace Koriym\Dii\Context;
+declare(strict_types=1);
+
+namespace Koriym\Dii;
 
 use Koriym\Dii\Module\AppModule;
-use Koriym\Dii\ModuleProvider;
 use Ray\Di\AbstractModule;
 
 class App implements ModuleProvider
 {
-    public function __invoke() : AbstractModule
+    public function __invoke(): AbstractModule
     {
         return new AppModule();
     }

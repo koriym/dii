@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.2.0@ccf6e2805f4c38655110f425c10ca79511f0bb0e">
+<files psalm-version="4.3.2@57b53ff26237074fdf5cbcb034f7da5172be4524">
   <file src="src/Dii.php">
     <UndefinedClass occurrences="2">
-      <code>AppModule</code>
+      <code>App</code>
       <code>AppModule</code>
     </UndefinedClass>
   </file>

@@ -6,10 +6,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Vendor\\Hello\\": "src/App",
-            "Koriym\\Dii\\": "../src/",
-            "Koriym\\Dii\\Module\\": "src/Module",
-            "Vendor\\App\\": "public/protected"
+            "Vendor\\Hello\\": "src/",
+            "Koriym\\Dii\\": "src-module"
         },
         "classmap": [
             "public/protected/controllers/",
@@ -35,5 +33,8 @@
     "prefer-stable": true,
     "scripts": {
         "serve": "php -dhtml_errors=0 -dzend_extension=xdebug.so -S 127.0.0.1:8080 -t public"
+    },
+    "config": {
+        "process-timeout": 0
     }
 }

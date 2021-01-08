@@ -3,7 +3,7 @@ vendor/
 composer.lock
 .php_cs.cache
 demo/public/protected/runtime/application.log
-demo/src/Module/tmp/
+demo/src-module/Context/tmp/
 .phpunit.result.cache
 .phpcs-cache
 build/
