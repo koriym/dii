@@ -7,6 +7,7 @@ use Koriym\Dii\BarInterceptor;
 use Koriym\Dii\FakeSiteController;
 use Koriym\Dii\Foo;
 use Koriym\Dii\FooInterface;
+use function var_dump;
 
 class AppModule extends AbstractModule
 {
