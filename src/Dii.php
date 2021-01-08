@@ -40,6 +40,7 @@ class Dii extends YiiBase
     {
         assert(class_exists($context));
         self::$context = $context;
+        self::createModule();
     }
 
     /**
@@ -99,13 +100,18 @@ class Dii extends YiiBase
         return new Grapher(self::getModuleInstance(), $tmpDir);
     }
 
+    private static function createModule():void
+    {
+        self::$module = (new self::$context())();
+    }
+
     /**
      * Get singleton instance of Module class
      */
     private static function getModuleInstance(): AbstractModule
     {
         if (! self::$module instanceof AbstractModule) {
-            self::$module = (new self::$context())();
+            self::createModule();
         }
 
         return self::$module;
