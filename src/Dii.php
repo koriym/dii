@@ -30,8 +30,7 @@ use function is_string;
  */
 class Dii extends YiiBase
 {
-    /** @var class-string<ModuleProvider> */
-    /** @psalm-suppress UndefinedClass */
+    /** @var class-string<ModuleProvider>  */
     public static $context = App::class;
 
     /** @var AbstractModule */
