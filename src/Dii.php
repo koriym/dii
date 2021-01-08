@@ -100,7 +100,7 @@ class Dii extends YiiBase
         return new Grapher(self::getModuleInstance(), $tmpDir);
     }
 
-    private static function createModule():void
+    private static function createModule(): void
     {
         self::$module = (new self::$context())();
     }
