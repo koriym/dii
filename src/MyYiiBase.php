@@ -12,6 +12,8 @@
 
 namespace Koriym\Dii;
 
+use function get_include_path;
+
 /**
  * Gets the application start timestamp.
  */
@@ -462,7 +464,14 @@ class MyYiiBase
 					}
 				}
 				else
-					include($className.'.php');
+				    $includePaths = get_include_path();
+                    foreach ($includePaths as $path) {
+                        $includePath = $path === '.' ? getcwd() : $path;
+                        $phpFile = $includePath . '/' . $className . '.php';
+                        if (file_exists($phpFile)) {
+                            include $phpFile;
+                        }
+                    }
 			}
 			else  // class name with namespace in PHP 5.3
 			{
