@@ -33,8 +33,7 @@
       "Koriym\\Dii\\": "src/"
     },
     "files": [
-      "autoload.php",
-      "vendor/yiisoft/yii/framework/base/interfaces.php"
+      "autoload.php"
     ]
   },
   "autoload-dev": {
