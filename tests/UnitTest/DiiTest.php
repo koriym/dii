@@ -17,6 +17,7 @@ class DiiTest extends TestCase
     public function setUp(): void
     {
         $this->dii = new Dii();
+        Dii::setContext(App::class);
         parent::setUp();
     }
 
