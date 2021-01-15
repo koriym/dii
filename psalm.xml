@@ -11,6 +11,7 @@
         <directory name="src" />
         <ignoreFiles>
             <directory name="vendor" />
+            <file name="src/MyYiiBase.php"/>
         </ignoreFiles>
     </projectFiles>
 </psalm>
