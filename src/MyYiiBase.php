@@ -12,6 +12,9 @@
 
 namespace Koriym\Dii;
 
+use Yii;
+use function dirname;
+use function explode;
 use function get_include_path;
 
 /**
@@ -39,7 +42,7 @@ defined('YII_ENABLE_ERROR_HANDLER') or define('YII_ENABLE_ERROR_HANDLER',true);
 /**
  * Defines the Yii framework installation path.
  */
-defined('YII_PATH') or define('YII_PATH',dirname(__FILE__));
+defined('YII_PATH') or define('YII_PATH', dirname(__DIR__ ) . '/vendor/yiisoft/yii/framework');
 /**
  * Defines the Zii library installation path.
  */
@@ -464,7 +467,7 @@ class MyYiiBase
 					}
 				}
 				else
-				    $includePaths = get_include_path();
+				    $includePaths = explode(':', get_include_path());
                     foreach ($includePaths as $path) {
                         $includePath = $path === '.' ? getcwd() : $path;
                         $phpFile = $includePath . '/' . $className . '.php';
@@ -678,9 +681,9 @@ class MyYiiBase
 		}
 		else
 		{
-			spl_autoload_unregister(array('YiiBase','autoload'));
+			spl_autoload_unregister(array('MyYiiBase','autoload'));
 			spl_autoload_register($callback);
-			spl_autoload_register(array('YiiBase','autoload'));
+			spl_autoload_register(array('MyYiiBase','autoload'));
 		}
 	}
 
