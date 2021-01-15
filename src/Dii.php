@@ -28,7 +28,7 @@ use function is_string;
 /**
  * Ray.Di powered Yii class
  */
-class Dii extends YiiBase
+class Dii extends MyYiiBase
 {
     /** @var class-string<ModuleProvider>  */
     public static $context = App::class;
