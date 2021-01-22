@@ -4,12 +4,18 @@ declare(strict_types=1);
 
 namespace Koriym\Dii;
 
+use function class_exists;
+use function error_reporting;
+
+use const E_ALL;
+use const E_WARNING;
+
 /**
  * Silent auto loader
  *
  * If the class is not found, no warning will be triggerd.
  */
-final class Autoload
+final class SilentAutoload
 {
     public static function autoload(string $class): bool
     {
