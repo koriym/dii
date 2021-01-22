@@ -17,6 +17,13 @@ use const E_WARNING;
  */
 final class SilentAutoload
 {
+    /**
+     * @codeCoverageIgnore
+     */
+    private function __construct()
+    {
+    }
+
     public static function autoload(string $class): bool
     {
         $e = error_reporting(E_ALL & ~E_WARNING);
