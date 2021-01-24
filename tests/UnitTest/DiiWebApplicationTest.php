@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Koriym\Dii;
 
+use application\controllers\NamespacedController;
 use CWebApplication;
 use PHPUnit\Framework\TestCase;
 use Yii;
@@ -19,6 +20,11 @@ class DiiWebApplicationTest extends TestCase
     {
         $this->config = [
             'basePath' => dirname(__DIR__) . '/Fake/protected',
+            'controllerMap' => [
+                'namespaced' => [
+                    'class' => NamespacedController::class,
+                ],
+            ],
         ];
         parent::setUp();
     }
@@ -46,6 +52,7 @@ class DiiWebApplicationTest extends TestCase
             [''],
             ['site/foo'],
             ['subdir/subdirectory'],
+            ['namespaced'],
         ];
     }
 }
