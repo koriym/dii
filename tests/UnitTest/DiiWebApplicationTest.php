@@ -18,6 +18,7 @@ class DiiWebApplicationTest extends TestCase
     public function setUp(): void
     {
         $this->config = [
+            'basePath' => dirname(__DIR__) . '/Fake/protected',
         ];
         parent::setUp();
     }
@@ -42,6 +43,9 @@ class DiiWebApplicationTest extends TestCase
     public function routesProvider(): array
     {
         return [
+            [''],
+            ['site/foo'],
+            ['subdir/subdirectory'],
         ];
     }
 }
