@@ -19,5 +19,6 @@ class AppModule extends AbstractModule
             $this->matcher->startsWith('actionIndex'),
             [BarInterceptor::class]
         );
+        $this->bind(FakeSiteController::class);
     }
 }

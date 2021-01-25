@@ -5,24 +5,19 @@ declare(strict_types=1);
 namespace Koriym\Dii;
 
 use CException;
-use Koriym\Dii\Module\AppModule;
-use LengthException;
+use Doctrine\Common\Cache\ArrayCache;
+use Doctrine\Common\Cache\Cache;
 use LogicException;
-use Ray\Di\AbstractModule;
-use Ray\Di\Bind;
-use Ray\Di\Exception\Unbound;
 use Ray\Di\Grapher;
 use ReflectionClass;
 use ReflectionException;
 use YiiBase;
 
-use function assert;
 use function class_exists;
 use function class_implements;
 use function dirname;
 use function func_get_args;
 use function in_array;
-use function is_callable;
 use function is_string;
 
 /**
@@ -30,24 +25,26 @@ use function is_string;
  */
 class Dii extends YiiBase
 {
-    /** @var class-string<ModuleProvider>  */
-    public static $context = App::class;
-
-    /** @var AbstractModule */
-    private static $module;
+    /** @var ?Grapher */
+    private static $grapher;
 
     /**
-     * @param class-string<ModuleProvider> $context
+     * @param class-string<ModuleProvider> $contextClass
      */
-    public static function setContext(string $context): void
+    public static function setContext(string $contextClass, ?Cache $cache = null, ?string $tmpDir = null): void
     {
-        if (! class_exists($context)) {
-            throw new LogicException("Unloadable: {$context}");
+        $cache = $cache ?? new ArrayCache();
+        $tmpDir = $tmpDir ?? dirname((new ReflectionClass($contextClass))->getFileName()) . '/tmp';
+        if (! class_exists($contextClass)) {
+            throw new LogicException("Not found context class: {$contextClass}");
         }
 
-        assert(class_exists($context));
-        self::$context = $context;
-        self::createModule();
+        /** @var ?Grapher $cachedModule */
+        self::$grapher = $cache->fetch($contextClass);
+        if (! self::$grapher instanceof Grapher) {
+            $module = (new $contextClass())();
+            self::$grapher = new Grapher($module, $tmpDir);
+        }
     }
 
     /**
@@ -66,13 +63,8 @@ class Dii extends YiiBase
         unset($args[0]);
 
         $isInjectable = in_array(Injectable::class, class_implements($type), true);
-        if ($isInjectable) {
-            try {
-                $object = self::getGrapher()->newInstanceArgs($type, $args);
-            } catch (Unbound $unbound) {
-                new Bind(self::getModuleInstance()->getContainer(), $type);
-                $object = self::getGrapher()->newInstanceArgs($type, $args);
-            }
+        if ($isInjectable && self::$grapher instanceof Grapher) {
+            $object = self::$grapher->newInstanceArgs($type, $args);
         } else {
             $object = (new ReflectionClass($type))->newInstanceArgs($args);
         }
@@ -98,32 +90,6 @@ class Dii extends YiiBase
     public static function createConsoleApplication($config = null)
     {
         return self::createApplication(DiiConsoleApplication::class, $config);
-    }
-
-    public static function getGrapher(): Grapher
-    {
-        $tmpDir = dirname((new ReflectionClass(AppModule::class))->getFileName()) . '/tmp';
-
-        return new Grapher(self::getModuleInstance(), $tmpDir);
-    }
-
-    private static function createModule(): void
-    {
-        $context = new self::$context();
-        assert(is_callable($context));
-        self::$module = ($context)();
-    }
-
-    /**
-     * Get singleton instance of Module class
-     */
-    private static function getModuleInstance(): AbstractModule
-    {
-        if (! self::$module instanceof AbstractModule) {
-            self::createModule();
-        }
-
-        return self::$module;
     }
 
     /**
