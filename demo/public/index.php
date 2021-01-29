@@ -10,7 +10,7 @@ use Koriym\Dii\Dii;
 use Koriym\Dii\Test;
 
 $loader = require dirname(__DIR__) . '/vendor/autoload.php';
-AnnotationRegistry::registerLoader([SilentAutoload::class, 'autoload']);
+Dii::registerAnnotationLoader();
 
 $config = __DIR__ . '/protected/config/main.php';
 

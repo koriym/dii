@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Koriym\Dii;
 
 use CException;
+use Doctrine\Common\Annotations\AnnotationRegistry;
 use Koriym\Dii\Module\AppModule;
 use LengthException;
 use LogicException;
@@ -149,5 +150,14 @@ class Dii extends YiiBase
         }
 
         throw new CException(self::t('yii', 'Object configuration must be an array containing a "class" element.'));
+    }
+
+    /**
+     * Register silent annotation loader
+     */
+    public static function registerAnnotationLoader()
+    {
+        AnnotationRegistry::reset();
+        AnnotationRegistry::registerLoader([SilentAutoload::class, 'autoload']);
     }
 }
