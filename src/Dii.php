@@ -21,10 +21,15 @@ use function assert;
 use function class_exists;
 use function class_implements;
 use function dirname;
+use function error_reporting;
 use function func_get_args;
 use function in_array;
 use function is_callable;
 use function is_string;
+use function spl_autoload_register;
+use function spl_autoload_unregister;
+use const E_ALL;
+use const E_WARNING;
 
 /**
  * Ray.Di powered Yii class
@@ -155,9 +160,26 @@ class Dii extends YiiBase
     /**
      * Register silent annotation loader
      */
-    public static function registerAnnotationLoader()
+    public static function registerAnnotationLoader(): void
     {
         AnnotationRegistry::reset();
         AnnotationRegistry::registerLoader([SilentAutoload::class, 'autoload']);
+    }
+
+    /**
+     * Silence the Yii autoloader
+     *
+     * Silence YiiBase::autoload, which gives a warning for non-existent classes.
+     */
+    public static function registerSilentAutoLoader(): void
+    {
+        spl_autoload_unregister(array('YiiBase','autoload'));
+        spl_autoload_register(function(string $class): bool {
+            $e = error_reporting(E_ALL & ~E_WARNING);
+            $loaded = YiiBase::autoload($class);
+            error_reporting($e);
+
+            return $loaded;
+        });
     }
 }
