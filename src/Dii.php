@@ -28,6 +28,7 @@ use function is_callable;
 use function is_string;
 use function spl_autoload_register;
 use function spl_autoload_unregister;
+
 use const E_ALL;
 use const E_WARNING;
 
@@ -173,8 +174,8 @@ class Dii extends YiiBase
      */
     public static function registerSilentAutoLoader(): void
     {
-        spl_autoload_unregister(array('YiiBase','autoload'));
-        spl_autoload_register(function(string $class): bool {
+        spl_autoload_unregister(['YiiBase', 'autoload']);
+        spl_autoload_register(static function (string $class): bool {
             $e = error_reporting(E_ALL & ~E_WARNING);
             $loaded = YiiBase::autoload($class);
             error_reporting($e);
