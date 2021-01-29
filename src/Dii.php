@@ -152,6 +152,9 @@ class Dii extends YiiBase
         throw new CException(self::t('yii', 'Object configuration must be an array containing a "class" element.'));
     }
 
+    /**
+     * Register silent annotation loader
+     */
     public static function registerAnnotationLoader()
     {
         AnnotationRegistry::reset();
