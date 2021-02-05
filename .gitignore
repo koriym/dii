@@ -7,3 +7,4 @@ demo/src-module/Context/tmp/
 .phpunit.result.cache
 .phpcs-cache
 build/
+demo/public/protected/cache/
