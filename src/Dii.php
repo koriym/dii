@@ -7,6 +7,9 @@ namespace Koriym\Dii;
 use CException;
 use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\Common\Cache\Cache;
+use Doctrine\Common\Annotations\AnnotationRegistry;
+use Koriym\Dii\Module\AppModule;
+use LengthException;
 use LogicException;
 use Ray\Di\Grapher;
 use ReflectionClass;
@@ -16,9 +19,15 @@ use YiiBase;
 use function class_exists;
 use function class_implements;
 use function dirname;
+use function error_reporting;
 use function func_get_args;
 use function in_array;
 use function is_string;
+use function spl_autoload_register;
+use function spl_autoload_unregister;
+
+use const E_ALL;
+use const E_WARNING;
 
 /**
  * Ray.Di powered Yii class
@@ -115,5 +124,31 @@ class Dii extends YiiBase
         }
 
         throw new CException(self::t('yii', 'Object configuration must be an array containing a "class" element.'));
+    }
+
+    /**
+     * Register silent annotation loader
+     */
+    public static function registerAnnotationLoader(): void
+    {
+        AnnotationRegistry::reset();
+        AnnotationRegistry::registerLoader([SilentAutoload::class, 'autoload']);
+    }
+
+    /**
+     * Silence the Yii autoloader
+     *
+     * Silence YiiBase::autoload, which gives a warning for non-existent classes.
+     */
+    public static function registerSilentAutoLoader(): void
+    {
+        spl_autoload_unregister(['YiiBase', 'autoload']);
+        spl_autoload_register(static function (string $class): bool {
+            $e = error_reporting(E_ALL & ~E_WARNING);
+            $loaded = YiiBase::autoload($class);
+            error_reporting($e);
+
+            return $loaded;
+        });
     }
 }

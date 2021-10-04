@@ -94,7 +94,7 @@ class DiiWebApplication extends CWebApplication
                     $id[0] = strtolower($id[0]);
 
                     return [
-                        Dii::createComponent($className, $id, $owner === $this ? null : $owner),
+                        Dii::createComponent($className, $controllerID . $id, $owner === $this ? null : $owner),
                         $this->parseActionParams($route),
                     ];
                 }
@@ -106,7 +106,7 @@ class DiiWebApplication extends CWebApplication
                     $id[0] = strtolower($id[0]);
 
                     return [
-                        Dii::createComponent($namespacedClassName, $id, $owner === $this ? null : $owner),
+                        Dii::createComponent($namespacedClassName, $controllerID . $id, $owner === $this ? null : $owner),
                         $this->parseActionParams($route),
                     ];
                 }
