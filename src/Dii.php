@@ -165,6 +165,7 @@ class Dii extends YiiBase
     public static function registerAnnotationLoader(): void
     {
         AnnotationRegistry::reset();
+        /** @psalm-suppress UndefinedMethod */
         AnnotationRegistry::registerLoader([SilentAutoload::class, 'autoload']);
     }
 
