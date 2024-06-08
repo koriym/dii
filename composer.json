@@ -49,10 +49,11 @@
   "scripts": {
     "demo": "php -S 127.0.0.1:8080 -t demo/public",
     "test": ["phpunit"],
-    "tests": ["@sa", "@cs", "@test"],
+    "tests": ["@clean", "@sa", "@cs", "@test"],
     "sa": "psalm --show-info=false",
     "cs": "phpcs --standard=./phpcs.xml src tests",
     "cs-fix": "phpcbf src tests",
+    "clean": "psalm --clear-cache",
     "coverage": ["php -dzend_extension=xdebug.so ./vendor/bin/phpunit --coverage-text --coverage-html=build/coverage"],
     "pcov": ["php -dextension=pcov.so -d pcov.enabled=1 ./vendor/bin/phpunit --coverage-text --coverage-html=build/coverage  --coverage-clover=coverage.xml"]
   },
