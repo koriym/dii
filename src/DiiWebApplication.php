@@ -30,13 +30,13 @@ class DiiWebApplication extends CWebApplication
     /**
      * {@inheritdoc}
      *
+     * @return array|null
+     *
      * @throws CException
      * @throws ReflectionException
      *
      * @psalm-suppress UndefinedVariable
      * @psalm-suppress ArgumentTypeCoercion
-     *
-     * @return array|null
      */
     public function createController($route, $owner = null)
     {
