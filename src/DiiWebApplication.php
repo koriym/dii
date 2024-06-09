@@ -30,6 +30,8 @@ class DiiWebApplication extends CWebApplication
     /**
      * {@inheritdoc}
      *
+     * @return array|null
+     *
      * @throws CException
      * @throws ReflectionException
      *

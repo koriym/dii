@@ -117,7 +117,8 @@ class Dii extends YiiBase
     private static function createModule(): void
     {
         $context = new self::$context();
-        assert(is_callable($context));
+        /** @var callable $context */
+        /** @psalm-suppress InvalidFunctionCall */
         self::$module = ($context)();
     }
 
@@ -164,6 +165,7 @@ class Dii extends YiiBase
     public static function registerAnnotationLoader(): void
     {
         AnnotationRegistry::reset();
+        /** @psalm-suppress UndefinedMethod */
         AnnotationRegistry::registerLoader([SilentAutoload::class, 'autoload']);
     }
 
