@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Koriym\Dii;
 
 use CException;
+use Doctrine\Common\Annotations\AnnotationRegistry;
 use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\Common\Cache\Cache;
-use Doctrine\Common\Annotations\AnnotationRegistry;
 use Koriym\Dii\Module\AppModule;
 use LengthException;
 use LogicException;
