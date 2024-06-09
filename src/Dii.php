@@ -101,6 +101,33 @@ class Dii extends YiiBase
         return self::createApplication(DiiConsoleApplication::class, $config);
     }
 
+    public static function getGrapher(): Grapher
+    {
+        $tmpDir = dirname((new ReflectionClass(AppModule::class))->getFileName()) . '/tmp';
+
+        return new Grapher(self::getModuleInstance(), $tmpDir);
+    }
+
+    private static function createModule(): void
+    {
+        $context = new self::$context();
+        /** @var callable $context */
+        /** @psalm-suppress InvalidFunctionCall */
+        self::$module = ($context)();
+    }
+
+    /**
+     * Get singleton instance of Module class
+     */
+    private static function getModuleInstance(): AbstractModule
+    {
+        if (! self::$module instanceof AbstractModule) {
+            self::createModule();
+        }
+
+        return self::$module;
+    }
+
     /**
      * Extract config
      *
@@ -132,6 +159,7 @@ class Dii extends YiiBase
     public static function registerAnnotationLoader(): void
     {
         AnnotationRegistry::reset();
+        /** @psalm-suppress UndefinedMethod */
         AnnotationRegistry::registerLoader([SilentAutoload::class, 'autoload']);
     }
 
