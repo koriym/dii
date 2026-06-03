@@ -19,6 +19,7 @@ use function error_reporting;
 use function func_get_args;
 use function in_array;
 use function is_string;
+use function method_exists;
 use function spl_autoload_register;
 use function spl_autoload_unregister;
 
@@ -96,8 +97,10 @@ class Dii extends YiiBase
      */
     public static function registerAnnotationLoader(): void
     {
+        // registerLoader() exists only in doctrine/annotations 1.x; 2.x removed it
+        // and attribute-based ray/di (>= 2.16) has no doctrine/annotations at all.
         /** @psalm-suppress UndefinedClass */
-        if (! class_exists(AnnotationRegistry::class)) {
+        if (! method_exists(AnnotationRegistry::class, 'registerLoader')) {
             return;
         }
 

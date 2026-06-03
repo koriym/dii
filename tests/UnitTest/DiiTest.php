@@ -17,6 +17,7 @@ class DiiTest extends TestCase
     public function setUp(): void
     {
         $this->dii = new Dii();
+        Dii::registerAnnotationLoader(); // enable @Inject on annotation-based ray/di (no-op on attribute-based)
         Dii::setContext(App::class);
         parent::setUp();
     }
