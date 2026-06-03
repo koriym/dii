@@ -150,6 +150,23 @@ As soon as the controller is created, all methods with the `#[Inject]` attribute
 
 > With older, annotation-based Ray.Di (`< 2.16`), the `@Inject` docblock annotation works as well.
 
+### Bind your injectable controllers
+
+Ray.Di resolves bindings at compile time, so each `Injectable` controller or console command must be **bound explicitly in your module**. If it is not bound, Ray.Di raises `Untargeted` and the request fails fast. Dii no longer auto-binds the concrete class at runtime: that silent fallback was not AOP-compiled, so it behaved differently from an explicit binding and the missing binding went unnoticed (especially at compile time).
+
+```php
+class AppModule extends AbstractModule
+{
+    protected function configure()
+    {
+        $this->bind(FooInterface::class)->to(Foo::class);
+
+        // Bind each injectable controller / command (untargeted binding)
+        $this->bind(SiteController::class);
+    }
+}
+```
+
 Also any class created by `Yii:createComponent()` method is worked as well.
 
 ## Demo
