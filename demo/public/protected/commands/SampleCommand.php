@@ -14,6 +14,7 @@ class SampleCommand extends \CConsoleCommand implements Injectable
     /**
      * @Inject
      */
+    #[Inject]
     public function setFoo(FooInterface $foo) : void
     {
         $this->foo = $foo;

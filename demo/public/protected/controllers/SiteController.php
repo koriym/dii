@@ -17,6 +17,7 @@ class SiteController extends CController implements Injectable
     /**
      * @Inject
      */
+    #[Inject]
     public function setFoo(FooInterface $foo)
     {
         $this->foo = $foo;

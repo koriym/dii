@@ -17,6 +17,8 @@ class DiiTest extends TestCase
     public function setUp(): void
     {
         $this->dii = new Dii();
+        Dii::registerAnnotationLoader(); // enable @Inject on annotation-based ray/di (no-op on attribute-based)
+        Dii::setContext(App::class);
         parent::setUp();
     }
 
@@ -70,6 +72,14 @@ class DiiTest extends TestCase
         $this->assertInstanceOf(FakeSiteController::class, $controller);
         $this->assertNotInstanceOf(Foo::class, $controller->foo);
         $this->assertInstanceOf(TestFoo::class, $controller->foo);
+    }
+
+    public function testSetContextWithNullCache(): void
+    {
+        Dii::setContext(App::class, new NullCache());
+        $controller = $this->dii->createComponent(FakeSiteController::class, 'site');
+        $this->assertInstanceOf(FakeSiteController::class, $controller);
+        $this->assertInstanceOf(Foo::class, $controller->foo);
     }
 
     public function testInvalidArgument(): void

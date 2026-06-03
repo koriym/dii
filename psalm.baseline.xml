@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.3.2@57b53ff26237074fdf5cbcb034f7da5172be4524">
-  <file src="src/Dii.php">
-    <UndefinedClass occurrences="2">
-      <code>App</code>
-      <code>AppModule</code>
-    </UndefinedClass>
+<files psalm-version="6.16.1@f1f5de594dc76faf8784e02d3dc4716c91c6f6ac">
+  <file src="src/DiiWebApplication.php">
+    <InvalidArrayAccess>
+      <code><![CDATA[$id[0]]]></code>
+      <code><![CDATA[$id[0]]]></code>
+    </InvalidArrayAccess>
+    <InvalidArrayAssignment>
+      <code><![CDATA[$id[0]]]></code>
+      <code><![CDATA[$id[0]]]></code>
+    </InvalidArrayAssignment>
   </file>
 </files>

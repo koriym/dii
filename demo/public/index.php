@@ -10,9 +10,6 @@ $loader = require dirname(__DIR__) . '/vendor/autoload.php';
 Dii::registerAnnotationLoader(); // アノテーションローダーのwarning抑制
 //Dii::registerSilentAutoLoader(); // YiiBase::autoloadのwarning抑制
 
-// set cached annotation reader
-require __DIR__ . '/protected/annotation_cache.php';
-
 $config = __DIR__ . '/protected/config/main.php';
 
 

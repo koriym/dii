@@ -84,9 +84,43 @@ class Test implements ModuleProvider
 }
 ```
 
+## Caching
+
+By default `Dii::setContext()` rebuilds the object graph (the Ray.Di `Grapher`) on every call, so changes to your modules always take effect.
+
+```php
+// Default: rebuild the object graph on every request
+Dii::setContext(App::class);
+```
+
+In production, pass `FileCache` to cache the graph and skip the costly rebuild. It stores the graph as a `<?php return '...';` file so OPcache keeps it in memory.
+
+```php
+use Koriym\Dii\FileCache;
+
+// Production: cache the object graph on the filesystem
+Dii::setContext(App::class, new FileCache(__DIR__ . '/tmp'));
+```
+
+To use your own storage (APCu, PSR-16, etc.), implement `CacheInterface`:
+
+```php
+use Koriym\Dii\CacheInterface;
+
+final class MyCache implements CacheInterface
+{
+    public function get(string $key, callable $callback): mixed
+    {
+        // Return the cached value, or run $callback() and store its result.
+    }
+}
+
+Dii::setContext(App::class, new MyCache());
+```
+
 ## Injecting Dependencies in Controllers
 
-Ray.Di is able to inject instances to your controllers based on annotations:
+Ray.Di is able to inject instances to your controllers based on the `#[Inject]` attribute:
 
 ```php
 <?php
@@ -99,9 +133,7 @@ class SiteController extends CController implements Injectable
 {
     private $foo;
 
-    /**
-     * @Inject
-     */
+    #[Inject]
     public function setDeps(FooInterface $foo)
     {
         $this->foo = $foo;
@@ -114,7 +146,26 @@ class SiteController extends CController implements Injectable
 }
 ```
 
-As soon as the controller is created, all methods having the `@Inject` annotation will get instances of the hinted class passed. This works only for setter method, not constructors. Please implemet marker interface `Injectable` to notify Ray.Di the class injectable.
+As soon as the controller is created, all methods with the `#[Inject]` attribute will get instances of the hinted class passed. This works only for setter methods, not constructors. Please implement the marker interface `Injectable` to notify Ray.Di that the class is injectable.
+
+> With older, annotation-based Ray.Di (`< 2.16`), the `@Inject` docblock annotation works as well.
+
+### Bind your injectable controllers
+
+Ray.Di resolves bindings at compile time, so each `Injectable` controller or console command must be **bound explicitly in your module**. If it is not bound, Ray.Di raises `Untargeted` and the request fails fast. Dii no longer auto-binds the concrete class at runtime: that silent fallback was not AOP-compiled, so it behaved differently from an explicit binding and the missing binding went unnoticed (especially at compile time).
+
+```php
+class AppModule extends AbstractModule
+{
+    protected function configure()
+    {
+        $this->bind(FooInterface::class)->to(Foo::class);
+
+        // Bind each injectable controller / command (untargeted binding)
+        $this->bind(SiteController::class);
+    }
+}
+```
 
 Also any class created by `Yii:createComponent()` method is worked as well.
 

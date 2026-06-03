@@ -6,11 +6,11 @@
     </include>
   </coverage>
   <testsuites>
-    <testsuite name="Dii Test Suite">
-      <directory>tests</directory>
+    <testsuite name="Unit">
+      <directory>tests/UnitTest</directory>
+    </testsuite>
+    <testsuite name="Integration">
+      <file>tests/IntegrationTest.php</file>
     </testsuite>
   </testsuites>
-  <php>
-    <ini name="error_reporting" value="-1"/>
-  </php>
 </phpunit>

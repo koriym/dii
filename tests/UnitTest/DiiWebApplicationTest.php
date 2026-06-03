@@ -11,6 +11,9 @@ use PHPUnit\Framework\TestCase;
 use Yii;
 
 use function dirname;
+use function error_reporting;
+
+use const E_DEPRECATED;
 
 class DiiWebApplicationTest extends TestCase
 {
@@ -19,6 +22,10 @@ class DiiWebApplicationTest extends TestCase
 
     public function setUp(): void
     {
+        // Yii's error handler (set_error_handler with error_reporting()) turns
+        // PHP 8.5's "(double) cast is deprecated" notice into an HTML fatal.
+        // Scope the suppression to this Yii-driven test.
+        error_reporting(error_reporting() & ~E_DEPRECATED);
         $this->config = [
             'basePath' => dirname(__DIR__) . '/Fake/protected',
             'controllerMap' => [

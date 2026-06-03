@@ -7,283 +7,30 @@
     "content-hash": "dd060237af869021adf263f6fcee5401",
     "packages": [
         {
-            "name": "doctrine/annotations",
-            "version": "1.11.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/doctrine/annotations.git",
-                "reference": "ce77a7ba1770462cd705a91a151b6c3746f9c6ad"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/annotations/zipball/ce77a7ba1770462cd705a91a151b6c3746f9c6ad",
-                "reference": "ce77a7ba1770462cd705a91a151b6c3746f9c6ad",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/lexer": "1.*",
-                "ext-tokenizer": "*",
-                "php": "^7.1 || ^8.0"
-            },
-            "require-dev": {
-                "doctrine/cache": "1.*",
-                "doctrine/coding-standard": "^6.0 || ^8.1",
-                "phpstan/phpstan": "^0.12.20",
-                "phpunit/phpunit": "^7.5 || ^9.1.5"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.11.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Doctrine\\Common\\Annotations\\": "lib/Doctrine/Common/Annotations"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Guilherme Blanco",
-                    "email": "guilhermeblanco@gmail.com"
-                },
-                {
-                    "name": "Roman Borschel",
-                    "email": "roman@code-factory.org"
-                },
-                {
-                    "name": "Benjamin Eberlei",
-                    "email": "kontakt@beberlei.de"
-                },
-                {
-                    "name": "Jonathan Wage",
-                    "email": "jonwage@gmail.com"
-                },
-                {
-                    "name": "Johannes Schmitt",
-                    "email": "schmittjoh@gmail.com"
-                }
-            ],
-            "description": "Docblock Annotations Parser",
-            "homepage": "https://www.doctrine-project.org/projects/annotations.html",
-            "keywords": [
-                "annotations",
-                "docblock",
-                "parser"
-            ],
-            "support": {
-                "issues": "https://github.com/doctrine/annotations/issues",
-                "source": "https://github.com/doctrine/annotations/tree/1.11.1"
-            },
-            "time": "2020-10-26T10:28:16+00:00"
-        },
-        {
-            "name": "doctrine/cache",
-            "version": "1.10.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/doctrine/cache.git",
-                "reference": "13e3381b25847283a91948d04640543941309727"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/cache/zipball/13e3381b25847283a91948d04640543941309727",
-                "reference": "13e3381b25847283a91948d04640543941309727",
-                "shasum": ""
-            },
-            "require": {
-                "php": "~7.1 || ^8.0"
-            },
-            "conflict": {
-                "doctrine/common": ">2.2,<2.4"
-            },
-            "require-dev": {
-                "alcaeus/mongo-php-adapter": "^1.1",
-                "doctrine/coding-standard": "^6.0",
-                "mongodb/mongodb": "^1.1",
-                "phpunit/phpunit": "^7.0",
-                "predis/predis": "~1.0"
-            },
-            "suggest": {
-                "alcaeus/mongo-php-adapter": "Required to use legacy MongoDB driver"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.9.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Doctrine\\Common\\Cache\\": "lib/Doctrine/Common/Cache"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Guilherme Blanco",
-                    "email": "guilhermeblanco@gmail.com"
-                },
-                {
-                    "name": "Roman Borschel",
-                    "email": "roman@code-factory.org"
-                },
-                {
-                    "name": "Benjamin Eberlei",
-                    "email": "kontakt@beberlei.de"
-                },
-                {
-                    "name": "Jonathan Wage",
-                    "email": "jonwage@gmail.com"
-                },
-                {
-                    "name": "Johannes Schmitt",
-                    "email": "schmittjoh@gmail.com"
-                }
-            ],
-            "description": "PHP Doctrine Cache library is a popular cache implementation that supports many different drivers such as redis, memcache, apc, mongodb and others.",
-            "homepage": "https://www.doctrine-project.org/projects/cache.html",
-            "keywords": [
-                "abstraction",
-                "apcu",
-                "cache",
-                "caching",
-                "couchdb",
-                "memcached",
-                "php",
-                "redis",
-                "xcache"
-            ],
-            "support": {
-                "issues": "https://github.com/doctrine/cache/issues",
-                "source": "https://github.com/doctrine/cache/tree/1.10.x"
-            },
-            "funding": [
-                {
-                    "url": "https://www.doctrine-project.org/sponsorship.html",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://www.patreon.com/phpdoctrine",
-                    "type": "patreon"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/doctrine%2Fcache",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2020-07-07T18:54:01+00:00"
-        },
-        {
-            "name": "doctrine/lexer",
-            "version": "1.2.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/doctrine/lexer.git",
-                "reference": "e864bbf5904cb8f5bb334f99209b48018522f042"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/lexer/zipball/e864bbf5904cb8f5bb334f99209b48018522f042",
-                "reference": "e864bbf5904cb8f5bb334f99209b48018522f042",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.2 || ^8.0"
-            },
-            "require-dev": {
-                "doctrine/coding-standard": "^6.0",
-                "phpstan/phpstan": "^0.11.8",
-                "phpunit/phpunit": "^8.2"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.2.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Doctrine\\Common\\Lexer\\": "lib/Doctrine/Common/Lexer"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Guilherme Blanco",
-                    "email": "guilhermeblanco@gmail.com"
-                },
-                {
-                    "name": "Roman Borschel",
-                    "email": "roman@code-factory.org"
-                },
-                {
-                    "name": "Johannes Schmitt",
-                    "email": "schmittjoh@gmail.com"
-                }
-            ],
-            "description": "PHP Doctrine Lexer parser library that can be used in Top-Down, Recursive Descent Parsers.",
-            "homepage": "https://www.doctrine-project.org/projects/lexer.html",
-            "keywords": [
-                "annotations",
-                "docblock",
-                "lexer",
-                "parser",
-                "php"
-            ],
-            "support": {
-                "issues": "https://github.com/doctrine/lexer/issues",
-                "source": "https://github.com/doctrine/lexer/tree/1.2.1"
-            },
-            "funding": [
-                {
-                    "url": "https://www.doctrine-project.org/sponsorship.html",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://www.patreon.com/phpdoctrine",
-                    "type": "patreon"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/doctrine%2Flexer",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2020-05-25T17:44:05+00:00"
-        },
-        {
             "name": "koriym/dii",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/koriym/dii.git",
-                "reference": "8a3ab76500bc5950f8f3492d46a59b2f54f6acba"
+                "reference": "6cde86f5bd6d0f980c31e0de5fea56b11595b01e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/koriym/dii/zipball/8a3ab76500bc5950f8f3492d46a59b2f54f6acba",
-                "reference": "8a3ab76500bc5950f8f3492d46a59b2f54f6acba",
+                "url": "https://api.github.com/repos/koriym/dii/zipball/6cde86f5bd6d0f980c31e0de5fea56b11595b01e",
+                "reference": "6cde86f5bd6d0f980c31e0de5fea56b11595b01e",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.1.0",
-                "ray/di": "^2.0",
-                "yiisoft/yii": "1.1.*"
+                "php": "^7.1 || ^8.0",
+                "ray/di": "^2.10",
+                "yiisoft/yii": "^1.1.16"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.16",
-                "phpunit/phpunit": "^7.5",
-                "vimeo/psalm": "^4.2"
+                "doctrine/coding-standard": "^8.2",
+                "phpmd/phpmd": "^2.9",
+                "phpunit/phpunit": "^8.5 || ^9.6.19",
+                "squizlabs/php_codesniffer": "^3.5",
+                "symfony/process": "^5.2"
             },
             "default-branch": true,
             "type": "library",
@@ -296,158 +43,123 @@
             "license": [
                 "MIT"
             ],
+            "authors": [
+                {
+                    "name": "Akihito Koriyama",
+                    "email": "akihito.koriyama@gmail.com"
+                },
+                {
+                    "name": "Hiroshi Sambo",
+                    "email": "sun3bow@gmail.com"
+                },
+                {
+                    "name": "Seiji Amashige",
+                    "email": "tenjuu99@gmail.com"
+                }
+            ],
             "description": "Dependency Injection Plugin for Yii 1",
             "support": {
                 "issues": "https://github.com/koriym/dii/issues",
-                "source": "https://github.com/koriym/dii/tree/master"
+                "source": "https://github.com/koriym/dii/tree/0.5.0"
             },
-            "time": "2020-12-23T01:43:51+00:00"
+            "time": "2024-06-09T00:30:51+00:00"
         },
         {
-            "name": "koriym/printo",
-            "version": "1.0.1",
+            "name": "koriym/null-object",
+            "version": "1.0.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/koriym/print_o.git",
-                "reference": "d969e4cc738a376d479c2125e7d62be88cfa9dbe"
+                "url": "https://github.com/koriym/Koriym.NullObject.git",
+                "reference": "97687d240413a11f482c960391f50cdc4fe9b98b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/koriym/print_o/zipball/d969e4cc738a376d479c2125e7d62be88cfa9dbe",
-                "reference": "d969e4cc738a376d479c2125e7d62be88cfa9dbe",
+                "url": "https://api.github.com/repos/koriym/Koriym.NullObject/zipball/97687d240413a11f482c960391f50cdc4fe9b98b",
+                "reference": "97687d240413a11f482c960391f50cdc4fe9b98b",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.4.0"
+                "php": "^7.2 || ^8.0"
+            },
+            "require-dev": {
+                "bamarni/composer-bin-plugin": "^1.4",
+                "doctrine/annotations": "^1.14 || ^2.0",
+                "phpunit/phpunit": "^8.5.34 || ^9.6"
             },
             "type": "library",
             "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                "bamarni-bin": {
+                    "bin-links": true,
+                    "forward-command": true
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Koriym\\Printo\\": "src/"
-                },
                 "files": [
-                    "src/print_o.php"
-                ]
+                    "autoload.php"
+                ],
+                "psr-4": {
+                    "Koriym\\NullObject\\": "src/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "BSD-3-Clause"
+                "MIT"
             ],
             "authors": [
                 {
                     "name": "Akihito Koriyama",
-                    "email": "akihito.koriyama@gmail.com",
-                    "homepage": "https://github.com/koriym"
+                    "email": "akihito.koriyama@gmail.com"
                 }
             ],
-            "description": "An object graph visualizer.",
-            "homepage": "https://github.com/koriym/print_o",
-            "keywords": [
-                "debug",
-                "var_dump"
-            ],
+            "description": "Null object generator",
             "support": {
-                "issues": "https://github.com/koriym/print_o/issues",
-                "source": "https://github.com/koriym/print_o/tree/develop"
+                "issues": "https://github.com/koriym/Koriym.NullObject/issues",
+                "source": "https://github.com/koriym/Koriym.NullObject/tree/1.0.4"
             },
-            "time": "2015-02-13T19:04:21+00:00"
+            "time": "2023-09-29T06:40:29+00:00"
         },
         {
-            "name": "nikic/php-parser",
-            "version": "v4.10.4",
+            "name": "ray/aop",
+            "version": "2.19.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "c6d052fc58cb876152f89f532b95a8d7907e7f0e"
+                "url": "https://github.com/ray-di/Ray.Aop.git",
+                "reference": "e93080580fdda3497c329fb438d72737c1f2b354"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/c6d052fc58cb876152f89f532b95a8d7907e7f0e",
-                "reference": "c6d052fc58cb876152f89f532b95a8d7907e7f0e",
+                "url": "https://api.github.com/repos/ray-di/Ray.Aop/zipball/e93080580fdda3497c329fb438d72737c1f2b354",
+                "reference": "e93080580fdda3497c329fb438d72737c1f2b354",
                 "shasum": ""
             },
             "require": {
                 "ext-tokenizer": "*",
-                "php": ">=7.0"
+                "php": "^8.2"
             },
             "require-dev": {
-                "ircmaxell/php-yacc": "^0.0.7",
-                "phpunit/phpunit": "^6.5 || ^7.0 || ^8.0 || ^9.0"
-            },
-            "bin": [
-                "bin/php-parse"
-            ],
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "4.9-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "PhpParser\\": "lib/PhpParser"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Nikita Popov"
-                }
-            ],
-            "description": "A PHP parser written in PHP",
-            "keywords": [
-                "parser",
-                "php"
-            ],
-            "support": {
-                "issues": "https://github.com/nikic/PHP-Parser/issues",
-                "source": "https://github.com/nikic/PHP-Parser/tree/v4.10.4"
-            },
-            "time": "2020-12-20T10:01:03+00:00"
-        },
-        {
-            "name": "ray/aop",
-            "version": "2.9.9",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ray-di/Ray.Aop.git",
-                "reference": "7ba283d78b4a457ecefe548c3affc4c0a7e1072b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ray-di/Ray.Aop/zipball/7ba283d78b4a457ecefe548c3affc4c0a7e1072b",
-                "reference": "7ba283d78b4a457ecefe548c3affc4c0a7e1072b",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/annotations": "^1.10",
-                "nikic/php-parser": "^4.2",
-                "php": "^7.2 || ^8.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^8.5 || ^9.3"
+                "bamarni/composer-bin-plugin": "^1.4.1",
+                "infection/infection": "^0.31.9",
+                "phpunit/phpunit": "^10.5.0",
+                "symfony/string": "^7.2"
             },
             "suggest": {
                 "ray/di": "A dependency injection framework"
             },
             "type": "library",
+            "extra": {
+                "bamarni-bin": {
+                    "bin-links": true,
+                    "forward-command": true
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Ray\\Aop\\": [
-                        "src/"
-                    ]
-                },
-                "files": [
-                    "annotation_loader.php"
-                ]
+                        "src/",
+                        "src-deprecated/"
+                    ],
+                    "Ray\\ServiceLocator\\": "src-deprecated/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -465,44 +177,60 @@
             ],
             "support": {
                 "issues": "https://github.com/ray-di/Ray.Aop/issues",
-                "source": "https://github.com/ray-di/Ray.Aop/tree/2.9.9"
+                "source": "https://github.com/ray-di/Ray.Aop/tree/2.19.1"
             },
-            "time": "2020-09-28T04:33:52+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/koriym",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/ray/aop",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-01-24T03:12:32+00:00"
         },
         {
             "name": "ray/di",
-            "version": "2.10.5",
+            "version": "2.20.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ray-di/Ray.Di.git",
-                "reference": "9abb764d515c8c5b90db0fdc168f3fe1b43ccbdd"
+                "reference": "2a03a153559fbdd94544e1741a25972fc2c9947a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ray-di/Ray.Di/zipball/9abb764d515c8c5b90db0fdc168f3fe1b43ccbdd",
-                "reference": "9abb764d515c8c5b90db0fdc168f3fe1b43ccbdd",
+                "url": "https://api.github.com/repos/ray-di/Ray.Di/zipball/2a03a153559fbdd94544e1741a25972fc2c9947a",
+                "reference": "2a03a153559fbdd94544e1741a25972fc2c9947a",
                 "shasum": ""
             },
             "require": {
-                "doctrine/annotations": "^1.10",
-                "doctrine/cache": "^1.10",
-                "koriym/printo": "^1.0",
-                "nikic/php-parser": "^4.5",
-                "php": "^7.2 || ^8.0",
-                "ray/aop": "^2.9.8"
+                "koriym/null-object": "^1.0",
+                "php": "^8.2",
+                "ray/aop": "^2.19"
             },
             "require-dev": {
-                "phpunit/phpunit": "^8.5"
+                "bamarni/composer-bin-plugin": "^1.4",
+                "ext-pdo": "*",
+                "infection/infection": "*",
+                "phpunit/phpunit": "^9.6.31"
+            },
+            "suggest": {
+                "ray/compiler": "For compiling dependency injection container to improve performance"
             },
             "type": "library",
+            "extra": {
+                "bamarni-bin": {
+                    "bin-links": true,
+                    "forward-command": true
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Ray\\Di\\": [
                         "src/di",
                         "src-deprecated/di"
-                    ],
-                    "Ray\\Compiler\\": [
-                        "src/compiler"
                     ]
                 }
             },
@@ -516,29 +244,29 @@
                     "email": "akihito.koriyama@gmail.com"
                 }
             ],
-            "description": "Guice style annotation-driven dependency injection framework",
+            "description": "Guice style dependency injection framework",
             "keywords": [
                 "aop",
                 "di"
             ],
             "support": {
                 "issues": "https://github.com/ray-di/Ray.Di/issues",
-                "source": "https://github.com/ray-di/Ray.Di/tree/2.10.5"
+                "source": "https://github.com/ray-di/Ray.Di/tree/2.20.0"
             },
-            "time": "2020-10-03T04:47:32+00:00"
+            "time": "2025-12-24T13:12:28+00:00"
         },
         {
             "name": "yiisoft/yii",
-            "version": "1.1.23",
+            "version": "1.1.32",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii.git",
-                "reference": "445827fe625a392451e9839787bd513112b23b1b"
+                "reference": "e7728e20dd6901f449a6e7392037c37b029288e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii/zipball/445827fe625a392451e9839787bd513112b23b1b",
-                "reference": "445827fe625a392451e9839787bd513112b23b1b",
+                "url": "https://api.github.com/repos/yiisoft/yii/zipball/e7728e20dd6901f449a6e7392037c37b029288e4",
+                "reference": "e7728e20dd6901f449a6e7392037c37b029288e4",
                 "shasum": ""
             },
             "require": {
@@ -546,11 +274,11 @@
             },
             "require-dev": {
                 "cweagans/composer-patches": "^1.7",
-                "pear/archive_tar": "~1.4.6",
+                "pear/archive_tar": "~1.5.0",
                 "phing/phing": "2.*",
                 "phpseclib/mcrypt_compat": "^1.0",
                 "phpunit/phpunit": "4.8.34",
-                "phpunit/phpunit-selenium": "~2.0.0"
+                "phpunit/phpunit-selenium": "~1.4.0"
             },
             "suggest": {
                 "ext-mcrypt": "Required by encrypt and decrypt methods of CSecurityManager",
@@ -561,19 +289,24 @@
             ],
             "type": "library",
             "extra": {
+                "patches": {
+                    "phpunit/phpunit": {
+                        "Fix PHP 7 compatibility": "https://yiisoft.github.io/phpunit-patches/phpunit_php7.patch",
+                        "Fix PHP 8 compatibility": "https://yiisoft.github.io/phpunit-patches/phpunit_php8.patch",
+                        "Fix PHP 8.1 compatibility": "https://yiisoft.github.io/phpunit-patches/phpunit_php81.patch",
+                        "Fix PHP 8.3 compatibility": "https://yiisoft.github.io/phpunit-patches/phpunit_php83.patch"
+                    },
+                    "phpunit/php-file-iterator": {
+                        "Fix PHP 8.1 compatibility": "https://yiisoft.github.io/phpunit-patches/phpunit_path_file_iterator.patch"
+                    },
+                    "phpunit/phpunit-mock-objects": {
+                        "Fix PHP 7 and 8 compatibility": "https://yiisoft.github.io/phpunit-patches/phpunit_mock_objects.patch"
+                    }
+                },
                 "branch-alias": {
                     "dev-master": "1.1.x-dev"
                 },
-                "composer-exit-on-patch-failure": true,
-                "patches": {
-                    "phpunit/phpunit-mock-objects": {
-                        "Fix PHP 7 and 8 compatibility": "https://yiisoft.github.io/phpunit-patches/phpunit_mock_objects.patch"
-                    },
-                    "phpunit/phpunit": {
-                        "Fix PHP 7 compatibility": "https://yiisoft.github.io/phpunit-patches/phpunit_php7.patch",
-                        "Fix PHP 8 compatibility": "https://yiisoft.github.io/phpunit-patches/phpunit_php8.patch"
-                    }
-                }
+                "composer-exit-on-patch-failure": true
             },
             "autoload": {
                 "classmap": [
@@ -589,13 +322,13 @@
                 {
                     "name": "Qiang Xue",
                     "email": "qiang.xue@gmail.com",
-                    "homepage": "http://www.yiiframework.com/",
+                    "homepage": "https://www.yiiframework.com/",
                     "role": "Founder and project lead"
                 },
                 {
                     "name": "Alexander Makarov",
                     "email": "sam@rmcreative.ru",
-                    "homepage": "http://rmcreative.ru/",
+                    "homepage": "https://rmcreative.ru/",
                     "role": "Core framework development"
                 },
                 {
@@ -606,7 +339,7 @@
                 {
                     "name": "Carsten Brandt",
                     "email": "mail@cebe.cc",
-                    "homepage": "http://cebe.cc/",
+                    "homepage": "https://cebe.cc/",
                     "role": "Core framework development"
                 },
                 {
@@ -637,17 +370,17 @@
                 }
             ],
             "description": "Yii Web Programming Framework",
-            "homepage": "http://www.yiiframework.com/",
+            "homepage": "https://www.yiiframework.com/",
             "keywords": [
                 "framework",
                 "yii"
             ],
             "support": {
-                "forum": "http://www.yiiframework.com/forum/",
-                "irc": "irc://irc.freenode.net/yii",
+                "forum": "https://www.yiiframework.com/forum/",
+                "irc": "ircs://irc.libera.chat:6697/yii",
                 "issues": "https://github.com/yiisoft/yii/issues?state=open",
                 "source": "https://github.com/yiisoft/yii",
-                "wiki": "http://www.yiiframework.com/wiki/"
+                "wiki": "https://www.yiiframework.com/wiki/"
             },
             "funding": [
                 {
@@ -663,7 +396,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-12-02T16:53:51+00:00"
+            "time": "2025-12-23T09:54:33+00:00"
         }
     ],
     "packages-dev": [],
@@ -677,6 +410,6 @@
     "platform": {
         "php": ">=7.1.0"
     },
-    "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "platform-dev": {},
+    "plugin-api-version": "2.9.0"
 }

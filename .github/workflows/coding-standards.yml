@@ -9,30 +9,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: 8.3
-          tools: phpcs, cs2pr
+          tools: cs2pr
           coverage: none
 
       - name: Get composer cache directory
         id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+        run: echo "dir=$(composer config cache-files-dir)" >> "$GITHUB_OUTPUT"
 
       - name: Cache dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
           restore-keys: ${{ runner.os }}-composer-
 
       - name: Install dependencies
-        run: |
-          composer install --no-interaction --no-progress --prefer-dist
-          composer require --dev doctrine/coding-standard ^8.1
+        run: composer install --no-interaction --no-progress --prefer-dist
 
       - name: Run PHP_CodeSniffer
         run: ./vendor/bin/phpcs -q --no-colors --report=checkstyle src tests | cs2pr
