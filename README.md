@@ -84,9 +84,43 @@ class Test implements ModuleProvider
 }
 ```
 
+## Caching
+
+`Dii::setContext()` caches the built object graph (the Ray.Di `Grapher`) so it is not rebuilt on every request. By default it stores the graph as a `<?php return '...';` file under the context class's `tmp/` directory, so OPcache keeps it in memory.
+
+```php
+// Production: cache the object graph on the filesystem (default)
+Dii::setContext(App::class);
+```
+
+During development, pass `NullCache` so that changes to your modules take effect immediately without clearing the cache:
+
+```php
+use Koriym\Dii\NullCache;
+
+// Development: rebuild the object graph on every request
+Dii::setContext(App::class, new NullCache());
+```
+
+To use your own storage (APCu, PSR-16, etc.), implement `CacheInterface`:
+
+```php
+use Koriym\Dii\CacheInterface;
+
+final class MyCache implements CacheInterface
+{
+    public function get(string $key, callable $callback): mixed
+    {
+        // Return the cached value, or run $callback() and store its result.
+    }
+}
+
+Dii::setContext(App::class, new MyCache());
+```
+
 ## Injecting Dependencies in Controllers
 
-Ray.Di is able to inject instances to your controllers based on annotations:
+Ray.Di is able to inject instances to your controllers based on the `#[Inject]` attribute:
 
 ```php
 <?php
@@ -99,9 +133,7 @@ class SiteController extends CController implements Injectable
 {
     private $foo;
 
-    /**
-     * @Inject
-     */
+    #[Inject]
     public function setDeps(FooInterface $foo)
     {
         $this->foo = $foo;
@@ -114,7 +146,9 @@ class SiteController extends CController implements Injectable
 }
 ```
 
-As soon as the controller is created, all methods having the `@Inject` annotation will get instances of the hinted class passed. This works only for setter method, not constructors. Please implemet marker interface `Injectable` to notify Ray.Di the class injectable.
+As soon as the controller is created, all methods with the `#[Inject]` attribute will get instances of the hinted class passed. This works only for setter methods, not constructors. Please implement the marker interface `Injectable` to notify Ray.Di that the class is injectable.
+
+> With older, annotation-based Ray.Di (`< 2.16`), the `@Inject` docblock annotation works as well.
 
 Also any class created by `Yii:createComponent()` method is worked as well.
 
