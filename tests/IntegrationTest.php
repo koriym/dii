@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 use function dirname;
 use function file_get_contents;
+use function passthru;
 use function register_shutdown_function;
 use function stream_context_create;
 
@@ -21,6 +22,7 @@ class IntegrationTest extends TestCase
 
     public static function setUpBeforeClass(): void
     {
+        passthru('cd ' . dirname(__DIR__) . '/demo && composer install --quiet');
         $publicDir = dirname(__DIR__) . '/demo/public';
         self::$server = new BuiltinServer(self::$host, $publicDir . '/index.php');
         self::$server->start();

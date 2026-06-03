@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 jobs:
   attribute:
-    name: PHPUnit (attribute, ray.di latest)
+    name: Unit (attribute, ray.di latest)
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -25,17 +25,17 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
-          coverage: pcov
+          coverage: none
           ini-values: zend.assertions=1
 
       - name: Install dependencies
         run: composer update --no-interaction --no-progress
 
-      - name: Run test suite
-        run: ./vendor/bin/phpunit
+      - name: Run unit tests
+        run: ./vendor/bin/phpunit --testsuite Unit
 
   annotation:
-    name: PHPUnit (annotation, ray.di < 2.16)
+    name: Unit (annotation, ray.di < 2.16)
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -50,7 +50,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
-          coverage: pcov
+          coverage: none
           ini-values: zend.assertions=1
 
       - name: Pin annotation-based ray.di and doctrine/annotations 1.x
@@ -59,5 +59,30 @@ jobs:
       - name: Install dependencies
         run: composer update --no-interaction --no-progress
 
-      - name: Run test suite
-        run: ./vendor/bin/phpunit
+      - name: Run unit tests
+        run: ./vendor/bin/phpunit --testsuite Unit
+
+  integration:
+    name: Integration (demo e2e)
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version:
+          - '8.4'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP ${{ matrix.php-version }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          coverage: none
+          ini-values: zend.assertions=1
+
+      - name: Install dependencies
+        run: composer update --no-interaction --no-progress
+
+      - name: Run integration tests
+        run: ./vendor/bin/phpunit --testsuite Integration
