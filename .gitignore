@@ -8,3 +8,9 @@ demo/src-module/Context/tmp/
 .phpcs-cache
 build/
 demo/public/protected/cache/
+tests/Fake/tmp/*
+!tests/Fake/tmp/.gitkeep
+tests/Fake/Module/tmp/*
+!tests/Fake/Module/tmp/.gitkeep
+demo/src-module/tmp/*
+!demo/src-module/tmp/.gitkeep

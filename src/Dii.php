@@ -6,11 +6,7 @@ namespace Koriym\Dii;
 
 use CException;
 use Doctrine\Common\Annotations\AnnotationRegistry;
-use Doctrine\Common\Cache\ArrayCache;
-use Doctrine\Common\Cache\Cache;
-use Koriym\Dii\Module\AppModule;
-use LengthException;
-use LogicException;
+use Koriym\Dii\Exception\Unloadable;
 use Ray\Di\Grapher;
 use ReflectionClass;
 use ReflectionException;
@@ -40,20 +36,18 @@ class Dii extends YiiBase
     /**
      * @param class-string<ModuleProvider> $contextClass
      */
-    public static function setContext(string $contextClass, ?Cache $cache = null, ?string $tmpDir = null): void
+    public static function setContext(string $contextClass, ?CacheInterface $cache = null, ?string $tmpDir = null): void
     {
-        $cache = $cache ?? new ArrayCache();
-        $tmpDir = $tmpDir ?? dirname((new ReflectionClass($contextClass))->getFileName()) . '/tmp';
         if (! class_exists($contextClass)) {
-            throw new LogicException("Not found context class: {$contextClass}");
+            throw new Unloadable("Not found context class: {$contextClass}");
         }
 
-        /** @var ?Grapher $cachedModule */
-        self::$grapher = $cache->fetch($contextClass);
-        if (! self::$grapher instanceof Grapher) {
-            $module = (new $contextClass())();
-            self::$grapher = new Grapher($module, $tmpDir);
-        }
+        $tmpDir ??= dirname((new ReflectionClass($contextClass))->getFileName()) . '/tmp';
+        $cache ??= new FileCache($tmpDir);
+        self::$grapher = (new GrapherCache($cache))->get(
+            $contextClass,
+            static fn (): Grapher => new Grapher((new $contextClass())(), $tmpDir),
+        );
     }
 
     /**
@@ -71,13 +65,7 @@ class Dii extends YiiBase
 
         unset($args[0]);
 
-        $isInjectable = in_array(Injectable::class, class_implements($type), true);
-        if ($isInjectable && self::$grapher instanceof Grapher) {
-            $object = self::$grapher->newInstanceArgs($type, $args);
-        } else {
-            $object = (new ReflectionClass($type))->newInstanceArgs($args);
-        }
-
+        $object = self::newInstance($type, $args);
         foreach ($config as $key => $value) {
             $object->$key = $value;
         }
@@ -101,31 +89,59 @@ class Dii extends YiiBase
         return self::createApplication(DiiConsoleApplication::class, $config);
     }
 
-    public static function getGrapher(): Grapher
+    /**
+     * Register silent annotation loader
+     *
+     * No-op on attribute-based ray/di (>= 2.16) where doctrine/annotations is absent.
+     */
+    public static function registerAnnotationLoader(): void
     {
-        $tmpDir = dirname((new ReflectionClass(AppModule::class))->getFileName()) . '/tmp';
+        /** @psalm-suppress UndefinedClass */
+        if (! class_exists(AnnotationRegistry::class)) {
+            return;
+        }
 
-        return new Grapher(self::getModuleInstance(), $tmpDir);
-    }
-
-    private static function createModule(): void
-    {
-        $context = new self::$context();
-        /** @var callable $context */
-        /** @psalm-suppress InvalidFunctionCall */
-        self::$module = ($context)();
+        /** @psalm-suppress UndefinedClass */
+        AnnotationRegistry::reset();
+        /** @psalm-suppress UndefinedClass, UndefinedMethod */
+        AnnotationRegistry::registerLoader([SilentAutoload::class, 'autoload']);
     }
 
     /**
-     * Get singleton instance of Module class
+     * Silence the Yii autoloader
+     *
+     * Silence YiiBase::autoload, which gives a warning for non-existent classes.
      */
-    private static function getModuleInstance(): AbstractModule
+    public static function registerSilentAutoLoader(): void
     {
-        if (! self::$module instanceof AbstractModule) {
-            self::createModule();
+        spl_autoload_unregister(['YiiBase', 'autoload']);
+        spl_autoload_register(static function (string $class): bool {
+            $e = error_reporting(E_ALL & ~E_WARNING);
+            $loaded = YiiBase::autoload($class);
+            error_reporting($e);
+
+            return $loaded;
+        });
+    }
+
+    /**
+     * Create an instance through the Grapher when injectable, otherwise plainly
+     *
+     * @param array<mixed> $args
+     *
+     * @throws ReflectionException
+     */
+    private static function newInstance(string $type, array $args): object
+    {
+        $isInjectable = in_array(Injectable::class, class_implements($type), true);
+        if ($isInjectable && self::$grapher instanceof Grapher) {
+            /** @var object $object */
+            $object = self::$grapher->newInstanceArgs($type, $args);
+
+            return $object;
         }
 
-        return self::$module;
+        return (new ReflectionClass($type))->newInstanceArgs($args);
     }
 
     /**
@@ -151,32 +167,5 @@ class Dii extends YiiBase
         }
 
         throw new CException(self::t('yii', 'Object configuration must be an array containing a "class" element.'));
-    }
-
-    /**
-     * Register silent annotation loader
-     */
-    public static function registerAnnotationLoader(): void
-    {
-        AnnotationRegistry::reset();
-        /** @psalm-suppress UndefinedMethod */
-        AnnotationRegistry::registerLoader([SilentAutoload::class, 'autoload']);
-    }
-
-    /**
-     * Silence the Yii autoloader
-     *
-     * Silence YiiBase::autoload, which gives a warning for non-existent classes.
-     */
-    public static function registerSilentAutoLoader(): void
-    {
-        spl_autoload_unregister(['YiiBase', 'autoload']);
-        spl_autoload_register(static function (string $class): bool {
-            $e = error_reporting(E_ALL & ~E_WARNING);
-            $loaded = YiiBase::autoload($class);
-            error_reporting($e);
-
-            return $loaded;
-        });
     }
 }

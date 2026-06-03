@@ -8,21 +8,23 @@ jobs:
     name: PHPUnit
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         operating-system:
           - ubuntu-latest
         php-version:
-          - '7.3'
-          - '7.4'
           - '8.0'
           - '8.1'
           - '8.2'
           - '8.3'
+          - '8.4'
+          - '8.5'
         dependencies:
+          - lowest
           - highest
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v4
 
       - name: Setup PHP ${{ matrix.php-version }}
         uses: shivammathur/setup-php@v2
@@ -33,24 +35,22 @@ jobs:
 
       - name: Get composer cache directory
         id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+        run: echo "dir=$(composer config cache-files-dir)" >> "$GITHUB_OUTPUT"
 
       - name: Cache dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          key: ${{ runner.os }}-composer-${{ matrix.dependencies }}-${{ hashFiles('**/composer.json') }}
           restore-keys: ${{ runner.os }}-composer-
 
       - name: Install lowest dependencies
         if: ${{ matrix.dependencies == 'lowest' }}
-        run: >-
-          composer update --prefer-lowest --no-interaction --no-progress
-          --no-suggest
+        run: composer update --prefer-lowest --no-interaction --no-progress
 
       - name: Install highest dependencies
         if: ${{ matrix.dependencies == 'highest' }}
-        run: composer update --no-interaction --no-progress --no-suggest
+        run: composer update --no-interaction --no-progress
 
       - name: Run test suite
         run: ./vendor/bin/phpunit

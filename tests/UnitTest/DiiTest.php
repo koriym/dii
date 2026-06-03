@@ -73,6 +73,14 @@ class DiiTest extends TestCase
         $this->assertInstanceOf(TestFoo::class, $controller->foo);
     }
 
+    public function testSetContextWithNullCache(): void
+    {
+        Dii::setContext(App::class, new NullCache());
+        $controller = $this->dii->createComponent(FakeSiteController::class, 'site');
+        $this->assertInstanceOf(FakeSiteController::class, $controller);
+        $this->assertInstanceOf(Foo::class, $controller->foo);
+    }
+
     public function testInvalidArgument(): void
     {
         $this->expectException(CException::class);

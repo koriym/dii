@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <psalm
     errorLevel="6"
+    autoloader="psalm-bootstrap.php"
     resolveFromConfigFile="true"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
@@ -15,4 +16,8 @@
             <directory name="vendor" />
         </ignoreFiles>
     </projectFiles>
+    <issueHandlers>
+        <!-- The Override attribute requires PHP 8.3+; this library supports PHP 7.2+ -->
+        <MissingOverrideAttribute errorLevel="suppress" />
+    </issueHandlers>
 </psalm>
