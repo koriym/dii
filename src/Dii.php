@@ -6,6 +6,7 @@ namespace Koriym\Dii;
 
 use CException;
 use Doctrine\Common\Annotations\AnnotationRegistry;
+use Koriym\Dii\Exception\ContextNotSet;
 use Koriym\Dii\Exception\Unloadable;
 use Ray\Di\Grapher;
 use ReflectionClass;
@@ -44,7 +45,7 @@ class Dii extends YiiBase
         }
 
         $tmpDir ??= dirname((new ReflectionClass($contextClass))->getFileName()) . '/tmp';
-        $cache ??= new FileCache($tmpDir);
+        $cache ??= new NullCache();
         self::$grapher = (new GrapherCache($cache))->get(
             $contextClass,
             static fn (): Grapher => new Grapher((new $contextClass())(), $tmpDir),
@@ -137,14 +138,18 @@ class Dii extends YiiBase
     private static function newInstance(string $type, array $args): object
     {
         $isInjectable = in_array(Injectable::class, class_implements($type), true);
-        if ($isInjectable && self::$grapher instanceof Grapher) {
-            /** @var object $object */
-            $object = self::$grapher->newInstanceArgs($type, $args);
-
-            return $object;
+        if (! $isInjectable) {
+            return (new ReflectionClass($type))->newInstanceArgs($args);
         }
 
-        return (new ReflectionClass($type))->newInstanceArgs($args);
+        if (! self::$grapher instanceof Grapher) {
+            throw new ContextNotSet("Dii::setContext() must be called before creating injectable: {$type}");
+        }
+
+        /** @var object $object */
+        $object = self::$grapher->newInstanceArgs($type, $args);
+
+        return $object;
     }
 
     /**

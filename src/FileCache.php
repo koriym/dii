@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Koriym\Dii;
 
+use Koriym\Dii\Exception\CacheNotWritable;
+
 use function dirname;
 use function file_put_contents;
 use function hash;
@@ -13,6 +15,7 @@ use function mkdir;
 use function rename;
 use function substr;
 use function tempnam;
+use function unlink;
 use function var_export;
 
 use const LOCK_EX;
@@ -46,17 +49,27 @@ final class FileCache implements CacheInterface
     {
         $hash = hash('crc32b', $key);
         $dir = $this->tmpDir . '/' . substr($hash, 0, 2);
-        if (! is_dir($dir)) {
-            mkdir($dir, 0755, true);
+        if (! is_dir($dir) && ! @mkdir($dir, 0755, true) && ! is_dir($dir)) {
+            throw new CacheNotWritable("Cannot create cache directory: {$dir}");
         }
 
         return $dir . '/' . $hash . '.php';
     }
 
+    /**
+     * Write atomically (tempnam in the same directory, then rename)
+     */
     private function write(string $file, string $code): void
     {
-        $tmp = tempnam(dirname($file), 'dii');
-        file_put_contents($tmp, $code, LOCK_EX);
-        rename($tmp, $file);
+        $tmp = @tempnam(dirname($file), 'dii');
+        if ($tmp === false) {
+            throw new CacheNotWritable('Cannot create a temp file in: ' . dirname($file));
+        }
+
+        if (@file_put_contents($tmp, $code, LOCK_EX) === false || ! @rename($tmp, $file)) {
+            @unlink($tmp);
+
+            throw new CacheNotWritable("Cannot write cache file: {$file}");
+        }
     }
 }

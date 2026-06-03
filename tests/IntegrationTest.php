@@ -7,6 +7,7 @@ namespace Koriym\Dii;
 use PHPUnit\Framework\TestCase;
 
 use function dirname;
+use function escapeshellarg;
 use function file_get_contents;
 use function passthru;
 use function register_shutdown_function;
@@ -22,8 +23,13 @@ class IntegrationTest extends TestCase
 
     public static function setUpBeforeClass(): void
     {
-        passthru('cd ' . dirname(__DIR__) . '/demo && composer install --quiet');
-        $publicDir = dirname(__DIR__) . '/demo/public';
+        $demoDir = dirname(__DIR__) . '/demo';
+        passthru('cd ' . escapeshellarg($demoDir) . ' && composer install --quiet', $exitCode);
+        if ($exitCode !== 0) {
+            self::fail("demo composer install failed with exit code {$exitCode}");
+        }
+
+        $publicDir = $demoDir . '/public';
         self::$server = new BuiltinServer(self::$host, $publicDir . '/index.php');
         self::$server->start();
         register_shutdown_function(static function () {

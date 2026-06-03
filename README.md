@@ -86,20 +86,20 @@ class Test implements ModuleProvider
 
 ## Caching
 
-`Dii::setContext()` caches the built object graph (the Ray.Di `Grapher`) so it is not rebuilt on every request. By default it stores the graph as a `<?php return '...';` file under the context class's `tmp/` directory, so OPcache keeps it in memory.
+By default `Dii::setContext()` rebuilds the object graph (the Ray.Di `Grapher`) on every call, so changes to your modules always take effect.
 
 ```php
-// Production: cache the object graph on the filesystem (default)
+// Default: rebuild the object graph on every request
 Dii::setContext(App::class);
 ```
 
-During development, pass `NullCache` so that changes to your modules take effect immediately without clearing the cache:
+In production, pass `FileCache` to cache the graph and skip the costly rebuild. It stores the graph as a `<?php return '...';` file so OPcache keeps it in memory.
 
 ```php
-use Koriym\Dii\NullCache;
+use Koriym\Dii\FileCache;
 
-// Development: rebuild the object graph on every request
-Dii::setContext(App::class, new NullCache());
+// Production: cache the object graph on the filesystem
+Dii::setContext(App::class, new FileCache(__DIR__ . '/tmp'));
 ```
 
 To use your own storage (APCu, PSR-16, etc.), implement `CacheInterface`:
