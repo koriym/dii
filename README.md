@@ -192,7 +192,7 @@ class AppModule extends AbstractModule
 }
 ```
 
-The scan is non-recursive and only `*.php` files declaring classes that implement `Koriym\Dii\Injectable` are bound.
+The scan is non-recursive and only top-level `*.php` files declaring classes that implement `Koriym\Dii\Injectable` are bound. Pass each subdirectory explicitly when it should be scanned.
 
 ## Demo
 

@@ -9,6 +9,6 @@ use RuntimeException;
 /**
  * Thrown when an injectable scan directory does not exist
  */
-final class DirectoryNotFoundException extends RuntimeException
+final class DirectoryNotFound extends RuntimeException
 {
 }
