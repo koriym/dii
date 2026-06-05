@@ -152,7 +152,7 @@ As soon as the controller is created, all methods with the `#[Inject]` attribute
 
 ### Bind your injectable controllers
 
-Ray.Di resolves bindings at compile time, so each `Injectable` controller or console command must be **bound explicitly in your module**. If it is not bound, Ray.Di raises `Untargeted` and the request fails fast. Dii no longer auto-binds the concrete class at runtime: that silent fallback was not AOP-compiled, so it behaved differently from an explicit binding and the missing binding went unnoticed (especially at compile time).
+Ray.Di resolves bindings at compile time, so each `Injectable` controller or console command must be **bound in your module**. If it is not bound, Ray.Di raises `Untargeted` and the request fails fast. Dii no longer auto-binds the concrete class at runtime: that silent fallback was not AOP-compiled, so it behaved differently from a module binding and the missing binding went unnoticed (especially at compile time).
 
 ```php
 class AppModule extends AbstractModule
@@ -168,6 +168,33 @@ class AppModule extends AbstractModule
 ```
 
 Also any class created by `Yii:createComponent()` method is worked as well.
+
+## InjectableModule
+
+Use `InjectableModule` to bind every `Injectable` class in flat Yii controller or command directories at compile time:
+
+```php
+use Koriym\Dii\InjectableModule;
+use Ray\Di\AbstractModule;
+
+class AppModule extends AbstractModule
+{
+    protected function configure()
+    {
+        $this->bind(FooInterface::class)->to(Foo::class);
+
+        // Install this last so explicit bindings above are preserved.
+        $this->install(new InjectableModule([
+            __DIR__ . '/../protected/controllers',
+            __DIR__ . '/../protected/commands',
+        ]));
+    }
+}
+```
+
+The scan is non-recursive and only top-level `*.php` files declaring classes that implement `Koriym\Dii\Injectable` are bound. Pass each subdirectory explicitly when it should be scanned. Abstract classes are skipped because they cannot be instantiated.
+
+A scan path that does not exist throws `Koriym\Dii\Exception\DirectoryNotFound` during module configuration, so a misconfigured path fails fast at compile time.
 
 ## Demo
 
