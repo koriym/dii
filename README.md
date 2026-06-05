@@ -192,7 +192,9 @@ class AppModule extends AbstractModule
 }
 ```
 
-The scan is non-recursive and only top-level `*.php` files declaring classes that implement `Koriym\Dii\Injectable` are bound. Pass each subdirectory explicitly when it should be scanned.
+The scan is non-recursive and only top-level `*.php` files declaring classes that implement `Koriym\Dii\Injectable` are bound. Pass each subdirectory explicitly when it should be scanned. Abstract classes are skipped because they cannot be instantiated.
+
+A scan path that does not exist throws `Koriym\Dii\Exception\DirectoryNotFound` during module configuration, so a misconfigured path fails fast at compile time.
 
 ## Demo
 
