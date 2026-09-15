@@ -6,7 +6,7 @@ All notable changes to this project are documented in this file.
 
 ### Fixed
 
-- `InjectableModule`'s directory scanner mis-parsed several valid PHP shapes and silently dropped the `Injectable` binding for the affected class: group-use imports (`use A\{B, C};`), mixed function/class group-use (`use A\{function f, B};`), a `use function`/`use const` modifier applying to every comma-separated item in an ungrouped import list, bracketed `namespace X { ... }` blocks, a namespace `use` appearing after an earlier class in the same file, a trait-use as a body's first statement, and `implements namespace\Marker` (namespace-relative name resolution).
+- `InjectableModule`'s directory scanner mis-parsed several valid `use` shapes and silently dropped the `Injectable` binding for the affected class: group-use imports (`use A\{B, C};` lost the prefix on the second and later members), mixed function/class group-use (`use A\{function f, B};` stopped at the `function` item), a `use function`/`use const` modifier not applying to every comma-separated item, and `implements namespace\Marker` (namespace-relative name resolution).
 - `FileCache`: switched the cache-file hash from `crc32b` (32-bit) to `sha256` to avoid key collisions, and a corrupted/truncated cache file is now rebuilt instead of raising a fatal error.
 - `GrapherCache`: a corrupted or malformed cache payload (including one whose `__wakeup()` throws) no longer emits a warning or propagates the exception; it now falls back to rebuilding the object graph.
 - `Dii::registerSilentAutoLoader()` and `SilentAutoload::autoload()`: `error_reporting()` is now restored via `finally`, so a throwing autoloader no longer leaves warnings permanently suppressed process-wide.

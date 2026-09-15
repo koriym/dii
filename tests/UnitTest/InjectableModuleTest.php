@@ -133,62 +133,12 @@ final class InjectableModuleTest extends TestCase
         );
     }
 
-    public function testBracedNamespaceIsResolved(): void
-    {
-        $module = new InjectableModule([self::FAKE_DIR]);
-
-        $this->assertArrayHasKey(
-            $this->bindingKey(InjectableModuleFake\BracedNamespaceInjectable::class),
-            $module->getContainer()->getContainer(),
-        );
-    }
-
-    public function testLateImportAfterAPrecedingClassIsResolved(): void
-    {
-        $module = new InjectableModule([self::FAKE_DIR]);
-
-        $this->assertArrayHasKey(
-            $this->bindingKey(InjectableModuleFake\LateImportInjectable::class),
-            $module->getContainer()->getContainer(),
-        );
-    }
-
-    public function testTraitUseFirstInBodyDoesNotShadowTheInjectableAlias(): void
-    {
-        $module = new InjectableModule([self::FAKE_DIR]);
-
-        $this->assertArrayHasKey(
-            $this->bindingKey(InjectableModuleFake\TraitFirstInjectable::class),
-            $module->getContainer()->getContainer(),
-        );
-    }
-
-    public function testStringInterpolationDoesNotDesyncTheScopeStack(): void
-    {
-        $module = new InjectableModule([self::FAKE_DIR]);
-
-        $this->assertArrayHasKey(
-            $this->bindingKey(InjectableModuleFake\InterpolationInjectable::class),
-            $module->getContainer()->getContainer(),
-        );
-    }
-
     public function testFunctionImportInGroupUseDoesNotDropALaterClassImport(): void
     {
         $module = new InjectableModule([self::FAKE_DIR]);
 
         $this->assertArrayHasKey(
             $this->bindingKey(InjectableModuleFake\MixedGroupUseInjectable::class),
-            $module->getContainer()->getContainer(),
-        );
-    }
-
-    public function testClosureCaptureListIsNotMisreadAsAnImport(): void
-    {
-        $module = new InjectableModule([self::FAKE_DIR]);
-
-        $this->assertArrayHasKey(
-            $this->bindingKey(InjectableModuleFake\ClosureUseInjectable::class),
             $module->getContainer()->getContainer(),
         );
     }

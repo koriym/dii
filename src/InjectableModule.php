@@ -12,7 +12,6 @@ use ReflectionProperty;
 
 use function array_key_exists;
 use function array_keys;
-use function array_pop;
 use function array_slice;
 use function class_exists;
 use function class_implements;
@@ -38,9 +37,7 @@ use const T_AS;
 use const T_CLASS;
 use const T_COMMENT;
 use const T_CONST;
-use const T_CURLY_OPEN;
 use const T_DOC_COMMENT;
-use const T_DOLLAR_OPEN_CURLY_BRACES;
 use const T_DOUBLE_COLON;
 use const T_EXTENDS;
 use const T_FUNCTION;
@@ -51,6 +48,7 @@ use const T_NAME_RELATIVE;
 use const T_NAMESPACE;
 use const T_NEW;
 use const T_NS_SEPARATOR;
+use const T_OPEN_TAG;
 use const T_STRING;
 use const T_USE;
 use const T_WHITESPACE;
@@ -261,46 +259,21 @@ final class InjectableModule extends AbstractModule
         $namespace = '';
         $uses = [];
         $classes = [];
-        /** @var list<bool> $scopeStack true = namespace-bracket scope, false = class/trait/function/other scope */
-        $scopeStack = [];
-        $pendingScopeIsNamespace = false;
         $count = count($tokens);
         for ($i = 0; $i < $count; $i++) {
             $token = $tokens[$i];
-
-            if ($token === '{') {
-                $scopeStack[] = $pendingScopeIsNamespace;
-                $pendingScopeIsNamespace = false;
-
-                continue;
-            }
-
-            if ($token === '}') {
-                array_pop($scopeStack);
-
-                continue;
-            }
-
             if (! is_array($token)) {
                 continue;
             }
 
-            if (in_array($token[0], [T_CURLY_OPEN, T_DOLLAR_OPEN_CURLY_BRACES], true)) {
-                // "{$expr}" / "${name}" string interpolation: opener is a distinct
-                // token but PHP still tokenizes its closer as a literal '}'.
-                $scopeStack[] = false;
-
-                continue;
-            }
-
             if ($token[0] === T_NAMESPACE) {
-                $namespace = $this->readNamespace($tokens, $i + 1, $pendingScopeIsNamespace);
+                $namespace = $this->readNamespace($tokens, $i + 1);
                 $uses = [];
 
                 continue;
             }
 
-            if ($token[0] === T_USE && $this->isImportUse($tokens, $i, $scopeStack)) {
+            if ($token[0] === T_USE && $classes === [] && $this->isNamespaceUse($tokens, $i)) {
                 foreach ($this->readUseAliases($tokens, $i + 1) as $alias => $class) {
                     $uses[$alias] = $class;
                 }
@@ -329,23 +302,14 @@ final class InjectableModule extends AbstractModule
 
     /**
      * @param array<int, array{0:int, 1:string, 2:int}|string> $tokens
-     *
-     * @psalm-param-out bool $bracketed
      */
-    private function readNamespace(array $tokens, int $offset, bool &$bracketed): string
+    private function readNamespace(array $tokens, int $offset): string
     {
-        $bracketed = false;
         $namespace = '';
         $count = count($tokens);
         for ($i = $offset; $i < $count; $i++) {
             $token = $tokens[$i];
-            if ($token === ';') {
-                return $namespace;
-            }
-
-            if ($token === '{') {
-                $bracketed = true;
-
+            if ($token === ';' || $token === '{') {
                 return $namespace;
             }
 
@@ -669,37 +633,23 @@ final class InjectableModule extends AbstractModule
 
     /**
      * @param array<int, array{0:int, 1:string, 2:int}|string> $tokens
-     * @param list<bool>                                       $scopeStack
      */
-    private function isImportUse(array $tokens, int $useIndex, array $scopeStack): bool
+    private function isNamespaceUse(array $tokens, int $useIndex): bool
     {
-        if ($this->isClosureUseClause($tokens, $useIndex)) {
-            return false; // function () use (&$x) { ... } capture list, not an import
-        }
-
-        // Empty stack: top-level file scope, where an unbracketed `namespace` still
-        // allows plain `use` imports. Otherwise only an explicit `namespace { ... }`
-        // block scope permits imports; a class/trait/enum body scope means `use`
-        // names a trait instead.
-        return $scopeStack === [] || $scopeStack[count($scopeStack) - 1];
-    }
-
-    /**
-     * @param array<int, array{0:int, 1:string, 2:int}|string> $tokens
-     */
-    private function isClosureUseClause(array $tokens, int $useIndex): bool
-    {
-        $count = count($tokens);
-        for ($i = $useIndex + 1; $i < $count; $i++) {
+        for ($i = $useIndex - 1; $i >= 0; $i--) {
             $token = $tokens[$i];
             if (is_array($token) && in_array($token[0], [T_WHITESPACE, T_COMMENT, T_DOC_COMMENT], true)) {
                 continue;
             }
 
-            return $token === '(';
+            if (is_array($token) && $token[0] === T_OPEN_TAG) {
+                return true;
+            }
+
+            return $token === ';' || $token === '{';
         }
 
-        return false;
+        return true;
     }
 
     private function isNameToken(int $token): bool
