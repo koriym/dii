@@ -102,6 +102,8 @@ use Koriym\Dii\FileCache;
 Dii::setContext(App::class, new FileCache(__DIR__ . '/tmp'));
 ```
 
+The cache key is the context class name, not a hash of your module graph: `FileCache` never notices that `AppModule::configure()` itself changed. Clear the cache directory (e.g. `rm -rf tmp/*` before warming it back up) as part of your deploy step whenever module bindings change; otherwise a deploy can silently keep serving the previous graph.
+
 To use your own storage (APCu, PSR-16, etc.), implement `CacheInterface`:
 
 ```php

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dd060237af869021adf263f6fcee5401",
+    "content-hash": "9a31e3f6ed70ff374240a1473d3d4c47",
     "packages": [
         {
             "name": "koriym/dii",
@@ -408,7 +408,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.1.0"
+        "php": "^8.0"
     },
     "platform-dev": {},
     "plugin-api-version": "2.9.0"

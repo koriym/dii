@@ -123,6 +123,46 @@ final class InjectableModuleTest extends TestCase
         new InjectableModule([dirname(__DIR__) . '/Fake/InjectableModuleFakeMissing']);
     }
 
+    public function testGroupUseImportIsResolved(): void
+    {
+        $module = new InjectableModule([self::FAKE_DIR]);
+
+        $this->assertArrayHasKey(
+            $this->bindingKey(InjectableModuleFake\GroupUseInjectable::class),
+            $module->getContainer()->getContainer(),
+        );
+    }
+
+    public function testFunctionImportInGroupUseDoesNotDropALaterClassImport(): void
+    {
+        $module = new InjectableModule([self::FAKE_DIR]);
+
+        $this->assertArrayHasKey(
+            $this->bindingKey(InjectableModuleFake\MixedGroupUseInjectable::class),
+            $module->getContainer()->getContainer(),
+        );
+    }
+
+    public function testNamespaceRelativeImplementsIsResolved(): void
+    {
+        $module = new InjectableModule([self::FAKE_DIR]);
+
+        $this->assertArrayHasKey(
+            $this->bindingKey(NamespaceRelativeInjectable::class),
+            $module->getContainer()->getContainer(),
+        );
+    }
+
+    public function testFunctionImportAppliesToEveryCommaSeparatedItem(): void
+    {
+        $module = new InjectableModule([self::FAKE_DIR]);
+
+        $this->assertArrayHasKey(
+            $this->bindingKey(InjectableModuleFake\UngroupedFunctionImportInjectable::class),
+            $module->getContainer()->getContainer(),
+        );
+    }
+
     /**
      * @param class-string $class
      */

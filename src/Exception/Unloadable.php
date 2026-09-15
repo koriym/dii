@@ -7,7 +7,7 @@ namespace Koriym\Dii\Exception;
 use LogicException;
 
 /**
- * Thrown when the context class can not be loaded
+ * Thrown when a requested class cannot be loaded
  */
 final class Unloadable extends LogicException
 {

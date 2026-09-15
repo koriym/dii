@@ -17,7 +17,7 @@
         </ignoreFiles>
     </projectFiles>
     <issueHandlers>
-        <!-- The Override attribute requires PHP 8.3+; this library supports PHP 7.2+ -->
+        <!-- The Override attribute requires PHP 8.3+; this library supports PHP 8.0+ -->
         <MissingOverrideAttribute errorLevel="suppress" />
     </issueHandlers>
 </psalm>

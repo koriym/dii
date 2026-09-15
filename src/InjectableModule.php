@@ -27,6 +27,7 @@ use function is_string;
 use function ltrim;
 use function rtrim;
 use function sprintf;
+use function stripos;
 use function strrpos;
 use function substr;
 use function token_get_all;
@@ -35,9 +36,11 @@ use const DIRECTORY_SEPARATOR;
 use const T_AS;
 use const T_CLASS;
 use const T_COMMENT;
+use const T_CONST;
 use const T_DOC_COMMENT;
 use const T_DOUBLE_COLON;
 use const T_EXTENDS;
+use const T_FUNCTION;
 use const T_IMPLEMENTS;
 use const T_NAME_FULLY_QUALIFIED;
 use const T_NAME_QUALIFIED;
@@ -509,28 +512,75 @@ final class InjectableModule extends AbstractModule
     private function readUseAliases(array $tokens, int $offset): array
     {
         $uses = [];
+        $prefix = '';
         $name = '';
         $alias = '';
         $readingAlias = false;
+        $inGroup = false;
+        $skipCurrent = false; // per-item `function`/`const` modifier inside a group
+        $skipAll = false; // `use function`/`use const` modifier before any group `{`, applies to every comma-separated item
         $count = count($tokens);
         for ($i = $offset; $i < $count; $i++) {
             $token = $tokens[$i];
+            if ($token === '{') { // group use: `use Prefix\{A, B as C};`
+                $prefix = $name;
+                $name = '';
+                $inGroup = true;
+
+                continue;
+            }
+
+            if ($token === '}') {
+                if (! $skipAll && ! $skipCurrent) {
+                    $this->addUseAlias($uses, $prefix . $name, $alias);
+                }
+
+                $prefix = '';
+                $name = '';
+                $alias = '';
+                $readingAlias = false;
+                $skipCurrent = false;
+                $inGroup = false;
+
+                continue;
+            }
+
             if ($token === ';') {
-                $this->addUseAlias($uses, $name, $alias);
+                if (! $skipAll && ! $skipCurrent) {
+                    $this->addUseAlias($uses, $prefix . $name, $alias);
+                }
 
                 return $uses;
             }
 
             if ($token === ',') {
-                $this->addUseAlias($uses, $name, $alias);
+                if (! $skipAll && ! $skipCurrent) {
+                    $this->addUseAlias($uses, $prefix . $name, $alias);
+                }
+
                 $name = '';
                 $alias = '';
                 $readingAlias = false;
+                $skipCurrent = false; // a per-item modifier only ever covers one group member
 
                 continue;
             }
 
             if (! is_array($token)) {
+                continue;
+            }
+
+            if (in_array($token[0], [T_FUNCTION, T_CONST], true)) {
+                // Before any group `{`: `use function f, g;` / `use function Prefix\{f, g};`
+                // apply to every comma-separated item in the statement/group.
+                // After a group `{`: `use Prefix\{function f, ClassA};` applies
+                // only to this one member; siblings may still be class imports.
+                if ($inGroup) {
+                    $skipCurrent = true;
+                } else {
+                    $skipAll = true;
+                }
+
                 continue;
             }
 
@@ -553,7 +603,9 @@ final class InjectableModule extends AbstractModule
             $name .= $token[1];
         }
 
-        $this->addUseAlias($uses, $name, $alias);
+        if (! $skipAll && ! $skipCurrent) {
+            $this->addUseAlias($uses, $prefix . $name, $alias);
+        }
 
         return $uses;
     }
@@ -621,6 +673,14 @@ final class InjectableModule extends AbstractModule
     {
         if ($name[0] === '\\') {
             return ltrim($name, '\\');
+        }
+
+        if (stripos($name, 'namespace\\') === 0) {
+            // T_NAME_RELATIVE (`namespace\Foo`): explicitly relative to the
+            // current namespace, never subject to `use`-alias resolution.
+            $relative = substr($name, 10);
+
+            return $namespace === '' ? $relative : $namespace . '\\' . $relative;
         }
 
         $parts = explode('\\', $name);

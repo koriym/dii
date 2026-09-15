@@ -27,9 +27,10 @@ final class SilentAutoload
     public static function autoload(string $class): bool
     {
         $e = error_reporting(E_ALL & ~E_WARNING);
-        $classExists = class_exists($class);
-        error_reporting($e);
-
-        return $classExists;
+        try {
+            return class_exists($class);
+        } finally {
+            error_reporting($e);
+        }
     }
 }

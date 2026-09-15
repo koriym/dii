@@ -62,7 +62,7 @@ class Dii extends YiiBase
         $args = func_get_args();
         [$type, $config] = self::extract($config);
         if (! class_exists($type, false)) {
-            $type = self::import($type, true);
+            $type = self::importSilently($type);
         }
 
         unset($args[0]);
@@ -73,6 +73,21 @@ class Dii extends YiiBase
         }
 
         return $object;
+    }
+
+    /**
+     * Import via Yii, silencing the E_WARNING YiiBase::autoload() emits when
+     * the alias does not resolve to a loadable file: newInstance() below
+     * throws a clear Unloadable exception for that case instead.
+     */
+    private static function importSilently(string $type): string
+    {
+        $e = error_reporting(E_ALL & ~E_WARNING);
+        try {
+            return self::import($type, true);
+        } finally {
+            error_reporting($e);
+        }
     }
 
     /**
@@ -121,10 +136,11 @@ class Dii extends YiiBase
         spl_autoload_unregister(['YiiBase', 'autoload']);
         spl_autoload_register(static function (string $class): bool {
             $e = error_reporting(E_ALL & ~E_WARNING);
-            $loaded = YiiBase::autoload($class);
-            error_reporting($e);
-
-            return $loaded;
+            try {
+                return YiiBase::autoload($class);
+            } finally {
+                error_reporting($e);
+            }
         });
     }
 
@@ -137,6 +153,10 @@ class Dii extends YiiBase
      */
     private static function newInstance(string $type, array $args): object
     {
+        if (! class_exists($type, false)) {
+            throw new Unloadable("Not found class: {$type}");
+        }
+
         $isInjectable = in_array(Injectable::class, class_implements($type), true);
         if (! $isInjectable) {
             return (new ReflectionClass($type))->newInstanceArgs($args);
