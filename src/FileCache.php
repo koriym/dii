@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Koriym\Dii;
 
 use Koriym\Dii\Exception\CacheNotWritable;
+use Throwable;
 
 use function dirname;
 use function file_put_contents;
@@ -36,7 +37,11 @@ final class FileCache implements CacheInterface
     {
         $file = $this->getFilename($key);
         if (is_file($file)) {
-            return include $file;
+            try {
+                return include $file;
+            } catch (Throwable) {
+                // Corrupted or truncated cache file: fall through and rebuild it below.
+            }
         }
 
         $value = $callback();
@@ -47,7 +52,7 @@ final class FileCache implements CacheInterface
 
     private function getFilename(string $key): string
     {
-        $hash = hash('crc32b', $key);
+        $hash = hash('sha256', $key);
         $dir = $this->tmpDir . '/' . substr($hash, 0, 2);
         if (! is_dir($dir) && ! @mkdir($dir, 0755, true) && ! is_dir($dir)) {
             throw new CacheNotWritable("Cannot create cache directory: {$dir}");

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Koriym\Dii;
 
 use Ray\Di\Grapher;
+use Throwable;
 
 use function is_string;
 use function serialize;
@@ -29,9 +30,18 @@ final class GrapherCache
     public function get(string $contextClass, callable $build): Grapher
     {
         $serialized = $this->cache->get($contextClass, static fn (): string => serialize($build()));
-        $grapher = is_string($serialized)
-            ? unserialize($serialized, ['allowed_classes' => true])
-            : null;
+
+        try {
+            $grapher = is_string($serialized)
+                ? @unserialize($serialized, ['allowed_classes' => true])
+                : null;
+        } catch (Throwable) {
+            // A malformed payload's __unserialize()/__wakeup() threw instead
+            // of just failing to parse: treat it the same as any other
+            // corrupted or tampered cache payload below.
+            $grapher = null;
+        }
+
         if ($grapher instanceof Grapher) {
             return $grapher;
         }

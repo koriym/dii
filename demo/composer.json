@@ -1,7 +1,7 @@
 {
     "name": "vendor/hello",
     "require": {
-        "php": ">=7.1.0",
+        "php": "^8.0",
         "koriym/dii": "dev-master"
     },
     "autoload": {

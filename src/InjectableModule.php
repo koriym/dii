@@ -12,6 +12,7 @@ use ReflectionProperty;
 
 use function array_key_exists;
 use function array_keys;
+use function array_pop;
 use function array_slice;
 use function class_exists;
 use function class_implements;
@@ -27,6 +28,7 @@ use function is_string;
 use function ltrim;
 use function rtrim;
 use function sprintf;
+use function stripos;
 use function strrpos;
 use function substr;
 use function token_get_all;
@@ -35,9 +37,13 @@ use const DIRECTORY_SEPARATOR;
 use const T_AS;
 use const T_CLASS;
 use const T_COMMENT;
+use const T_CONST;
+use const T_CURLY_OPEN;
 use const T_DOC_COMMENT;
+use const T_DOLLAR_OPEN_CURLY_BRACES;
 use const T_DOUBLE_COLON;
 use const T_EXTENDS;
+use const T_FUNCTION;
 use const T_IMPLEMENTS;
 use const T_NAME_FULLY_QUALIFIED;
 use const T_NAME_QUALIFIED;
@@ -45,7 +51,6 @@ use const T_NAME_RELATIVE;
 use const T_NAMESPACE;
 use const T_NEW;
 use const T_NS_SEPARATOR;
-use const T_OPEN_TAG;
 use const T_STRING;
 use const T_USE;
 use const T_WHITESPACE;
@@ -256,21 +261,46 @@ final class InjectableModule extends AbstractModule
         $namespace = '';
         $uses = [];
         $classes = [];
+        /** @var list<bool> $scopeStack true = namespace-bracket scope, false = class/trait/function/other scope */
+        $scopeStack = [];
+        $pendingScopeIsNamespace = false;
         $count = count($tokens);
         for ($i = 0; $i < $count; $i++) {
             $token = $tokens[$i];
+
+            if ($token === '{') {
+                $scopeStack[] = $pendingScopeIsNamespace;
+                $pendingScopeIsNamespace = false;
+
+                continue;
+            }
+
+            if ($token === '}') {
+                array_pop($scopeStack);
+
+                continue;
+            }
+
             if (! is_array($token)) {
                 continue;
             }
 
+            if (in_array($token[0], [T_CURLY_OPEN, T_DOLLAR_OPEN_CURLY_BRACES], true)) {
+                // "{$expr}" / "${name}" string interpolation: opener is a distinct
+                // token but PHP still tokenizes its closer as a literal '}'.
+                $scopeStack[] = false;
+
+                continue;
+            }
+
             if ($token[0] === T_NAMESPACE) {
-                $namespace = $this->readNamespace($tokens, $i + 1);
+                $namespace = $this->readNamespace($tokens, $i + 1, $pendingScopeIsNamespace);
                 $uses = [];
 
                 continue;
             }
 
-            if ($token[0] === T_USE && $classes === [] && $this->isNamespaceUse($tokens, $i)) {
+            if ($token[0] === T_USE && $this->isImportUse($tokens, $i, $scopeStack)) {
                 foreach ($this->readUseAliases($tokens, $i + 1) as $alias => $class) {
                     $uses[$alias] = $class;
                 }
@@ -299,14 +329,23 @@ final class InjectableModule extends AbstractModule
 
     /**
      * @param array<int, array{0:int, 1:string, 2:int}|string> $tokens
+     *
+     * @psalm-param-out bool $bracketed
      */
-    private function readNamespace(array $tokens, int $offset): string
+    private function readNamespace(array $tokens, int $offset, bool &$bracketed): string
     {
+        $bracketed = false;
         $namespace = '';
         $count = count($tokens);
         for ($i = $offset; $i < $count; $i++) {
             $token = $tokens[$i];
-            if ($token === ';' || $token === '{') {
+            if ($token === ';') {
+                return $namespace;
+            }
+
+            if ($token === '{') {
+                $bracketed = true;
+
                 return $namespace;
             }
 
@@ -509,28 +548,75 @@ final class InjectableModule extends AbstractModule
     private function readUseAliases(array $tokens, int $offset): array
     {
         $uses = [];
+        $prefix = '';
         $name = '';
         $alias = '';
         $readingAlias = false;
+        $inGroup = false;
+        $skipCurrent = false; // per-item `function`/`const` modifier inside a group
+        $skipAll = false; // `use function`/`use const` modifier before any group `{`, applies to every comma-separated item
         $count = count($tokens);
         for ($i = $offset; $i < $count; $i++) {
             $token = $tokens[$i];
+            if ($token === '{') { // group use: `use Prefix\{A, B as C};`
+                $prefix = $name;
+                $name = '';
+                $inGroup = true;
+
+                continue;
+            }
+
+            if ($token === '}') {
+                if (! $skipAll && ! $skipCurrent) {
+                    $this->addUseAlias($uses, $prefix . $name, $alias);
+                }
+
+                $prefix = '';
+                $name = '';
+                $alias = '';
+                $readingAlias = false;
+                $skipCurrent = false;
+                $inGroup = false;
+
+                continue;
+            }
+
             if ($token === ';') {
-                $this->addUseAlias($uses, $name, $alias);
+                if (! $skipAll && ! $skipCurrent) {
+                    $this->addUseAlias($uses, $prefix . $name, $alias);
+                }
 
                 return $uses;
             }
 
             if ($token === ',') {
-                $this->addUseAlias($uses, $name, $alias);
+                if (! $skipAll && ! $skipCurrent) {
+                    $this->addUseAlias($uses, $prefix . $name, $alias);
+                }
+
                 $name = '';
                 $alias = '';
                 $readingAlias = false;
+                $skipCurrent = false; // a per-item modifier only ever covers one group member
 
                 continue;
             }
 
             if (! is_array($token)) {
+                continue;
+            }
+
+            if (in_array($token[0], [T_FUNCTION, T_CONST], true)) {
+                // Before any group `{`: `use function f, g;` / `use function Prefix\{f, g};`
+                // apply to every comma-separated item in the statement/group.
+                // After a group `{`: `use Prefix\{function f, ClassA};` applies
+                // only to this one member; siblings may still be class imports.
+                if ($inGroup) {
+                    $skipCurrent = true;
+                } else {
+                    $skipAll = true;
+                }
+
                 continue;
             }
 
@@ -553,7 +639,9 @@ final class InjectableModule extends AbstractModule
             $name .= $token[1];
         }
 
-        $this->addUseAlias($uses, $name, $alias);
+        if (! $skipAll && ! $skipCurrent) {
+            $this->addUseAlias($uses, $prefix . $name, $alias);
+        }
 
         return $uses;
     }
@@ -581,23 +669,37 @@ final class InjectableModule extends AbstractModule
 
     /**
      * @param array<int, array{0:int, 1:string, 2:int}|string> $tokens
+     * @param list<bool>                                       $scopeStack
      */
-    private function isNamespaceUse(array $tokens, int $useIndex): bool
+    private function isImportUse(array $tokens, int $useIndex, array $scopeStack): bool
     {
-        for ($i = $useIndex - 1; $i >= 0; $i--) {
+        if ($this->isClosureUseClause($tokens, $useIndex)) {
+            return false; // function () use (&$x) { ... } capture list, not an import
+        }
+
+        // Empty stack: top-level file scope, where an unbracketed `namespace` still
+        // allows plain `use` imports. Otherwise only an explicit `namespace { ... }`
+        // block scope permits imports; a class/trait/enum body scope means `use`
+        // names a trait instead.
+        return $scopeStack === [] || $scopeStack[count($scopeStack) - 1];
+    }
+
+    /**
+     * @param array<int, array{0:int, 1:string, 2:int}|string> $tokens
+     */
+    private function isClosureUseClause(array $tokens, int $useIndex): bool
+    {
+        $count = count($tokens);
+        for ($i = $useIndex + 1; $i < $count; $i++) {
             $token = $tokens[$i];
             if (is_array($token) && in_array($token[0], [T_WHITESPACE, T_COMMENT, T_DOC_COMMENT], true)) {
                 continue;
             }
 
-            if (is_array($token) && $token[0] === T_OPEN_TAG) {
-                return true;
-            }
-
-            return $token === ';' || $token === '{';
+            return $token === '(';
         }
 
-        return true;
+        return false;
     }
 
     private function isNameToken(int $token): bool
@@ -621,6 +723,14 @@ final class InjectableModule extends AbstractModule
     {
         if ($name[0] === '\\') {
             return ltrim($name, '\\');
+        }
+
+        if (stripos($name, 'namespace\\') === 0) {
+            // T_NAME_RELATIVE (`namespace\Foo`): explicitly relative to the
+            // current namespace, never subject to `use`-alias resolution.
+            $relative = substr($name, 10);
+
+            return $namespace === '' ? $relative : $namespace . '\\' . $relative;
         }
 
         $parts = explode('\\', $name);

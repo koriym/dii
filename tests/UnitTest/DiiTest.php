@@ -7,6 +7,7 @@ namespace Koriym\Dii;
 use CException;
 use CLogRouter;
 use Koriym\Dii\Context\Test;
+use Koriym\Dii\Exception\Unloadable;
 use PHPUnit\Framework\TestCase;
 
 class DiiTest extends TestCase
@@ -86,5 +87,12 @@ class DiiTest extends TestCase
     {
         $this->expectException(CException::class);
         $this->dii->createComponent([]); // no class
+    }
+
+    public function testCreateComponentWithUnloadableClassThrowsClearException(): void
+    {
+        $this->expectException(Unloadable::class);
+
+        $this->dii->createComponent(['class' => 'TotallyBogusClassNameThatDoesNotExist']);
     }
 }
