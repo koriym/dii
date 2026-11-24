@@ -33,8 +33,9 @@ jobs:
           coverage: none
           ini-values: zend.assertions=1
 
+      # psalm (only run by the static analysis job) does not allow PHP 8.6 yet
       - name: Install dependencies
-        run: composer update --no-interaction --no-progress
+        run: composer update --no-interaction --no-progress ${{ matrix.php-version == '8.6' && '--ignore-platform-req=php+' || '' }}
 
       - name: Run unit tests
         run: ./vendor/bin/phpunit --testsuite Unit
